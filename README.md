@@ -16,6 +16,7 @@ Written in Node.js
  * Discord WebHook Notifications for some events. Can be configured in config.json. Thanks to [discord.js](https://github.com/discordjs/discord.js).
  * Automatic response (whispered) like "Sorry, I am an AFK Bot", to people who "/tell" you.
  * Pathfinding ability to make your AFK bot follow you from one place to another, thanks to [mineflayer-pathfinder](https://github.com/Karang/mineflayer-pathfinder).
+ * Auto-Eat feature to auto eat(obviously) thanks to [mineflayer-auto-eat](https://github.com/LINKdiscordd/mineflayer-auto-eat).
  * Reconnect ability in case it's kicked from the server.
  * Online/Cracked mode support.
  * Looks at nearby entities simulating real players.
@@ -64,7 +65,9 @@ Written in Node.js
 	* "windowsAnnouncements": true/false. Receive notifications from Windows if something happens to the bot.
 	* "owner": Minecraft Username of the owner of the bot, so that the bot only replies to him.
 	* "attackMobs": true/false. Wether to attack mobs that are in range(KillAura).
-	* "webhook": settings for the Discord Webhook.
+	* "autoEat": Options of the auto eat.
+        	* "startAt": A number from 1 to 20(both included), example: "startAt": 19 => The bot will start to eat when its health reaches 9,5 food points.
+	* "webhook": Settings for the Discord Webhook.
 		* "sendMessage": true/false. Print chat in a channel with a webhook and receive notifications if something happens to the bot.
 		* "webhookUrl": URL of the webhook.
 		* "userIDToPing: ID so that the webhook pings you on Discord when something happens. WARNING: It's the ID of the user, not the USERNAME. You need to enable Developer Mode to get an ID of a user.
