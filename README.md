@@ -66,7 +66,8 @@ Written in Node.js
 	* "owner": Minecraft Username of the owner of the bot, so that the bot only replies to him.
 	* "attackMobs": true/false. Wether to attack mobs that are in range(KillAura).
 	* "autoEat": Options of the auto eat.
-        	* "startAt": A number from 1 to 20(both included), example: "startAt": 19 => The bot will start to eat when its health reaches 9,5 food points.
+        	* "startAt": A number from 1 to 20(both included), example: "startAt": 19 => The bot will start to eat when its health reaches 9,5 food points. Default 19.
+		* "priority": Choose from 'saturation' or 'foodPoints'. 'saturation' -> Bot chooses food with highest saturation. 'foodPoints' -> Bot chooses food with highest food points.
 	* "webhook": Settings for the Discord Webhook.
 		* "sendMessage": true/false. Print chat in a channel with a webhook and receive notifications if something happens to the bot.
 		* "webhookUrl": URL of the webhook.
