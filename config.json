@@ -6,6 +6,9 @@
     "windowsAnnouncements": "true",
     "owner": "DrMoraschi",
     "attackMobs": "true",
+    "autoEat" : {
+        "startAt" : 19
+    },
     "webhook": {
         "sendMessage": "true",
         "webhookUrl":"",
