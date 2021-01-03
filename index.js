@@ -47,7 +47,7 @@ function startBot() {
 
   bot.once('spawn', () => {
     bot.autoEat.options = {
-      priority: "foodPoints",
+      priority: `${botConfig.autoEat.priority}`,
       startAt: botConfig.autoEat.startAt,
       bannedFood: [],
     };
