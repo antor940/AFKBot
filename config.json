@@ -1,18 +1,37 @@
 {
-    "username": "AFKBot",
-    "password": null,
-    "host": "localhost",
-    "port": 25565,
-    "windowsAnnouncements": "true",
-    "owner": "DrMoraschi",
-    "attackMobs": "true",
-    "autoEat" : {
-        "startAt" : 19,
-        "priority" : "foodPoints"
+    "server" : {
+        "host" : "localhost"
     },
-    "webhook": {
-        "sendMessage": "true",
-        "webhookUrl":"",
-        "userIDToPing":""
+
+    "botOptions" : {
+        "username" : "AFKBot",
+        "password" : null
+    },
+
+    "announcements" : {
+        "windowsAnnouncements" : true,
+
+        "discordBot": {
+            "sendMessage" : true,
+            "token" :"",
+            "channelID" : "",
+            "prefix" : "+ABot",
+            "userIDToPing" :""
+        }
+    },
+    
+    "misc" : {
+        "owner" : "DrMoraschi",
+        "attackMobs" : true,
+
+        "autoEat" : {
+            "startAt" : 19,
+            "priority" : "foodPoints"
+        }
+    },
+
+    "timeouts" : {
+        "onKicked" : 10000,
+        "antiAFK" : 600000
     }
 }
