@@ -16,6 +16,7 @@
             "token" :"",
             "channelID" : "",
             "prefix" : "+ABot",
+            "embedHexColor" : "#0000ff",
             "userIDToPing" :""
         }
     },
