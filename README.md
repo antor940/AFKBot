@@ -73,6 +73,7 @@ Written in Node.js
 			* "token" : Token of the bot.
 			* "channelID" : ID of the channel where the bot will print the chat, or where it will listen for commands.
 			* "prefix" : Prefix of the bot for the commands. Can be left as blank(It will send every message to the chat).
+			* "embedHexColor" : Color of the embeds that the bot will send.
 			* "userIDToPing" : ID so that the bot pings you on Discord when something happens. WARNING: It's the ID of the user, not the USERNAME. You need to enable Developer Mode to get an ID of a user. You can leave it as blank, but the bot won't ping you.
 	* "misc" : Miscellaneous options.
 		* "owner" : Minecraft Username of the owner of the bot, so that the bot only replies to him.
