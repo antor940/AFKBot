@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: If you want a feature added, please fill out this template.
-title: ''
+title: "[FEATURE]"
 labels: request
 assignees: ''
 
