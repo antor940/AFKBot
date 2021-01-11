@@ -75,6 +75,11 @@ Written in Node.js
 			* "prefix" : Prefix of the bot for the commands. Can be left as blank(It will send every message to the chat).
 			* "embedHexColor" : Color of the embeds that the bot will send.
 			* "userIDToPing" : ID so that the bot pings you on Discord when something happens. WARNING: It's the ID of the user, not the USERNAME. You need to enable Developer Mode to get an ID of a user. You can leave it as blank, but the bot won't ping you.
+		* "richPresence" : Options for the Rich Presence.
+			* "enable" : true/false. Toggles the Rich Presence.
+			* "details" : Second line of the Presence.
+			* "state" : Third line of the Presence.
+			* "imageText" : Text that appears when you hover with your mouse on the image.
 	* "misc" : Miscellaneous options.
 		* "owner" : Minecraft Username of the owner of the bot, so that the bot only replies to him.
 		* "attackMobs" : true/false. Wether to attack mobs that are in range(KillAura).
