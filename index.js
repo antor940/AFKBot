@@ -9,7 +9,6 @@ const Discord = require('discord.js');
 const chalk = require('chalk');
 
 
-
 // run main function
 startBot();
 
@@ -80,7 +79,9 @@ function startBot()
         //Executes when bot spawns
         bot.once('spawn', () => {
             try{
+                if(sendToDS){
                 const channel = client.channels.cache.get(announcements.discordBot.channelID)
+                }
             }catch(err){
                 console.log(`Something went wrong with your channel id.
                 Some things to make sure:
