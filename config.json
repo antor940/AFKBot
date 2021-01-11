@@ -13,8 +13,8 @@
 
         "discordBot": {
             "sendMessage" : true,
-            "token" :"Nzc5NzEzNzUwNjg5MjUxMzU4.X7kjBA.70myl51XRQA7kCvh6O1YK0H7cd8",
-            "channelID" : "784390151426015252",
+            "token" :"",
+            "channelID" : "",
             "prefix" : "+ABot",
             "embedHexColor" : "#0000ff",
             "userIDToPing" :""
