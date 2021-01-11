@@ -145,7 +145,7 @@ function startBot()
             };
     
 
-            //why is once used here
+           
             //Runs when health or Hp change and sends a message in Discord
             bot.once('health', () => {
                 const startEmbed = new Discord.MessageEmbed()
