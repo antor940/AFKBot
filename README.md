@@ -12,7 +12,7 @@ Written in Node.js
 
  * Supports up to 1.16.3.
  * Windows Desktop Notifications for events like /tell or on death. These can be disabled inside config.json. Thanks to [node-notifier](https://github.com/mikaelbr/node-notifier).
- * Use a Discord Bot to control the AFKBot. Can be configured in config.json. Thanks to [discord.js](https://github.com/discordjs/discord.js).
+ * Use a Discord Bot to control the AFKBot, and a Custom Rich Presence. Can be configured in config.json. Thanks to [discord.js](https://github.com/discordjs/discord.js).
  * Automatic response (whispered) like "Sorry, I am an AFK Bot", to people who "/tell" you.
  * Pathfinding ability to make your AFK bot follow you from one place to another, thanks to [mineflayer-pathfinder](https://github.com/Karang/mineflayer-pathfinder).
  * Auto-Eat feature to auto eat(obviously) thanks to [mineflayer-auto-eat](https://github.com/LINKdiscordd/mineflayer-auto-eat).
