@@ -62,9 +62,10 @@ function startBot()
         const botOwner = misc.owner
         const attackMob = misc.attackMobs
         const sendToDS = announcements.discordBot.sendMessage
+        var channel
     
         bot.once('spawn', () => {
-            const channel = client.channels.cache.get(announcements.discordBot.channelID)
+            if (sendToDS) channel = client.channels.cache.get(announcements.discordBot.channelID)
 
             const mcData = require('minecraft-data')(bot.version);
             const defaultMove = new Movements(bot, mcData);
@@ -83,27 +84,29 @@ function startBot()
     
             var playersList = Object.keys(bot.players).join(", ");
     
-            if (sendToDS === true) console.log(chalk.blueBright(` <DISCORD> Token found`));
+            if (sendToDS) console.log(chalk.blueBright(` <DISCORD> Token found`));
             console.log(chalk.blueBright(` <WORLD> Online players: `)+playersList);
             console.log(chalk.blueBright(` <WORLD> Current time: `)+Math.abs(bot.time.timeOfDay));
     
             console.log(chalk.greenBright(` <STATUS> Spawned at x: ${chalk.white(Math.round(bot.entity.position.x))} y: ${chalk.white(Math.round(bot.entity.position.y))} z: ${chalk.white(Math.round(bot.entity.position.z))}`));
             
-            client.on('message', (message) => {
-                if (message.author.id === client.user.id) return
-                if (message.channel.id !== announcements.discordBot.channelID) return
-                if (message.content.startsWith(`${announcements.discordBot.prefix}`) === true) {
-                    if (announcements.discordBot.prefix === '') {
-                        const commandSplit = message.content.replace(`${announcements.discordBot.prefix}`, '');
-
-                        bot.chat(commandSplit);
-                    } else {
-                        const commandSplit = message.content.replace(`${announcements.discordBot.prefix} `, '');
-
-                        bot.chat(commandSplit)
+            if (sendToDS) {
+                client.on('message', (message) => {
+                    if (message.author.id === client.user.id) return
+                    if (message.channel.id !== announcements.discordBot.channelID) return
+                    if (message.content.startsWith(`${announcements.discordBot.prefix}`) === true) {
+                        if (announcements.discordBot.prefix === '') {
+                            const commandSplit = message.content.replace(`${announcements.discordBot.prefix}`, '');
+    
+                            bot.chat(commandSplit);
+                        } else {
+                            const commandSplit = message.content.replace(`${announcements.discordBot.prefix} `, '');
+    
+                            bot.chat(commandSplit)
+                        };
                     };
-                };
-            });
+                });
+            };
     
             bot.once('health', () => {
                 const startEmbed = new Discord.MessageEmbed()
@@ -116,7 +119,7 @@ function startBot()
                 )
                 .setFooter(`${bot.username}`);
 
-                if (sendToDS === true) channel.send(startEmbed)
+                if (sendToDS) channel.send(startEmbed)
 
                 if (bot.health <= 5) {
                     console.log(chalk.yellowBright(` <STATUS> I have ${Math.floor(bot.health)} health.`));
@@ -134,7 +137,7 @@ function startBot()
             });
     
             bot.on('message', (msg) => {
-                if (sendToDS === true) channel.send(`<CHAT> `+msg.toString());
+                if (sendToDS) channel.send(`<CHAT> `+msg.toString());
     
                 console.log(` ${msg.toAnsi()}`)
             });
@@ -156,7 +159,7 @@ function startBot()
                     bot.whisper(username, 'Sorry, I am an AFK Bot');
                     console.log(chalk.greenBright(' <STATUS> Whispered that I am a bot'));
     
-                    if (windowsNotification === true) notifierSend('Whisper Message', 'You have a new message');
+                    if (windowsNotification) notifierSend('Whisper Message', 'You have a new message');
                 };
             });
     
@@ -168,15 +171,15 @@ function startBot()
                 if (reasonKicked.extra[0].text.includes('banned') === true) {
                     console.log(chalk.redBright(' <STATUS> I got banned. Exiting in 5 seconds...'));
             
-                    if (sendToDS === true) {
+                    if (sendToDS) {
                         const bannedEmbed = embedConstructor(`**I got banned. Exiting in 5 seconds**`, `Reason`, `${reasonKicked.extra[0].text}`);
 
                         if (pingOn === true) {
-                            if (sendToDS === true) channel.send(bannedEmbed);
+                            if (sendToDS) channel.send(bannedEmbed);
 
-                            if (sendToDS === true) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`);
+                            if (sendToDS) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`);
                         } else {
-                            if (sendToDS === true) channel.send(bannedEmbed);
+                            if (sendToDS) channel.send(bannedEmbed);
                         };
                     };
     
@@ -185,22 +188,22 @@ function startBot()
                     }, 5000);
                 } else {
                     console.log(chalk.redBright(` <STATUS> I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds. Reason: `)+reasonKicked.extra[0].text);
-                    if (windowsNotification === true) notifierSend('Event Message', 'I got kicked!');
+                    if (windowsNotification) notifierSend('Event Message', 'I got kicked!');
                 
-                    if (sendToDS === true) {
+                    if (sendToDS) {
                         const kickedEmbed = embedConstructor(`**I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds**`, `Reason`, `${reasonKicked.extra[0].text}`);
     
                         if (pingOn === true) {
-                            if (sendToDS === true) channel.send(kickedEmbed);
+                            if (sendToDS) channel.send(kickedEmbed);
     
-                            if (sendToDS === true) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`);
+                            if (sendToDS) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`);
                         } else {
-                            if (sendToDS === true) channel.send(kickedEmbed);
+                            if (sendToDS) channel.send(kickedEmbed);
                         };
                     }; 
                 
                     setTimeout(() => {
-                        client.destroy();
+                        if (sendToDS) client.destroy();
                         startBot();
                     }, timeouts.onKicked);
                 };
@@ -208,11 +211,11 @@ function startBot()
     
             bot.on('death', () => {
                 console.log(chalk.redBright(` <STATUS> I died!`));
-                if (windowsNotification === true) notifierSend('Event Message', 'I died!');
+                if (windowsNotification) notifierSend('Event Message', 'I died!');
             });
     
             bot.on('respawn', () => {
-                if (sendToDS === true) {
+                if (sendToDS) {
                     const respawnEmbed = new Discord.MessageEmbed()
                     .setAuthor(`${bot.username} Status: `, `https://crafatar.com/renders/head/${bot.player.uuid}`)
                     .setColor(announcements.discordBot.embedHexColor)
@@ -224,11 +227,11 @@ function startBot()
                     .setFooter(`${bot.username}`);
 
                     if (pingOn === true) {
-                        if (sendToDS === true) channel.send(respawnEmbed);
+                        if (sendToDS) channel.send(respawnEmbed);
 
-                        if (sendToDS === true) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`)
+                        if (sendToDS) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`)
                     } else {
-                        if (sendToDS === true) channel.send(respawnEmbed);
+                        if (sendToDS) channel.send(respawnEmbed);
                     };
                 };
 
