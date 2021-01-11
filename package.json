@@ -1,32 +1,21 @@
 {
   "name": "afkbot",
   "version": "1.0.0",
-  "description": "AFK bot for Minecraft",
+  "description": "[![Discord](https://img.shields.io/badge/Chat-Discord-blue.svg)](https://discord.gg/JQeVxbQT5G)\r # AFKBot\r A bot for Minecraft to stay AFK thanks to [mineflayer](https://github.com/PrismarineJS/mineflayer). Mainly for Windows, but works also on macOS and Linux.",
   "main": "index.js",
   "dependencies": {
     "chalk": "^4.1.0",
+    "discord-rpc": "^3.1.4",
     "discord.js": "^12.5.1",
-    "mineflayer": "^2.29.1",
+    "mineflayer": "^2.40.1",
     "mineflayer-auto-eat": "^1.3.4",
-    "mineflayer-bloodhound": "^0.0.1",
-    "mineflayer-pathfinder": "^1.0.10",
-    "node-notifier": "^8.0.1"
+    "mineflayer-bloodhound": "0.0.1",
+    "mineflayer-pathfinder": "^1.3.5",
+    "node-notifier": "^9.0.0"
   },
   "scripts": {
-    "start": "node index.js",
-    "test": "node index.js"
+    "start": "node index.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DrMoraschi/AFKBot.git"
-  },
-  "keywords": [
-    "AFKBot"
-  ],
   "author": "DrMoraschi",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/DrMoraschi/AFKBot/issues"
-  },
-  "homepage": "https://github.com/DrMoraschi/AFKBot"
+  "license": "ISC"
 }

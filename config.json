@@ -13,11 +13,18 @@
 
         "discordBot": {
             "sendMessage" : true,
-            "token" :"",
-            "channelID" : "",
+            "token" :"Nzc5NzEzNzUwNjg5MjUxMzU4.X7kjBA.70myl51XRQA7kCvh6O1YK0H7cd8",
+            "channelID" : "784390151426015252",
             "prefix" : "+ABot",
             "embedHexColor" : "#0000ff",
             "userIDToPing" :""
+        },
+
+        "richPresence" : {
+            "enable" : true,
+            "details" : "AFKing",
+            "state" : "Away From Keyboard",
+            "imageText" : "This is an AFKBot"
         }
     },
     
