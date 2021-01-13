@@ -13,8 +13,8 @@
         "windowsAnnouncements" : true,
 
         "discordBot": {
-            "token" :"Nzc5NzEzNzUwNjg5MjUxMzU4.X7kjBA.jVrY9ktK8j5mkhbc_HtoKXlZ7kQ",
-            "channelID" : "784390151426015252",
+            "token" :"",
+            "channelID" : "",
             "prefix" : "+",
             "embedHexColor" : "#0000ff",
             "userIDToPing" :""
@@ -22,7 +22,7 @@
     },
     
     "misc" : {
-        "owner" : "Tragafantas",
+        "owner" : "DrMoraschi",
         "attackMobs" : true,
 
         "autoEat" : {
