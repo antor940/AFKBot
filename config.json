@@ -5,31 +5,24 @@
 
     "botOptions" : {
         "username" : "AFKBot",
-        "password" : null
+        "password" : null,
+        "msgToWhisper" : "Sorry, I'm an AFK Bot"
     },
 
     "announcements" : {
         "windowsAnnouncements" : true,
 
         "discordBot": {
-            "sendMessage" : true,
-            "token" :"",
-            "channelID" : "",
-            "prefix" : "+ABot",
+            "token" :"Nzc5NzEzNzUwNjg5MjUxMzU4.X7kjBA.jVrY9ktK8j5mkhbc_HtoKXlZ7kQ",
+            "channelID" : "784390151426015252",
+            "prefix" : "+",
             "embedHexColor" : "#0000ff",
             "userIDToPing" :""
-        },
-
-        "richPresence" : {
-            "enable" : true,
-            "details" : "AFKing",
-            "state" : "Away From Keyboard",
-            "imageText" : "This is an AFKBot"
         }
     },
     
     "misc" : {
-        "owner" : "DrMoraschi",
+        "owner" : "Tragafantas",
         "attackMobs" : true,
 
         "autoEat" : {

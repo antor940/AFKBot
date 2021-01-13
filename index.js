@@ -7,64 +7,121 @@ const bloodhoundPlugin = require('mineflayer-bloodhound')(mineflayer);
 const { pathfinder, Movements } = require('mineflayer-pathfinder');
 const { GoalFollow } = require('mineflayer-pathfinder').goals
 const autoeat = require('mineflayer-auto-eat');
+const fetch = require('node-fetch');
 const { server, botOptions, announcements, misc, timeouts } = require('./config.json');
+const { toDiscord, toMinecraft, whisperHandler } = require('./src/messageHandler');
+const { followOwner, notifierSend, attackMobs, embedConstructor, antiAFK, lookNearEntity } = require('./src/miscFunctions');
+const { printError } = require('./src/errorHandler');
 const Discord = require('discord.js');
 const chalk = require('chalk');
-const RPC = require('discord-rpc');
-
-if (!!announcements.richPresence.enable) {
-    const rpc = new RPC.Client({
-        transport: 'ipc'
-    });
-    
-    rpc.login({
-        clientId: '798273024368443423'
-    });
-    
-    rpc.on('ready', () => {
-        console.log(chalk.blueBright(` <DISCORD> Changed RichPresence`))
-
-        rpc.setActivity({
-            details: announcements.richPresence.details,
-            state: announcements.richPresence.state,
-            largeImageKey: 'image',
-            largeImageText: announcements.richPresence.imageText,
-        });
-    });
-};
 
 //Run main function
 startBot();
 
 function startBot()
 {
-    //Check config for sendMessage var and initialize Discord bot
-    if (announcements.discordBot.sendMessage) {
-        //Ensure that user included essential information for bot
-        if (!announcements.discordBot.token || !announcements.discordBot.channelID) {
-            //Return error if missing info
-            console.log(chalk.blueBright('\n   <DISCORD> Please specify a Discord Token and a Discord Channel ID'));
-            process.exit(1);
-        } else {
-            //Create client and login
-            global.client = new Discord.Client();
-            client.login(announcements.discordBot.token);
+    var alreadyJoined = false;
+    var alreadyLeft = true;
+    var leaveOnCommand = false;
+    var attackUser;
+    
 
-            client.on('ready', () => {
-                //Start MC Client
-                createThis();
-            });
-        };
+    if (!announcements.discordBot.token || !announcements.discordBot.channelID || !announcements.discordBot.prefix) {
+        //Return on missing info
+        console.log(chalk.blueBright('\n   <DISCORD> Please specify a Discord Token, a Discord Channel ID and a Prefix'));
+        process.exit(1);
     } else {
-        //Start MC Client
-        createThis();
+        //Start Client
+        global.client = new Discord.Client();
+        client.login(announcements.discordBot.token);
+
+        client.on('ready', async() => {
+            global.channel = client.channels.cache.get(announcements.discordBot.channelID)
+
+            var uuidOwner
+            
+            try {
+                await fetch(`https://api.mojang.com/users/profiles/minecraft/${misc.owner}`)
+                .then(res => res.json())
+                .then(player => uuidOwner = player);
+            } catch(err) {
+                printError(`An error occurred when attempting to check the username:
+                This is because either there was and error at the Mojand API,
+                or the username was incorrect.
+                The process was not terminated because the error is not critical,
+                so you can attempt to resolve the error and
+                try again without restart
+                
+                ERROR:
+                `, err.type, false, channel);
+            };
+
+            const clientReadyEmbed = new Discord.MessageEmbed()
+            .setColor(announcements.discordBot.embedHexColor)
+            .setAuthor(`AFKBot`, client.user.avatarURL(), 'https://github.com/DrMoraschi/AFKBot')
+            .setDescription(`__Commands__`)
+            .addFields(
+                { name: `${announcements.discordBot.prefix}join`, value: '_Makes the bot join the server_'},
+                { name: `${announcements.discordBot.prefix}leave`, value: `_Makes the bot leave the server_`},
+                { name: `${announcements.discordBot.prefix}say [message]`, value: `_Sends [message] to Minecraft's chat_`},
+                { name: `${announcements.discordBot.prefix}follow`, value: `_Makes the bot follow the owner: ${misc.owner}_`},
+                { name: `${announcements.discordBot.prefix}stop`, value: `_Stops the bot from following you_`},
+                { name: `${announcements.discordBot.prefix}exit`, value: `_Stops the program_` },
+            );
+            
+            if (uuidOwner) clientReadyEmbed.setThumbnail(`https://crafatar.com/renders/body/${uuidOwner.id}`);
+
+            console.log(chalk.blueBright(` <DISCORD> Token found`));
+            channel.send(clientReadyEmbed);
+
+            client.on('message', (message) => {
+                if (message.author.id === client.user.id || message.channel.id !== announcements.discordBot.channelID) return
+
+                switch (message.content) {
+                    case `${announcements.discordBot.prefix}join`:
+                        if (alreadyJoined) return;
+                        console.clear();
+                        createThis();
+                        break;
+                    case `${announcements.discordBot.prefix}leave`:
+                        if (alreadyLeft) return;
+                        bot.quit();
+                        alreadyLeft = true;
+                        alreadyJoined = false;
+                        leaveOnCommand = true;
+                        break;
+                    case `${announcements.discordBot.prefix}follow`:
+                        if (alreadyLeft) return;
+                        followOwner(bot, Discord, channel, toDiscord, announcements, channel, defaultMove, GoalFollow, misc.owner, printError);
+                        break;
+                    case `${announcements.discordBot.prefix}stop`:
+                        if (alreadyLeft) return;
+                        bot.pathfinder.setGoal(null);
+                        const stopEmbed = embedConstructor(bot, Discord, announcements, ``, `Pathfind:`, `Target: None`);
+                        channel.send(stopEmbed);
+                        break;
+                    case `${announcements.discordBot.prefix}exit`:
+                        process.exit();
+                };
+
+                if (message.content.startsWith(`${announcements.discordBot.prefix}say `)) {
+                    if (alreadyLeft) return;
+                    const toSay = message.content.replace(`${announcements.discordBot.prefix}say `, '');
+
+                    toMinecraft(bot, toSay);
+                };
+            });
+        });
     };
 
     //Start MC Client function 
     function createThis()
     {
+        alreadyLeft = false;
+        alreadyJoined = true;
+
         //Create Bot with data from config file
-        const bot = mineflayer.createBot({
+        global.bot = mineflayer.createBot({
             host: server.host,
             username: botOptions.username ? botOptions.username : 'AFKBot',
             password: botOptions.password,
@@ -81,33 +138,16 @@ function startBot()
         
         //Executes when bot spawns
         bot.once('spawn', () => {
-            try {
-                if (!!announcements.discordBot.sendMessage) {
-                    global.channel = client.channels.cache.get(announcements.discordBot.channelID)
-                };
-            } catch(err) {
-                console.log(`Something went wrong with your channel id.
-                Some things to make sure:
-                Make sure your bot is added to your server
-                Make sure your bot has permission to access the channel.
-                
-                Here's the error: 
-                `+err);
-                process.exit(1);
-            };
-            //Error message ^
-            
             //Init mcData, pathfinder
             const mcData = require('minecraft-data')(bot.version);
-            const defaultMove = new Movements(bot, mcData);
+            global.defaultMove = new Movements(bot, mcData);
             defaultMove.allowFreeMotion = true
-            bot.pathfinder.setMovements(defaultMove);
     
-            //Call function to look at nearest entity
-            lookNearEntity();
-            
-            //Check if config has !!misc.attackMobs enabled, and call !!misc.attackMobss function if true
-            if (!!misc.attackMobs === true) attackMobs();
+            //Call functions
+            lookNearEntity(bot);
+            antiAFK(bot, timeouts);
+            //Check if config has !!misc.attackMobs enabled, and call !!misc.attackMobs function if true
+            if (!!misc.attackMobs === true) attackMobs(bot, printError);
     
             //Configure autoeat
             bot.autoEat.options = {
@@ -119,36 +159,27 @@ function startBot()
             //Get current players on server
             var playersList = Object.keys(bot.players).join(", ");
     
-            if (!!announcements.discordBot.sendMessage) console.log(chalk.blueBright(` <DISCORD> Token found`));
-
             console.log(chalk.blueBright(` <WORLD> Online players: `)+playersList);
             console.log(chalk.blueBright(` <WORLD> Current time: `)+Math.abs(bot.time.timeOfDay));
             console.log(chalk.greenBright(` <STATUS> Spawned at x: ${chalk.white(Math.round(bot.entity.position.x))} y: ${chalk.white(Math.round(bot.entity.position.y))} z: ${chalk.white(Math.round(bot.entity.position.z))}`));
-            
-
-            //Transmits discord chat to ingame
-            if (!!announcements.discordBot.sendMessage) {
-                client.on('message', (message) => {
-                    if (message.author.id === client.user.id || message.channel.id !== announcements.discordBot.channelID) return
-                    if (message.content.startsWith(`${announcements.discordBot.prefix}`)) {
-                        if (!announcements.discordBot.prefix) {
-                            const commandSplit = message.content.replace(`${announcements.discordBot.prefix}`, '');
-    
-                            bot.chat(commandSplit);
-                        } else {
-                            const commandSplit = message.content.replace(`${announcements.discordBot.prefix} `, '');
-    
-                            bot.chat(commandSplit)
-                        };
-                    };
-                });
-            };
     
             //Runs when health or Hp change and sends a message in Discord
             bot.once('health', () => {
-                const startEmbed = embedConstructor(``, `Time`, `${Math.abs(bot.time.timeOfDay)}`, `Spawn position`, `x: ${Math.round(bot.entity.position.x)} y: ${Math.round(bot.entity.position.y)} z: ${Math.round(bot.entity.position.z)}`, `Health`, `${Math.floor(bot.health)}`);
+                const startEmbed =
+                embedConstructor(
+                    bot,
+                    Discord,
+                    announcements,
+                    ``,
+                    `Time`,
+                    `${Math.abs(bot.time.timeOfDay)}`,
+                    `Spawn position`,
+                    `x: ${Math.round(bot.entity.position.x)} y: ${Math.round(bot.entity.position.y)} z: ${Math.round(bot.entity.position.z)}`,
+                    `Health`,
+                    `${Math.floor(bot.health)}`
+                );
 
-                if (!!announcements.discordBot.sendMessage) channel.send(startEmbed)
+                toDiscord(channel, startEmbed);
 
                 if (bot.health <= 5) {
                     console.log(chalk.yellowBright(` <STATUS> I have ${Math.floor(bot.health)} health.`));
@@ -166,74 +197,48 @@ function startBot()
                 };
             });
             
-            //Sends a message in Discord when a message ingame is recieved
+            //Sends the message to the console
             bot.on('message', (msg) => {
-                if (!!announcements.discordBot.sendMessage) channel.send(`<CHAT> `+msg.toString());
-    
                 console.log(`${msg.toAnsi()}`)
             });
 
             //Runs when reciving a whisper
-            bot.on('whisper', (username, message) => {
-                if (username === bot.username) return
-                
-                try {
-                    const playerToFollow = bot.players[username].entity
-                    if (username === misc.owner) {
-                        switch (message) {
-                            case `follow me`:
-                                followOwner(playerToFollow, username);
-                                break
-                            case `stop`:
-                                bot.pathfinder.setGoal(null);
-                                break
-                        };
-                    } else if (username !== misc.owner) {
-                        bot.whisper(username, 'Sorry, I am an AFK Bot');
-                        console.log(chalk.greenBright(' <STATUS> Whispered that I am a bot'));
-        
-                        if (!!announcements.windowsAnnouncements) notifierSend('Whisper Message', 'You have a new message');
-                    };
-                } catch(err) {
-                    console.log(`An error occurred when attempting to pathfind:
-                    Something to check:
-                    Make sure you are close to the bot
-                    Make sure the bot is not already pathfinding to something
-
-                    The process was not terminated because the error is not critical, so you can attempt to resolve the error and 
-                    try again without restart
-
-                    Heres the error:    
-                    `+err);
-                };
-            //Error handling
+            bot.on('whisper', (username) => {
+                whisperHandler(bot, username, botOptions, announcements, misc, notifierSend, notifier, chalk);
             });
     
             //Runs when bot is kicked
             bot.on('kicked', (reason) => {
-
+                if (leaveOnCommand === true) return
                 //Parse response from server
                 const reasonKicked = JSON.parse(reason);
 
                 //Return if response empty
                 if (!reasonKicked.extra) return
 
-                
                 if (reasonKicked.extra[0].text.includes('banned')) {
                     //Check if bot was banned
                     console.log(chalk.redBright(' <STATUS> I got banned. Exiting in 5 seconds...'));
+
+                    if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I got banned!');
             
-                    if (!!announcements.discordBot.sendMessage) {
-                        //If discord message is to be sent, send it with ping or no ping based on config
-                        const bannedEmbed = embedConstructor(`**I got banned. Exiting in 5 seconds**`, `Reason`, `${reasonKicked.extra[0].text}`);
+                    //If discord message is to be sent, send it with ping or no ping based on config
+                    const bannedEmbed =
+                    embedConstructor(
+                        bot,
+                        Discord,
+                        announcements,
+                        `**I got banned. Exiting in 5 seconds**`,
+                        `Reason`,
+                        `${reasonKicked.extra[0].text}`
+                    );
 
-                        if (!!announcements.discordBot.userIDToPing) {
-                            if (!!announcements.discordBot.sendMessage) channel.send(bannedEmbed);
+                    if (!!announcements.discordBot.userIDToPing) {
+                        toDiscord(channel, bannedEmbed);
 
-                            if (!!announcements.discordBot.sendMessage) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`);
-                        } else {
-                            if (!!announcements.discordBot.sendMessage) channel.send(bannedEmbed);
-                        };
+                        toDiscord(channel, `^ <@${announcements.discordBot.userIDToPing}> ^`);
+                    } else {
+                        toDiscord(channel, bannedEmbed);
                     };
 
                     //Exit process if banned 
@@ -243,24 +248,30 @@ function startBot()
                 } else {
                     //If message does not include banned, then tell user and attempt to connect again set timeout
                     console.log(chalk.redBright(` <STATUS> I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds. Reason: `)+reasonKicked.extra[0].text);
-                    if (!!announcements.windowsAnnouncements) notifierSend('Event Message', 'I got kicked!');
+                    
+                    if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I got kicked!');
                 
-                    if (!!announcements.discordBot.sendMessage) {
-                        const kickedEmbed = embedConstructor(`**I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds**`, `Reason`, `${reasonKicked.extra[0].text}`);
+                    const kickedEmbed =
+                    embedConstructor(
+                        bot,
+                        Discord,
+                        announcements,
+                        `**I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds**`,
+                        `Reason`,
+                        `${reasonKicked.extra[0].text}`
+                    );
     
-                        if (!!announcements.discordBot.userIDToPing) {
-                            if (!!announcements.discordBot.sendMessage) channel.send(kickedEmbed);
-    
-                            if (!!announcements.discordBot.sendMessage) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`);
-                        } else {
-                            if (!!announcements.discordBot.sendMessage) channel.send(kickedEmbed);
-                        };
+                    if (!!announcements.discordBot.userIDToPing) {
+                        toDiscord(channel, kickedEmbed);
+
+                        toDiscord(channel, `^ <@${announcements.discordBot.userIDToPing}> ^`);
+                    } else {
+                        toDiscord(channel, kickedEmbed);
                     };
 
                     //Reset bot and retry joining
                     setTimeout(() => {
-                        if (!!announcements.discordBot.sendMessage) client.destroy();
-                        startBot();
+                        createThis();
                     }, timeouts.onKicked);
                 };
             });
@@ -268,21 +279,37 @@ function startBot()
             //Tell user when bot dies
             bot.on('death', () => {
                 console.log(chalk.redBright(` <STATUS> I died!`));
-                if (!!announcements.windowsAnnouncements) notifierSend('Event Message', 'I died!');
+
+                if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I died!');
             });
     
             //Tell user where and when bot respawns
             bot.on('respawn', () => {
-                if (!!announcements.discordBot.sendMessage) {
-                    const respawnEmbed = embedConstructor(`**I died**`, `Respawn position`, `x: ${Math.round(bot.entity.position.x)} y: ${Math.round(bot.entity.position.y)} z: ${Math.round(bot.entity.position.z)}`, `Last known attacker`, `${(attackUser.displayName || attackUser.username)}`)
-                    
-                    if (!!announcements.discordBot.userIDToPing) {
-                        if (!!announcements.discordBot.sendMessage) channel.send(respawnEmbed);
-
-                        if (!!announcements.discordBot.sendMessage) channel.send(`^ <@${announcements.discordBot.userIDToPing}> ^`)
-                    } else {
-                        if (!!announcements.discordBot.sendMessage) channel.send(respawnEmbed);
+                if (!attackUser) {
+                    attackUser = {
+                        name: 'Error finding out',
+                        displayName: 'Error finding out'
                     };
+                };
+                
+                const respawnEmbed = 
+                embedConstructor(
+                    bot,
+                    Discord,
+                    announcements, 
+                    `**I died**`,
+                    `Respawn position`,
+                    `x: ${Math.round(bot.entity.position.x)} y: ${Math.round(bot.entity.position.y)} z: ${Math.round(bot.entity.position.z)}`,
+                    `Last known attacker`,
+                    `${(attackUser.displayName || attackUser.username)}`
+                );
+                    
+                if (!!announcements.discordBot.userIDToPing) {
+                    toDiscord(channel, respawnEmbed);
+
+                    toDiscord(channel, `^ <@${announcements.discordBot.userIDToPing}> ^`)
+                } else {
+                    toDiscord(channel, respawnEmbed);
                 };
 
                 console.log(chalk.greenBright(` <STATUS> Respawned at x: ${chalk.white(Math.round(bot.entity.position.x))} y: ${chalk.white(Math.round(bot.entity.position.y))} z: ${chalk.white(Math.round(bot.entity.position.z))}`));
@@ -298,126 +325,20 @@ function startBot()
                     };
                 };
 
-                global.attackUser = attacker
+                attackUser = attacker
             });
 
-            //Set the anti afk timeout
-            setInterval(() => {
-                setTimeout(() => {
-                    bot.setControlState('jump', false);
-                }, 100);
-                    bot.setControlState('jump', true);
-            }, timeouts.antiAFK);
-            
-            //Function to follow a person
-            function followOwner(playerToFollow, username)
+            function updateMessage()
             {
-                bot.whisper(username, 'On my way');
-                bot.pathfinder.setGoal(new GoalFollow(playerToFollow, 2), true);
-            };
-            
-            //Function to look near an entity
-            function lookNearEntity()
-            {
-              setInterval(() => {
-                const entity = bot.nearestEntity();
-                    if (entity !== null) {
-                        if (entity.type === 'player') {
-                            bot.lookAt(entity.position.offset(0, 1.6, 0));
-                        } else if (entity.type === 'mob') {
-                            bot.lookAt(entity.position);
-                        };
-                    };
-                }, 50);
-            };
-            
-
-            //Function to attack mobs
-            function attackMobs()
-            {
-                //Look at a mob, and attack it when an entity moves
-                bot.on('entityMoved', (entity) => {
-                    if (entity.type === 'mob' && entity.position.distanceTo(bot.entity.position) < 8 && entity.mobType !== 'Armor Stand') {
-                        const mobFilter = e => e.type === 'mob' && e.position.distanceTo(bot.entity.position) < 8 && e.mobType !== 'Armor Stand'
-                        
-                        //Get info about the closest mob
-                        try {
-                            global.mob = bot.nearestEntity(mobFilter);
-                        } catch(err) {
-                            console.log(`
-                            An error occurred while attempting to get info to attack a mob.
-
-                            This error is not critical so the process will not be terminated
-                            
-                            
-                            The error:`+err);
-                        };
-
-                        //Return if mob is undefined
-                        if (!mob) return
-                        try {
-                            global.pos = mob.position
-                        } catch(err) {
-                            console.log(`
-                            An error occurred while attempting to get info to attack a mob.
-    
-                            This error is not critical so the process will not be terminated
-                                
-                                
-                            The error:`+err);
-                        };
-        
-                        bot.lookAt(pos, true, () => {
-                            bot.setControlState('jump', true);
-        
-                            setTimeout(() => {
-                                bot.attack(mob);
-                            }, 500);
-        
-                            bot.setControlState('jump', false);
-                        });
-                    };
+                bot.on('move', () => {
+                    process.stdout.write(`Pathfind: ${Math.round(bot.entity.position.x)}, ${Math.round(bot.entity.position.y)}, ${Math.round(bot.entity.position.z)}`);
+                    process.stdout.cursorTo(0);    
                 });
             };
 
-            //Function to send a Windows notif
-            function notifierSend(title, message)
-            {
-                notifier.notify({
-                    title: `${title}`,
-                    message: (`${message}`),
-                    icon: 'projectlogo.jpg'
-                }, (err) => {
-                    if (err) {
-                        console.log(chalk.redBright(` <STATUS> Couldn't send Windows Notification: `)+err)
-                    } else {
-                        console.log(chalk.greenBright(` <STATUS> Sent Windows Notification`))
-                    };
-                });
-            };
-
-            //Embed constructor function
-            function embedConstructor(message, name, value, name2, value2, name3, value3)
-            {
-                const returnedEmbed = new Discord.MessageEmbed()
-                .setAuthor(`${bot.username} Status: `, `https://crafatar.com/renders/head/${bot.player.uuid}`)
-                .setColor(announcements.discordBot.embedHexColor)
-                .setDescription(message)
-                .addFields(
-                    { name: name, value: value},
-                )
-                .setFooter(`${bot.username}`);
-
-                if (name2 && value2) {
-                    returnedEmbed.addFields({ name: name2, value: value2 });
-                };
-
-                if (name3 && value3) {
-                    returnedEmbed.addFields({ name: name3, value: value3 });
-                };
-
-                return returnedEmbed
-            };
-        }); 
+            module.exports = {
+                updateMessage
+            }
+        });
     };
 };
