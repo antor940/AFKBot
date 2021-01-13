@@ -11,15 +11,13 @@ Written in Node.js
 ## Features
 
  * Supports up to 1.16.3.
- * Windows Desktop Notifications for events like /tell or on death. These can be disabled inside config.json. Thanks to [node-notifier](https://github.com/mikaelbr/node-notifier).
- * Use a Discord Bot to control the AFKBot, and a Custom Rich Presence. Can be configured in config.json. Thanks to [discord.js](https://github.com/discordjs/discord.js).
- * Automatic response (whispered) like "Sorry, I am an AFK Bot", to people who "/tell" you.
+ * Windows Desktop Notifications for events like death. These can be disabled inside config.json. Thanks to [node-notifier](https://github.com/mikaelbr/node-notifier).
+ * Use a Discord Bot to control the AFKBot. Can be configured in config.json. Thanks to [discord.js](https://github.com/discordjs/discord.js).
  * Pathfinding ability to make your AFK bot follow you from one place to another, thanks to [mineflayer-pathfinder](https://github.com/Karang/mineflayer-pathfinder).
  * Auto-Eat feature to auto eat(obviously) thanks to [mineflayer-auto-eat](https://github.com/LINKdiscordd/mineflayer-auto-eat).
  * Reconnect ability in case it's kicked from the server.
  * Online/Cracked mode support.
  * Looks at nearby entities simulating real players.
- * Alerts on low health.
  * Option to make bot attack mobs inside his range (KillAura) for self-defense, can be disabled in config.json.
  * Shows who attacked the bot and the weapon. Thanks to [mineflayer-bloodhound](https://github.com/Nixes/mineflayer-bloodhound).
 
@@ -40,23 +38,7 @@ Written in Node.js
 
 ## Commands
 
- 1. The bot is configured to only reply to "/tell" messages. It will reply with "Sorry, I am an AFK Bot".
- 2. The bot will only follow you if tell him to do so:
-	
-	*/tell [botname] follow me*
-
-	Will make the bot follow you.
-
-	*/tell [botname] stop*
-
-	Will make the bot stop following you.
-	
-	*[prefix] [message]*
-	
-	To send a chat message from Discord to Minecraft.
-
- 3. The bot will start the anti-AFK-kick sequence when connected automatically, it will jump every X minutes to prevent kicks.
- 4. The bot will attack enemy mobs that are inside his range, he can't attack multiple mobs at once, but the option can be disabled.
+ Commands will be sent to the channel on startup. You can choose.
  
 ## How to Use
 
@@ -75,11 +57,6 @@ Written in Node.js
 			* "prefix" : Prefix of the bot for the commands. Can be left as blank(It will send every message to the chat).
 			* "embedHexColor" : Color of the embeds that the bot will send.
 			* "userIDToPing" : ID so that the bot pings you on Discord when something happens. WARNING: It's the ID of the user, not the USERNAME. You need to enable Developer Mode to get an ID of a user. You can leave it as blank, but the bot won't ping you.
-		* "richPresence" : Options for the Rich Presence.
-			* "enable" : true/false. Toggles the Rich Presence.
-			* "details" : Second line of the Presence.
-			* "state" : Third line of the Presence.
-			* "imageText" : Text that appears when you hover with your mouse on the image.
 	* "misc" : Miscellaneous options.
 		* "owner" : Minecraft Username of the owner of the bot, so that the bot only replies to him.
 		* "attackMobs" : true/false. Wether to attack mobs that are in range(KillAura).
