@@ -17,6 +17,7 @@ Written in Node.js
  * Auto-Eat feature to auto eat(obviously) thanks to [mineflayer-auto-eat](https://github.com/LINKdiscordd/mineflayer-auto-eat).
  * Reconnect ability in case it's kicked from the server.
  * Online/Cracked mode support.
+ * Custom whispered replies to whispers from other players.
  * Looks at nearby entities simulating real players.
  * Option to make bot attack mobs inside his range (KillAura) for self-defense, can be disabled in config.json.
  * Shows who attacked the bot and the weapon. Thanks to [mineflayer-bloodhound](https://github.com/Nixes/mineflayer-bloodhound).
@@ -48,6 +49,7 @@ Written in Node.js
 	* "botOptions" : Options for the bot.
 		* "username" : A name for the bot, if the server has online-mode set to true, it's the e-mail.
 		* "password" : Password of the account, if the server has online-mode set to false, you can leave it as null.
+		* "msgToWhisper" : Custom message to reply to whispers.
 	* "announcements" : Options for the announcements.
 		* "windowsAnnouncements" : true/false. Receive notifications from Windows if something happens to the bot.
 		* "discordBot" : Options for the Discord Bot.
