@@ -25,6 +25,7 @@ function startBot()
     var leaveOnCommand = false;
     var attackUser;
     var executed = false;
+    global.pathfindNow = false;
     
 
     if (!announcements.discordBot.token || !announcements.discordBot.channelID || !announcements.discordBot.prefix) {
@@ -109,6 +110,7 @@ function startBot()
                     case `${announcements.discordBot.prefix}stop`:
                         if (alreadyLeft) return;
                         bot.pathfinder.setGoal(null);
+                        pathfindNow = false;
                         const stopEmbed = embedConstructor(
                             bot,
                             Discord,

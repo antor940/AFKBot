@@ -11,6 +11,7 @@ module.exports = {
 function followOwner(bot, Discord, channel, toDiscord, announcements, channel, defaultMove, GoalFollow, owner, printError)
 {
     try {
+        pathfindNow = true;
         bot.pathfinder.setMovements(defaultMove);
         bot.pathfinder.setGoal(new GoalFollow(bot.players[owner].entity, 2), true)
 
@@ -30,6 +31,8 @@ function followOwner(bot, Discord, channel, toDiscord, announcements, channel, d
 
         ERROR:    
         `, err, false, channel);
+
+        pathfindNow = false;
     };
 };
 
@@ -54,6 +57,7 @@ function attackMobs(bot, printError)
 {
     //Look at a mob, and attack it when an entity moves
     bot.on('entityMoved', (entity) => {
+        if (pathfindNow) return;
         if (entity.type === 'mob' && entity.position.distanceTo(bot.entity.position) < 8 && entity.mobType !== 'Armor Stand') {
             const mobFilter = e => e.type === 'mob' && e.position.distanceTo(bot.entity.position) < 8 && e.mobType !== 'Armor Stand'
             
@@ -129,8 +133,9 @@ function antiAFK(bot, timeouts)
 //Function to look near an entity
 function lookNearEntity(bot)
 {
-  setInterval(() => {
-    const entity = bot.nearestEntity();
+    setInterval(() => {
+        if (pathfindNow) return;
+        const entity = bot.nearestEntity();
         if (entity !== null) {
             if (entity.type === 'player') {
                 bot.lookAt(entity.position.offset(0, 1.6, 0));
