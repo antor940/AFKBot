@@ -13,8 +13,10 @@
         "windowsAnnouncements" : true,
 
         "discordBot": {
+            "sendChat" : true,
             "token" :"",
             "channelID" : "",
+            "sayEverything" : true,
             "prefix" : "+",
             "embedHexColor" : "#0000ff",
             "userIDToPing" :""
