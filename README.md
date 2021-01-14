@@ -53,9 +53,11 @@ Written in Node.js
 	* "announcements" : Options for the announcements.
 		* "windowsAnnouncements" : true/false. Receive notifications from Windows if something happens to the bot.
 		* "discordBot" : Options for the Discord Bot.
+			* "sendChat" : true/false. Wether the bot sends the chat to Discord.
 			* "sendMessage" : true/false. Print chat in a channel with a bot and receive notifications if something happens to the bot.
 			* "token" : Token of the bot.
 			* "channelID" : ID of the channel where the bot will print the chat, or where it will listen for commands.
+			* "sayEverything" : true/false. This will let you send any message in the channel without the say command and the bot will print it in chat.
 			* "prefix" : Prefix of the bot for the commands. Can be left as blank(It will send every message to the chat).
 			* "embedHexColor" : Color of the embeds that the bot will send.
 			* "userIDToPing" : ID so that the bot pings you on Discord when something happens. WARNING: It's the ID of the user, not the USERNAME. You need to enable Developer Mode to get an ID of a user. You can leave it as blank, but the bot won't ping you.
