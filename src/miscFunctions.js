@@ -7,11 +7,12 @@ module.exports = {
     lookNearEntity
 };
 
+//Follow the owner
 function followOwner(bot, Discord, channel, toDiscord, announcements, channel, defaultMove, GoalFollow, owner, printError)
 {
     try {
         bot.pathfinder.setMovements(defaultMove);
-        bot.pathfinder.setGoal(new GoalFollow(bot.nearestEntity(entity => entity.username === owner), 2), true)
+        bot.pathfinder.setGoal(new GoalFollow(bot.players[owner].entity, 2), true)
 
         const pathFindEmbed =  embedConstructor(bot, Discord, announcements, ``, `Pathfind:`, `Target: Owner`);
 
@@ -99,16 +100,16 @@ function embedConstructor(bot, Discord, announcements, message, name, value, nam
     .setColor(announcements.discordBot.embedHexColor)
     .setDescription(message)
     .addFields(
-        { name: name, value: value},
+        { name: name, value: `_${value}_`},
     )
     .setFooter(`${bot.username}`);
 
     if (name2 && value2) {
-        returnedEmbed.addFields({ name: name2, value: value2 });
+        returnedEmbed.addFields({ name: name2, value: `_${value2}_` });
     };
 
     if (name3 && value3) {
-        returnedEmbed.addFields({ name: name3, value: value3 });
+        returnedEmbed.addFields({ name: name3, value: `_${value3}_` });
     };
 
     return returnedEmbed
