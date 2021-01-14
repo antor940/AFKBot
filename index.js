@@ -40,24 +40,6 @@ function startBot()
         client.on('ready', async() => {
             global.channel = client.channels.cache.get(announcements.discordBot.channelID)
 
-            var uuidOwner
-            
-            try {
-                await fetch(`https://api.mojang.com/users/profiles/minecraft/${botOptions.username}`)
-                .then(res => res.json())
-                .then(player => uuidOwner = player);
-            } catch(err) {
-                printError(`An error occurred when attempting to check the username:
-                This is because either there was and error at the Mojand API,
-                or the username was incorrect.
-                The process was not terminated because the error is not critical,
-                so you can attempt to resolve the error and
-                try again without restart
-                
-                ERROR:
-                `, err.type, false, channel);
-            };
-
             const clientReadyEmbed = new Discord.MessageEmbed()
             .setColor(announcements.discordBot.embedHexColor)
             .setAuthor(`AFKBot`, client.user.avatarURL(), 'https://github.com/DrMoraschi/AFKBot')
@@ -70,8 +52,6 @@ function startBot()
                 { name: `${announcements.discordBot.prefix}stop`, value: `_Stops the bot from following you_`},
                 { name: `${announcements.discordBot.prefix}exit`, value: `_Stops the program_` },
             );
-            
-            if (uuidOwner) clientReadyEmbed.setThumbnail(`https://crafatar.com/renders/body/${uuidOwner.id}`);
 
             console.log(chalk.blueBright(` <DISCORD> Token found`));
             channel.send(clientReadyEmbed);
@@ -133,13 +113,16 @@ function startBot()
                 };
 
                 if (!!announcements.discordBot.sayEverything && alreadyJoined) {
-                    if (message.content === `${announcements.discordBot.prefix}join`
-                    || message.content === `${announcements.discordBot.prefix}leave`
-                    || message.content === `${announcements.discordBot.prefix}follow`
-                    || message.content === `${announcements.discordBot.prefix}stop`
-                    || message.content === `${announcements.discordBot.prefix}exit`
-                    || message.content === `${announcements.discordBot.prefix}say`) return;
+                    const indexCommands = [
+                        `${announcements.discordBot.prefix}join`,
+                        `${announcements.discordBot.prefix}leave`,
+                        `${announcements.discordBot.prefix}follow`,
+                        `${announcements.discordBot.prefix}stop`,
+                        `${announcements.discordBot.prefix}exit`,
+                        `${announcements.discordBot.prefix}say`
+                    ];
 
+                    if (indexCommands.indexOf(message.content) >= 1) return;
                     bot.chat(message.content);
                 };
             });
