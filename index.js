@@ -54,7 +54,18 @@ function startBot()
             );
 
             console.log(chalk.blueBright(` <DISCORD> Token found`));
-            channel.send(clientReadyEmbed);
+
+            try {
+                channel.send(clientReadyEmbed);
+            } catch(err) {
+                printError(`An error occurred when attempting to send the starting embed:
+                Something to check:
+                - Make sure your channelID is correct
+                - Make sure the bot has administrator perms
+        
+                ERROR:    
+                `, err, true, channel);
+            };
 
             client.on('message', (message) => {
                 if (message.author.id === client.user.id || message.channel.id !== announcements.discordBot.channelID) return
