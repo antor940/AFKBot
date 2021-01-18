@@ -10,7 +10,13 @@
     },
 
     "announcements" : {
-        "windowsAnnouncements" : true,
+        "saySomething" : {
+            "enable" : false,
+            "interval" : 10000,
+            "lineToSay" : "Visit GitHub"
+        },
+
+        "windowsAnnouncements" : false,
 
         "discordBot": {
             "sendChat" : true,
@@ -26,6 +32,7 @@
     "misc" : {
         "owner" : "DrMoraschi",
         "attackMobs" : true,
+        "lookAtEntities" : true,
 
         "autoEat" : {
             "startAt" : 19,
