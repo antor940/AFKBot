@@ -1,10 +1,19 @@
 module.exports = {
+    saySomething,
     followOwner,
     notifierSend,
     attackMobs,
     embedConstructor,
     antiAFK,
     lookNearEntity
+};
+
+//Say something every X seconds
+function saySomething(bot, interval, toSay)
+{
+    setInterval(() => {
+        bot.chat(toSay);
+    }, interval);
 };
 
 //Follow the owner
