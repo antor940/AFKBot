@@ -16,7 +16,7 @@
             "lineToSay" : "Visit GitHub"
         },
 
-        "windowsAnnouncements" : false,
+        "windowsAnnouncements" : true,
 
         "discordBot": {
             "sendChat" : true,
