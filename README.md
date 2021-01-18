@@ -51,6 +51,10 @@ Written in Node.js
 		* "password" : Password of the account, if the server has online-mode set to false, you can leave it as null.
 		* "msgToWhisper" : Custom message to reply to whispers.
 	* "announcements" : Options for the announcements.
+		* "saySomething" : Options to make the bot say something in the chat every X milliseconds.
+			* "enable" : true/false. Toggle this. false by default.
+			* "interval" : Interval between each message is sent. In milliseconds.
+			* "lineToSay" : String. A line to say every "interval" milliseconds.
 		* "windowsAnnouncements" : true/false. Receive notifications from Windows if something happens to the bot.
 		* "discordBot" : Options for the Discord Bot.
 			* "sendChat" : true/false. Wether the bot sends the chat to Discord.
@@ -64,6 +68,7 @@ Written in Node.js
 	* "misc" : Miscellaneous options.
 		* "owner" : Minecraft Username of the owner of the bot, so that the bot only replies to him.
 		* "attackMobs" : true/false. Wether to attack mobs that are in range(KillAura).
+		* "lookAtEntities" : true/false. Wether to look at nearby entities.
 		* "autoEat" : Options of the auto eat.
 			* "startAt" : A number from 1 to 20(both included), example: "startAt": 19 => The bot will start to eat when its health reaches 9,5 food points. Default 19.
 			* "priority" : Choose from 'saturation' or 'foodPoints'. 'saturation' -> Bot chooses food with highest saturation. 'foodPoints' -> Bot chooses food with highest food points.
