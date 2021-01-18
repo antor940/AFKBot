@@ -7,10 +7,9 @@ const bloodhoundPlugin = require('mineflayer-bloodhound')(mineflayer);
 const { pathfinder, Movements } = require('mineflayer-pathfinder');
 const { GoalFollow } = require('mineflayer-pathfinder').goals
 const autoeat = require('mineflayer-auto-eat');
-const fetch = require('node-fetch');
 const { server, botOptions, announcements, misc, timeouts } = require('./config.json');
 const { toDiscord, toMinecraft, whisperHandler } = require('./src/messageHandler');
-const { followOwner, notifierSend, attackMobs, embedConstructor, antiAFK, lookNearEntity } = require('./src/miscFunctions');
+const { saySomething, followOwner, notifierSend, attackMobs, embedConstructor, antiAFK, lookNearEntity } = require('./src/miscFunctions');
 const { printError } = require('./src/errorHandler');
 const Discord = require('discord.js');
 const chalk = require('chalk');
@@ -161,6 +160,16 @@ function startBot()
         
         //Executes when bot spawns
         bot.once('spawn', () => {
+            bot._client.on('resource_pack_send', () => {
+                bot._client.write('resource_pack_receive', {
+                    result: 3
+                });
+
+                bot._client.write('resource_pack_receive', {
+                    result: 0
+                });
+            });
+
             alreadyLeft = false;
             alreadyJoined = true;
 
@@ -170,10 +179,11 @@ function startBot()
             defaultMove.allowFreeMotion = true
     
             //Call functions
-            lookNearEntity(bot);
+            if (!!announcements.saySomething.enable) saySomething(bot, announcements.saySomething.interval, announcements.saySomething.lineToSay);
+            if (!!misc.lookAtEntities) lookNearEntity(bot);
             antiAFK(bot, timeouts);
             //Check if config has !!misc.attackMobs enabled, and call !!misc.attackMobs function if true
-            if (!!misc.attackMobs === true) attackMobs(bot, printError);
+            if (!!misc.attackMobs) attackMobs(bot, printError);
     
             //Configure autoeat
             bot.autoEat.options = {
