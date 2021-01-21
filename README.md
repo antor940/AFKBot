@@ -57,7 +57,7 @@ Written in Node.js
 			* "lineToSay" : String. A line to say every "interval" milliseconds.
 		* "windowsAnnouncements" : true/false. Receive notifications from Windows if something happens to the bot.
 		* "discordBot" : Options for the Discord Bot.
-			* "sendChat" : true/false. Wether the bot sends the chat to Discord.
+			* "sendChat" : true/false. Whether the bot sends the chat to Discord.
 			* "sendMessage" : true/false. Print chat in a channel with a bot and receive notifications if something happens to the bot.
 			* "token" : Token of the bot.
 			* "channelID" : ID of the channel where the bot will print the chat, or where it will listen for commands.
@@ -67,8 +67,9 @@ Written in Node.js
 			* "userIDToPing" : ID so that the bot pings you on Discord when something happens. WARNING: It's the ID of the user, not the USERNAME. You need to enable Developer Mode to get an ID of a user. You can leave it as blank, but the bot won't ping you.
 	* "misc" : Miscellaneous options.
 		* "owner" : Minecraft Username of the owner of the bot, so that the bot only replies to him.
-		* "attackMobs" : true/false. Wether to attack mobs that are in range(KillAura).
-		* "lookAtEntities" : true/false. Wether to look at nearby entities.
+		* "attackMobs" : true/false. Whether to attack mobs that are in range(KillAura).
+		* "lookAtEntities" : true/false. Whether to look at nearby entities.
+		* "reconnectOnKick" : true/false. Whether the bot should stop if it gets kicked from the server.
 		* "autoEat" : Options of the auto eat.
 			* "startAt" : A number from 1 to 20(both included), example: "startAt": 19 => The bot will start to eat when its health reaches 9,5 food points. Default 19.
 			* "priority" : Choose from 'saturation' or 'foodPoints'. 'saturation' -> Bot chooses food with highest saturation. 'foodPoints' -> Bot chooses food with highest food points.
