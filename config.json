@@ -16,7 +16,7 @@
             "lineToSay" : "Visit GitHub"
         },
 
-        "windowsAnnouncements" : true,
+        "windowsAnnouncements" : false,
 
         "discordBot": {
             "sendChat" : true,
@@ -33,6 +33,7 @@
         "owner" : "DrMoraschi",
         "attackMobs" : true,
         "lookAtEntities" : true,
+        "reconnectOnKick" : true,
 
         "autoEat" : {
             "startAt" : 19,

@@ -5,7 +5,7 @@ const mineflayer = require('mineflayer');
 const notifier = require('node-notifier');
 const bloodhoundPlugin = require('mineflayer-bloodhound')(mineflayer);
 const { pathfinder, Movements } = require('mineflayer-pathfinder');
-const { GoalFollow } = require('mineflayer-pathfinder').goals
+const { GoalFollow, GoalBlock } = require('mineflayer-pathfinder').goals
 const autoeat = require('mineflayer-auto-eat');
 const { server, botOptions, announcements, misc, timeouts } = require('./config.json');
 const { toDiscord, toMinecraft, whisperHandler } = require('./src/messageHandler');
@@ -47,8 +47,9 @@ function startBot()
                 { name: `${announcements.discordBot.prefix}join`, value: `_Makes the bot join the server_`},
                 { name: `${announcements.discordBot.prefix}leave`, value: `_Makes the bot leave the server_`},
                 { name: `${announcements.discordBot.prefix}say [message]`, value: `_Sends [message] to Minecraft's chat. Disabled when sayEverything is true_`},
+                { name: `${announcements.discordBot.prefix}goto [x] [y] [z]`, value: `_Makes the bot go those coordinates_`},
                 { name: `${announcements.discordBot.prefix}follow`, value: `_Makes the bot follow the owner: ${misc.owner}_`},
-                { name: `${announcements.discordBot.prefix}stop`, value: `_Stops the bot from following you_`},
+                { name: `${announcements.discordBot.prefix}stop`, value: `_Stops the bot from following you or pathfinding in general_`},
                 { name: `${announcements.discordBot.prefix}exit`, value: `_Stops the program_` },
             );
 
@@ -115,11 +116,26 @@ function startBot()
                         process.exit();
                 };
 
-                if (message.content.startsWith(`${announcements.discordBot.prefix}say `)) {
+                if (message.content.startsWith(`${announcements.discordBot.prefix}say `))
+                {
                     if (alreadyLeft || announcements.discordBot.sayEverything) return;
                     const toSay = message.content.replace(`${announcements.discordBot.prefix}say `, '');
 
                     toMinecraft(bot, toSay);
+                };
+
+                if (message.content.startsWith(`${announcements.discordBot.prefix}goto `))
+                {
+                    if (alreadyLeft) return;
+                    const coords = message.content.split(' ');
+
+                    if (!coords[3]) return toDiscord(channel, '<ERROR> Please specify x, y, z');
+
+                    pathfindNow = true;
+
+                    bot.pathfinder.goto(new GoalBlock(coords[1], coords[2], coords[3]), () => {
+                        pathfindNow = false;
+                    });
                 };
 
                 if (!!announcements.discordBot.sayEverything && alreadyJoined) {
@@ -129,10 +145,10 @@ function startBot()
                         `${announcements.discordBot.prefix}follow`,
                         `${announcements.discordBot.prefix}stop`,
                         `${announcements.discordBot.prefix}exit`,
-                        `${announcements.discordBot.prefix}say`
+                        `${announcements.discordBot.prefix}say`,
                     ];
 
-                    if (indexCommands.indexOf(message.content) >= 1) return;
+                    if (indexCommands.indexOf(message.content) >= 1 || message.content.startsWith(`${announcements.discordBot.prefix}goto`)) return;
                     bot.chat(message.content);
                 };
             });
@@ -257,12 +273,14 @@ function startBot()
     
             //Runs when bot is kicked
             bot.on('kicked', (reason) => {
-                if (leaveOnCommand === true) return
+                if (!!!misc.reconnectOnKick) return process.exit();
+
+                if (leaveOnCommand === true) return;
                 //Parse response from server
                 const reasonKicked = JSON.parse(reason);
 
                 //Return if response empty
-                if (!reasonKicked.extra) return
+                if (!reasonKicked.extra) return;
 
                 if (reasonKicked.extra[0].text.includes('banned')) {
                     //Check if bot was banned
