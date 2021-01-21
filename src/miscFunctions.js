@@ -27,7 +27,9 @@ function followOwner(bot, Discord, channel, toDiscord, announcements, channel, d
         const pathFindEmbed =  embedConstructor(bot, Discord, announcements, ``, `Pathfind:`, `Target: Owner`);
 
         toDiscord(channel, pathFindEmbed);
-    } catch(err) {
+    }
+    catch(err)
+    {
         printError(`An error occurred when attempting to pathfind:
         Something to check:
         - Make sure you are close to the bot
@@ -71,9 +73,12 @@ function attackMobs(bot, printError)
             const mobFilter = e => e.type === 'mob' && e.position.distanceTo(bot.entity.position) < 8 && e.mobType !== 'Armor Stand'
             
             //Get info about the closest mob
-            try {
+            try
+            {
                 global.mob = bot.nearestEntity(mobFilter);
-            } catch(err) {
+            }
+            catch(err)
+            {
                 printError(`
                 An error occurred while attempting to get info to attack a mob.
                 This error is not critical so the process will not be terminated
@@ -83,9 +88,12 @@ function attackMobs(bot, printError)
 
             //Return if mob is undefined
             if (!mob) return
-            try {
+            try
+            {
                 global.pos = mob.position
-            } catch(err) {
+            }
+            catch(err)
+            {
                 console.log(`
                 An error occurred while attempting to get info to attack a mob.
                 This error is not critical so the process will not be terminated
@@ -93,7 +101,8 @@ function attackMobs(bot, printError)
                 ERROR:`, err, false);
             };
 
-            bot.lookAt(pos, true, () => {
+            bot.lookAt(pos, true, () =>
+            {
                 bot.setControlState('jump', true);
 
                 setTimeout(() => {
@@ -112,20 +121,24 @@ function embedConstructor(bot, Discord, announcements, message, name, value, nam
     .setAuthor(`${bot.username} Status: `, `https://crafatar.com/renders/head/${bot.player.uuid}`)
     .setColor(announcements.discordBot.embedHexColor)
     .setDescription(message)
-    .addFields(
-        { name: name, value: `_${value}_`},
-    )
     .setFooter(`${bot.username}`);
 
-    if (name2 && value2) {
+    if (name && value)
+    {
+        returnedEmbed.addFields({ name: name, value: `_${value}_` });
+    };
+
+    if (name2 && value2)
+    {
         returnedEmbed.addFields({ name: name2, value: `_${value2}_` });
     };
 
-    if (name3 && value3) {
+    if (name3 && value3)
+    {
         returnedEmbed.addFields({ name: name3, value: `_${value3}_` });
     };
 
-    return returnedEmbed
+    return returnedEmbed;
 };
 
 function antiAFK(bot, timeouts)

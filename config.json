@@ -33,7 +33,7 @@
         "owner" : "DrMoraschi",
         "attackMobs" : true,
         "lookAtEntities" : true,
-        "reconnectOnKick" : true,
+        "reconnectOnKick" : false,
 
         "autoEat" : {
             "startAt" : 19,

@@ -27,11 +27,14 @@ function startBot()
     global.pathfindNow = false;
     
 
-    if (!announcements.discordBot.token || !announcements.discordBot.channelID || !announcements.discordBot.prefix) {
+    if (!announcements.discordBot.token || !announcements.discordBot.channelID || !announcements.discordBot.prefix)
+    {
         //Return on missing info
         console.log(chalk.blueBright('\n   <DISCORD> Please specify a Discord Token, a Discord Channel ID and a Prefix'));
         process.exit(1);
-    } else {
+    }
+    else
+    {
         //Start Client
         global.client = new Discord.Client();
         client.login(announcements.discordBot.token);
@@ -55,9 +58,12 @@ function startBot()
 
             console.log(chalk.blueBright(` <DISCORD> Token found`));
 
-            try {
+            try
+            {
                 channel.send(clientReadyEmbed);
-            } catch(err) {
+            }
+            catch(err)
+            {
                 printError(`An error occurred when attempting to send the starting embed:
                 Something to check:
                 - Make sure your channelID is correct
@@ -67,10 +73,12 @@ function startBot()
                 `, err, true, channel);
             };
 
-            client.on('message', (message) => {
+            client.on('message', (message) =>
+            {
                 if (message.author.id === client.user.id || message.channel.id !== announcements.discordBot.channelID) return
 
-                switch (message.content) {
+                switch (message.content)
+                {
                     case `${announcements.discordBot.prefix}join`:
                         if (alreadyJoined) return;
                         console.clear();
@@ -138,14 +146,15 @@ function startBot()
                     });
                 };
 
-                if (!!announcements.discordBot.sayEverything && alreadyJoined) {
+                if (!!announcements.discordBot.sayEverything && alreadyJoined)
+                {
                     const indexCommands = [
                         `${announcements.discordBot.prefix}join`,
                         `${announcements.discordBot.prefix}leave`,
                         `${announcements.discordBot.prefix}follow`,
                         `${announcements.discordBot.prefix}stop`,
                         `${announcements.discordBot.prefix}exit`,
-                        `${announcements.discordBot.prefix}say`,
+                        `${announcements.discordBot.prefix}say`
                     ];
 
                     if (indexCommands.indexOf(message.content) >= 1 || message.content.startsWith(`${announcements.discordBot.prefix}goto`)) return;
@@ -175,7 +184,8 @@ function startBot()
         bot.loadPlugin(autoeat);
         
         //Executes when bot spawns
-        bot.once('spawn', () => {
+        bot.once('spawn', () =>
+        {
             bot._client.on('resource_pack_send', () => {
                 bot._client.write('resource_pack_receive', {
                     result: 3
@@ -202,7 +212,8 @@ function startBot()
             if (!!misc.attackMobs) attackMobs(bot, printError);
     
             //Configure autoeat
-            bot.autoEat.options = {
+            bot.autoEat.options =
+            {
                 priority: `${misc.autoEat.priority}`,
                 startAt: misc.autoEat.startAt,
                 bannedFood: [],
@@ -216,10 +227,14 @@ function startBot()
             console.log(chalk.greenBright(` <STATUS> Spawned at x: ${chalk.white(Math.round(bot.entity.position.x))} y: ${chalk.white(Math.round(bot.entity.position.y))} z: ${chalk.white(Math.round(bot.entity.position.z))}`));
     
             //Runs when health or Hp change and sends a message in Discord
-            bot.on('health', () => {
-                if (bot.food === 20) {
+            bot.on('health', () =>
+            {
+                if (bot.food === 20)
+                {
                     bot.autoEat.disable();
-                } else {
+                }
+                else
+                {
                     bot.autoEat.enable();
                 };
 
@@ -244,7 +259,8 @@ function startBot()
                     startEmbed
                 );
 
-                if (bot.health <= 5) {
+                if (bot.health <= 5)
+                {
                     console.log(chalk.yellowBright(` <STATUS> I have ${Math.floor(bot.health)} health.`));
                 } else {
                     console.log(chalk.greenBright(` <STATUS> I have ${Math.floor(bot.health)} health.`));
@@ -252,14 +268,16 @@ function startBot()
             });
             
             //Sends the message to the console
-            bot.on('message', (msg) => {
+            bot.on('message', (msg) =>
+            {
                 console.log(`${msg.toAnsi()}`);
 
                 if (!!announcements.discordBot.sendChat) channel.send(`CHAT: ${msg.toString()}`);
             });
 
             //Runs when reciving a whisper
-            bot.on('whisper', (username) => {
+            bot.on('whisper', (username) =>
+            {
                 whisperHandler(bot,
                     username,
                     botOptions,
@@ -272,17 +290,14 @@ function startBot()
             });
     
             //Runs when bot is kicked
-            bot.on('kicked', (reason) => {
+            bot.on('kicked', (reason) =>
+            {
                 if (!!!misc.reconnectOnKick) return process.exit();
 
-                if (leaveOnCommand === true) return;
-                //Parse response from server
-                const reasonKicked = JSON.parse(reason);
-
-                //Return if response empty
-                if (!reasonKicked.extra) return;
-
-                if (reasonKicked.extra[0].text.includes('banned')) {
+                if (leaveOnCommand) return;
+                
+                if (reason.toString().includes('ban'))
+                {
                     //Check if bot was banned
                     console.log(chalk.redBright(' <STATUS> I got banned. Exiting in 5 seconds...'));
 
@@ -296,27 +311,32 @@ function startBot()
                         announcements,
                         `**I got banned. Exiting in 5 seconds**`,
                         `Reason`,
-                        `${reasonKicked.extra[0].text}`
+                        `${reason}`
                     );
 
-                    if (!!announcements.discordBot.userIDToPing) {
+                    if (!!announcements.discordBot.userIDToPing)
+                    {
                         toDiscord(channel, bannedEmbed);
 
                         toDiscord(channel, `^ <@${announcements.discordBot.userIDToPing}> ^`);
-                    } else {
+                    }
+                    else
+                    {
                         toDiscord(channel, bannedEmbed);
                     };
 
                     //Exit process if banned 
-                    setTimeout(() => {
+                    setTimeout(() =>{
                         process.exit(1);
                     }, 5000);
-                } else {
-                    //If message does not include banned, then tell user and attempt to connect again set timeout
-                    console.log(chalk.redBright(` <STATUS> I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds. Reason: `)+reasonKicked.extra[0].text);
-                    
+                }
+                else
+                {
+                    //Attempt to connect again
+                    console.log(chalk.redBright(` <STATUS> I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds.`));
+                                        
                     if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I got kicked!');
-                
+
                     const kickedEmbed =
                     embedConstructor(
                         bot,
@@ -324,14 +344,17 @@ function startBot()
                         announcements,
                         `**I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds**`,
                         `Reason`,
-                        `${reasonKicked.extra[0].text}`
+                        `${reason.toString()}`
                     );
-    
-                    if (!!announcements.discordBot.userIDToPing) {
+
+                    if (!!announcements.discordBot.userIDToPing)
+                    {
                         toDiscord(channel, kickedEmbed);
 
                         toDiscord(channel, `^ <@${announcements.discordBot.userIDToPing}> ^`);
-                    } else {
+                    }
+                    else
+                    {
                         toDiscord(channel, kickedEmbed);
                     };
 
@@ -343,15 +366,18 @@ function startBot()
             });
             
             //Tell user when bot dies
-            bot.on('death', () => {
+            bot.on('death', () =>
+            {
                 console.log(chalk.redBright(` <STATUS> I died!`));
 
                 if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I died!');
             });
     
             //Tell user where and when bot respawns
-            bot.on('respawn', () => {
-                if (!attackUser) {
+            bot.on('respawn', () =>
+            {
+                if (!attackUser)
+                {
                     attackUser = {
                         name: 'Error finding out',
                         displayName: 'Error finding out'
@@ -370,11 +396,14 @@ function startBot()
                     `${(attackUser.displayName || attackUser.username)}`
                 );
                     
-                if (!!announcements.discordBot.userIDToPing) {
+                if (!!announcements.discordBot.userIDToPing)
+                {
                     toDiscord(channel, respawnEmbed);
 
                     toDiscord(channel, `^ <@${announcements.discordBot.userIDToPing}> ^`)
-                } else {
+                }
+                else
+                {
                     toDiscord(channel, respawnEmbed);
                 };
 
@@ -382,11 +411,15 @@ function startBot()
             });
             
             //When attacked inform user of attacker, who was attacked and with what
-            bot.on('onCorrelateAttack', (attacker, victim, weapon) => {
+            bot.on('onCorrelateAttack', (attacker, victim, weapon) =>
+            {
                 if (bot.username === victim.username) {
-                    if (weapon) {
+                    if (weapon)
+                    {
                         console.log(chalk.yellowBright(` <STATUS> Got hurt by ${chalk.whiteBright(attacker.displayName || attacker.username)} with a/an ${chalk.whiteBright(weapon.displayName)}`));
-                    } else {
+                    }
+                    else
+                    {
                         console.log(chalk.yellowBright(` <STATUS> Got hurt by ${chalk.whiteBright(attacker.displayName || attacker.username)}`));
                     };
                 };
