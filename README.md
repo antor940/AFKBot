@@ -48,7 +48,7 @@ Written in Node.js
 		* "host" : IP of the server.
 	* "botOptions" : Options for the bot.
 		* "username" : A name for the bot, if the server has online-mode set to true, it's the e-mail.
-		* "password" : Password of the account, if the server has online-mode set to false, you can leave it as null.
+		* "password" : Password of the account, if the server has online-mode set to false, you can leave it blank.
 		* "msgToWhisper" : Custom message to reply to whispers.
 	* "announcements" : Options for the announcements.
 		* "saySomething" : Options to make the bot say something in the chat every X milliseconds.
