@@ -64,10 +64,11 @@ function startBot()
             }
             catch(err)
             {
-                printError(`An error occurred when attempting to send the starting embed:
+                printError(`An error occurred while attempting to send the starting embed:
                 Something to check:
                 - Make sure your channelID is correct
                 - Make sure the bot has administrator perms
+                - Make sure the bot has been invited to the server
         
                 ERROR:    
                 `, err, true, channel);
@@ -171,7 +172,7 @@ function startBot()
         global.bot = mineflayer.createBot({
             host: server.host,
             username: botOptions.username ? botOptions.username : 'AFKBot',
-            password: botOptions.password,
+            password: botOptions.password ? botOptions.password : null,
             hideErrors: true
         });
 
@@ -235,7 +236,19 @@ function startBot()
                 }
                 else
                 {
-                    bot.autoEat.enable();
+                    try {
+                        bot.autoEat.enable();
+                    }
+                    catch(err)
+                    {
+                        printError(`An error occurred while attempting to use the AutoEat Plugin:
+                        Something to check:
+                        - Make sure the bot has food
+                        This error is not critical so the process will not be terminated
+                
+                        ERROR:    
+                        `, err, false, channel);
+                    };
                 };
 
                 if (executed) return

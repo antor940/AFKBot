@@ -5,7 +5,7 @@
 
     "botOptions" : {
         "username" : "AFKBot",
-        "password" : null,
+        "password" : "",
         "msgToWhisper" : "Sorry, I'm an AFK Bot"
     },
 

@@ -70,7 +70,7 @@ function attackMobs(bot, printError)
     bot.on('entityMoved', (entity) => {
         if (pathfindNow) return;
         if (entity.type === 'mob' && entity.position.distanceTo(bot.entity.position) < 8 && entity.mobType !== 'Armor Stand') {
-            const mobFilter = e => e.type === 'mob' && e.position.distanceTo(bot.entity.position) < 8 && e.mobType !== 'Armor Stand'
+            const mobFilter = e => e.type === 'mob' && e.position.distanceTo(bot.entity.position) < 8 && e.mobType !== 'Armor Stand' && e.kind === 'Hostile mobs'
             
             //Get info about the closest mob
             try
@@ -106,6 +106,7 @@ function attackMobs(bot, printError)
                 bot.setControlState('jump', true);
 
                 setTimeout(() => {
+                    if (!mob) return;
                     bot.attack(mob);
                 }, 500);
 
