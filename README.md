@@ -46,6 +46,7 @@ Written in Node.js
  1. Before starting the bot, please take a look at config.json, the options are:
  	* "server" : Server options.
 		* "host" : IP of the server.
+		* "port" : Port of the server. Default is 25565.
 	* "botOptions" : Options for the bot.
 		* "username" : A name for the bot, if the server has online-mode set to true, it's the e-mail.
 		* "password" : Password of the account, if the server has online-mode set to false, you can leave it blank.
