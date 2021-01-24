@@ -1,6 +1,7 @@
 {
     "server" : {
-        "host" : "localhost"
+        "host" : "localhost",
+        "port" : 25565
     },
 
     "botOptions" : {
