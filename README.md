@@ -18,7 +18,7 @@ Written in Node.js
  * Reconnect ability in case it's kicked from the server.
  * Online/Cracked mode support.
  * Custom whispered replies to whispers from other players.
- * Looks at nearby entities simulating real players.
+ * Looks at nearby entities simulating real players, can be disabled in config.json.
  * Option to make bot attack mobs inside his range (KillAura) for self-defense, can be disabled in config.json.
  * Shows who attacked the bot and the weapon. Thanks to [mineflayer-bloodhound](https://github.com/Nixes/mineflayer-bloodhound).
 
