@@ -170,11 +170,11 @@ function startBot()
     {
         //Create Bot with data from config file
         global.bot = mineflayer.createBot({
+            auth: botOptions.authMethod.toLowerCase(),
             host: server.host,
             port: server.port,
             username: botOptions.username ? botOptions.username : 'AFKBot',
-            password: botOptions.password ? botOptions.password : null,
-            hideErrors: true
+            password: botOptions.password ? botOptions.password : null
         });
 
         //Initiallize Plugins

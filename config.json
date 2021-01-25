@@ -7,6 +7,7 @@
     "botOptions" : {
         "username" : "AFKBot",
         "password" : "",
+        "authMethod" : "mojang",
         "msgToWhisper" : "Sorry, I'm an AFK Bot"
     },
 
