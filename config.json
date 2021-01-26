@@ -22,8 +22,8 @@
 
         "discordBot": {
             "sendChat" : true,
-            "token" :"",
-            "channelID" : "",
+            "token" :"Nzc5NzEzNzUwNjg5MjUxMzU4.X7kjBA.9ZlEA9gJh4zJ62CWLPcbT4-atN0",
+            "channelID" : "802104932958208000",
             "sayEverything" : true,
             "prefix" : "+",
             "embedHexColor" : "#0000ff",
@@ -32,7 +32,7 @@
     },
     
     "misc" : {
-        "owner" : "DrMoraschi",
+        "owner" : "Tragafantas",
         "attackMobs" : true,
         "lookAtEntities" : true,
         "reconnectOnKick" : true,
