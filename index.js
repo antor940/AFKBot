@@ -1,6 +1,5 @@
 //Clear output
 console.clear();
-
 const mineflayer = require('mineflayer');
 const notifier = require('node-notifier');
 const bloodhoundPlugin = require('mineflayer-bloodhound')(mineflayer);
@@ -16,7 +15,6 @@ const chalk = require('chalk');
 
 //Run main function
 startBot();
-
 function startBot()
 {
     var alreadyJoined = false;
@@ -24,6 +22,8 @@ function startBot()
     var leaveOnCommand = false;
     var attackUser;
     var executed = false;
+    var channel;
+    var client;
     global.pathfindNow = false;
     
 
@@ -36,11 +36,16 @@ function startBot()
     else
     {
         //Start Client
-        global.client = new Discord.Client();
+        startDiscord();
+    };
+
+    function startDiscord()
+    {
+        client = new Discord.Client();
         client.login(announcements.discordBot.token);
 
         client.on('ready', async() => {
-            global.channel = client.channels.cache.get(announcements.discordBot.channelID)
+            channel = client.channels.cache.get(announcements.discordBot.channelID)
 
             const clientReadyEmbed = new Discord.MessageEmbed()
             .setColor(announcements.discordBot.embedHexColor)
@@ -76,7 +81,7 @@ function startBot()
 
             client.on('message', (message) =>
             {
-                if (message.author.id === client.user.id || message.channel.id !== announcements.discordBot.channelID) return
+                if (message.author.id === client.user.id || message.channel.id !== announcements.discordBot.channelID) return;
 
                 switch (message.content)
                 {
@@ -180,9 +185,7 @@ function startBot()
         //Initiallize Plugins
         bloodhoundPlugin(bot);
         bot.bloodhound.yaw_correlation_enabled = true
-    
         bot.loadPlugin(pathfinder);
-    
         bot.loadPlugin(autoeat);
         
         //Executes when bot spawns
@@ -223,7 +226,6 @@ function startBot()
             
             //Get current players on server
             var playersList = Object.keys(bot.players).join(", ");
-    
             console.log(chalk.blueBright(` <WORLD> Online players: `)+playersList);
             console.log(chalk.blueBright(` <WORLD> Current time: `)+Math.abs(bot.time.timeOfDay));
             console.log(chalk.greenBright(` <STATUS> Spawned at x: ${chalk.white(Math.round(bot.entity.position.x))} y: ${chalk.white(Math.round(bot.entity.position.y))} z: ${chalk.white(Math.round(bot.entity.position.z))}`));
@@ -285,7 +287,6 @@ function startBot()
             bot.on('message', (msg) =>
             {
                 console.log(`${msg.toAnsi()}`);
-
                 if (!!announcements.discordBot.sendChat) channel.send(`CHAT: ${msg.toString()}`);
             });
 
@@ -307,16 +308,13 @@ function startBot()
             bot.on('kicked', (reason) =>
             {
                 if (!!!misc.reconnectOnKick) return process.exit();
-
                 if (leaveOnCommand) return;
-                
                 if (reason.toString().includes('ban'))
                 {
                     //Check if bot was banned
                     console.log(chalk.redBright(' <STATUS> I got banned. Exiting in 5 seconds...'));
-
                     if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I got banned!');
-            
+
                     //If discord message is to be sent, send it with ping or no ping based on config
                     const bannedEmbed =
                     embedConstructor(
@@ -347,8 +345,7 @@ function startBot()
                 else
                 {
                     //Attempt to connect again
-                    console.log(chalk.redBright(` <STATUS> I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds.`));
-                                        
+                    console.log(chalk.redBright(` <STATUS> I got kicked. Reconnecting in ${timeouts.onKicked/1000} seconds.`));            
                     if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I got kicked!');
 
                     const kickedEmbed =
@@ -383,7 +380,6 @@ function startBot()
             bot.on('death', () =>
             {
                 console.log(chalk.redBright(` <STATUS> I died!`));
-
                 if (!!announcements.windowsAnnouncements) notifierSend(notifier, chalk, 'Event Message', 'I died!');
             });
     
