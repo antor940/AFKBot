@@ -147,7 +147,13 @@ function startBot()
 
                     pathfindNow = true;
 
+                    const pathFindEmbed = embedConstructor(bot, Discord, announcements, ``, `Pathfind:`, `Target: x: ${coords[1]} y: ${coords[2]} z: ${coords[3]}`);
+
+                    channel.send(pathFindEmbed);
+
                     bot.pathfinder.goto(new GoalBlock(coords[1], coords[2], coords[3]), () => {
+                        const pathFindArrivedEmbed = embedConstructor(bot, Discord, announcements, ``, `Pathfind:`, `Target: Arrived`);
+                        channel.send(pathFindArrivedEmbed);
                         pathfindNow = false;
                     });
                 };
