@@ -1,5 +1,8 @@
 [![Discord](https://img.shields.io/badge/Chat-Discord-blue.svg)](https://discord.gg/JQeVxbQT5G)
 # AFKBot
+
+**I am aware that the code is messy, this is because I limited knowledge of Mineflayer when I first released this bot. If you find a way to make the code cleaner, feel free to PR, thank you :)**
+
 A bot for Minecraft to stay AFK thanks to [mineflayer](https://github.com/PrismarineJS/mineflayer). Mainly for Windows, but works also on macOS and Linux.
 
 Written in Node.js
