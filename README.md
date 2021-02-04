@@ -1,5 +1,5 @@
 [![Discord](https://img.shields.io/badge/Chat-Discord-blue.svg)](https://discord.gg/JQeVxbQT5G)
-<h1 align="center"><img src="/images/logo.png" width="65" height="40">AFKBot<img src="/images/logo.png" width="65" height="40"></h1>
+<h1 align="center"><img src="https://github.com/DrMoraschi/AFKBot/raw/master/files/logo.png" width="65" height="40">AFKBot<img src="https://github.com/DrMoraschi/AFKBot/raw/master/files/logo.png" width="65" height="40"></h1>
 
 A Bot for Minecraft to stay AFK thanks to [mineflayer](https://github.com/PrismarineJS/mineflayer). Mainly for Windows, but should work on macOS and Linux.
 
