@@ -159,7 +159,7 @@ function returnPing()
     .catch(err =>
     {
         logToFile(`<src/DiscordFunctions.js> Error ${err}`, dir);
-        errEmbed(err);
+        errEmbed(err, `- Check the IP and PORT`);
     });
 };
 
