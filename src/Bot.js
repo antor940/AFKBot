@@ -21,6 +21,8 @@ function startBot()
             auth: config.afkbot['auth-method'] ? config.afkbot['auth-method']: 'mojang',
         });
 
+        bot.on('error', (err) => reject(err));
+
         bot.once('spawn', () =>
         {
             logToFile('<src/Bot.js> Bot spawned', dir);

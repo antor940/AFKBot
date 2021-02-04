@@ -76,7 +76,7 @@ client.on('message', async (message) =>
             .catch(err =>
             {
                 logToFile(`<src/DiscordFunctions.js> Error: ${err}`, dir);
-                errEmbed(err);
+                errEmbed(err, `- Check credentials, IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
             });
         break;
         case `${config.discord.prefix}status`:
