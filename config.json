@@ -1,0 +1,102 @@
+{
+    "logs": {
+        "log-chat-to-console": true,
+        "log-chat-to-file": true
+    },
+
+    "server": {
+        "host": "localhost",
+        "port": 25565
+    },
+
+    "afkbot": {
+        "username": "AFKBot",
+        "password": "",
+        "auth-method": "mojang"
+    },
+
+    "discord": {
+        "token": "",
+        "guild-id": "",
+        "channel-id": "",
+        "embed-hex-color": "#000ff",
+        "prefix": "+",
+
+        "bot-rpc": {
+            "enable": true,
+            "text": "Being AFK is my profession"
+        },
+
+        "send-chat-to-minecraft": false
+    },
+
+    "whispers": {
+        "enable-answer": true,
+        "timeout-on-whisper": 1000,
+        "message-to-answer": "Sorry, I'm an AFKBot"
+    },
+
+    "pvp": {
+        "enable": true,
+        "attack-players": false,
+        "attack-endermans": false
+    },
+
+    "auto-eat": {
+        "enable": true,
+        "send-status": false,
+        "priority": "foodPoints",
+        "start-at": 19,
+        "banned-foods": [
+            "rotten_flesh",
+            "poisonous_potato",
+            "pufferfish"
+        ]
+    },
+
+    "bloodhound": {
+        "enable": true
+    },
+
+    "viewer": {
+        "enable": true,
+        "port": 3000
+    },
+
+    "low-health": {
+        "warn-on-low-health": false,
+        "health-points": 5,
+        "disconnect-on-low-health": false
+    },
+
+    "imitate-crouching": {
+        "enable": true
+    },
+
+    "message-on-interval": {
+        "enable": false,
+        "interval": 10000,
+        "message": "I am an AFKBot"
+    },
+
+    "windows-notifications": {
+        "on-banned": true,
+        "on-kicked": true,
+        "on-death": true
+    },
+
+    "misc-options": {
+        "send-chat-to-ds": false,
+        "antikick-jump": true,
+        "look-entities": true,
+        "pathfind-range": 1.5
+    },
+
+    "timeouts": {
+        "on-kicked": 5000,
+        "connect-timeout": 10000,
+        "antikick-jump-interval": 600000
+    },
+
+    "debug": false
+}
