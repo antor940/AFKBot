@@ -25,6 +25,11 @@ function startBotFunctions()
     if (config.viewer.enable) startViewer();
     
     if (config.debug) log(`<src/BotFunctions.js> load resource pack`);
+    bot.on('error', (err) =>
+    {
+        errEmbed(err, `- This was caused by something that interacted with the bot\n - If it persists, please report in on Discord or create an issue`);
+    });
+
     bot._client.on('resource_pack_send', () =>
     {
         logToFile('<src/BotFunctions.js> Loading resource pack', dir);

@@ -11,12 +11,11 @@ async function followPlayer(username)
     try
     {
         const { bot, goals } = require('./Bot');
-
         const playerToFollow = bot.players[username].entity;
 
         pathfindingNow = true;
         bot.pvp.stop();
-        bot.pathfinder.setGoal(new goals.GoalFollow(playerToFollow, config['misc-options']['pathfind-range']), true);
+        bot.pathfinder.setGoal(new goals.GoalFollow(playerToFollow, config.pathfind['pathfind-range']), true);
         bot.on('diggingAborted', () =>
         {
             bot.removeAllListeners('diggingAborted');

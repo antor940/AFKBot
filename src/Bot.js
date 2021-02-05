@@ -34,6 +34,7 @@ function startBot()
 
             const defaultMove = new Movements(bot, mcData);
             bot.pathfinder.setMovements(defaultMove);
+            bot.pathfinder.movements.maxDropDown = config.pathfind['max-dropdown-blocks'];
             bot.pvp.followRange = 10000;
             bot.pvp.attackRange = 5;
             bot.bloodhound.yaw_correlation_enabled = true;

@@ -136,7 +136,7 @@ client.on('message', async (message) =>
 function returnPing()
 {
     if (config.debug) log(`<src/DiscordFunctions.js> function returnPing`);
-    pingServer().then(res =>
+    pingServer().then(async res =>
     {
         pingTimerEnd = performance.now();
 
@@ -149,11 +149,11 @@ function returnPing()
             { name: 'Host', value: config.server.host, inline: true },
             { name: 'Port', value: config.server.port, inline: true },
             { name: 'Version', value: res.version.name, inline: true },
-            { name: 'Latency', value: res.latency, inline: true },
+            { name: 'Latency', value: `${res.latency} ms`, inline: true },
             { name: 'Time taken to ping', value: `${Math.round(pingTimerEnd-pingTimerStart)} ms`, inline: true }
         );
         
-        channel.send(resEmbed);
+        await channel.send(resEmbed);
         logToFile('<src/DiscordFunctions.js> Sent resEmbed', dir);
     })
     .catch(err =>

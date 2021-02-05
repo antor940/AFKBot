@@ -7,6 +7,12 @@ let lastNumber;
 if (config.debug) log('<src/Logging.js> started');
 function checkLatestLog()
 {
+    if (!fs.existsSync('./logs'))
+    {
+        if (config.debug) log(`<src/Logging.js> logs directory doesn't exist, creating one`);
+        fs.mkdirSync('./logs');
+    };
+
     fs.writeFileSync('./chat.log', '');
     if (config.debug) log('<src/Logging.js> function checkLatestLog');
     return new Promise((resolve) =>

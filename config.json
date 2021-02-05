@@ -85,6 +85,11 @@
         "on-death": true
     },
 
+    "pathfind": {
+        "pathfind-range": 1.5,
+        "max-dropdown-blocks": 4
+    },
+
     "misc-options": {
         "send-chat-to-ds": false,
         "antikick-jump": true,
