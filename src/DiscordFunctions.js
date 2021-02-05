@@ -42,7 +42,7 @@ const startEmbed = new Discord.MessageEmbed()
     { name: `${config.discord.prefix}start`, value: `Start the bot`, inline: true },
     { name: `${config.discord.prefix}status`, value: `Status of the bot`, inline: true },
     { name: `${config.discord.prefix}follow [username]`, value: `Follows the player with the exact username`, inline: true },
-    { name: `${config.discord.prefix}say [message]`, value: `Says [message]in chat. Disabled if "send-chat-to-minecraft" is set to true`, inline: true },
+    { name: `${config.discord.prefix}say [message]`, value: `Says [message] in chat. Disabled if "send-chat-to-minecraft" is set to true`, inline: true },
     { name: `${config.discord.prefix}fish`, value: `Start fishing and stop when inventory is full`, inline: true },
     { name: `${config.discord.prefix}stopfish`, value: `Stop fishing`, inline: true },
     { name: `${config.discord.prefix}list`, value: `List inventory`, inline: true },
