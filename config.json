@@ -93,8 +93,7 @@
     "misc-options": {
         "send-chat-to-ds": false,
         "antikick-jump": true,
-        "look-entities": true,
-        "pathfind-range": 1.5
+        "look-entities": true
     },
 
     "timeouts": {
