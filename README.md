@@ -22,7 +22,7 @@ Written in Node.js
  * Looks at nearby entities, can be disabled in config.json.
  * Option to make Bot attack mobs inside his range (KillAura) for self-defense, can be disabled in config.json. Thanks to [mineflayer-pvp](https://github.com/PrismarineJS/mineflayer-pvp)
  * Shows who attacked the Bot and with what weapon. Thanks to [mineflayer-bloodhound](https://github.com/Nixes/mineflayer-bloodhound).
- * View AFKBot's view in a webpage. Can be disabled in config.json. Thanks to [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer)
+ * View AFKBot's view in a webpage, and control him with the middle button of the mouse. Can be disabled in config.json. Thanks to [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer).
 
 ## Install
 
