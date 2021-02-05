@@ -1,6 +1,8 @@
+process.setMaxListeners(0);
 const config = require('../config.json');
 const { Discord, client, channel, errEmbed } = require('./Discord');
 const { logToFile, fetch } = require('../index');
+const { gotoCoord } = require('./Pathfind');
 
 logToFile('<src/Viewer.js> Started', dir);
 function startViewer()
@@ -11,7 +13,26 @@ function startViewer()
         logToFile('<src/BotFunctions.js> startViewer loaded', dir);
         
         const { bot, mineflayerViewer } = require('./Bot');
-        mineflayerViewer(bot, { port: port });
+        mineflayerViewer(bot, { port: port, firstPerson: config.viewer['first-person'], viewDistance: config.viewer['view-distance'] });
+
+        bot.on('path_update', (res) =>
+        {
+            const botPath = [bot.entity.position.offset(0, 0.5, 0)];
+            for (const node of res.path)
+            {
+                botPath.push({ x: node.x, y: node.y + 0.5, z: node.z });
+            };
+
+            bot.viewer.drawLine('path', botPath, 0xff0000);
+        });
+
+        bot.viewer.on('blockClicked', (block, face, button) =>
+        {
+            if (button !== 1) return;
+            const blockPos = block.position.offset(0, 1, 0);
+        
+            gotoCoord(blockPos);
+        });
     }
     catch (err)
     {

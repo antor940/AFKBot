@@ -60,6 +60,8 @@
 
     "viewer": {
         "enable": true,
+        "first-person": false,
+        "view-distance": 6,
         "port": 3000
     },
 

@@ -54,7 +54,7 @@ function gotoCoord(vec3)
         const { bot, goals } = require('./Bot');
         bot.on('diggingAborted', () =>
         {
-            bot.removeAllListeners('diggingAborted')
+            bot.removeAllListeners('diggingAborted');
         });
 
         pathfindingNow = true;
