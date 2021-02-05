@@ -68,11 +68,14 @@ All the options of the config.json:
 		"on-kicked": Having this set to true, will make the Bot send a Windows Notification when it's kicked.
 		"on-death": Having this set to true, will make the Bot send a Windows Notification when it dies or it's killed.
     
+    	"pathfind": Pathfinding options.
+		"pathfind-range": Number of blocks the Bot should stay away from the target when it's following him.
+		"max-dropdown-blocks": Maximum height the bot can fall while pathfinding. Default is 4.
+		
 	"misc-options". Miscellaneous options.
 		"send-chat-to-ds": Having this set to true, will make the Bot send the minecraft chat to Discord, not recommended as Discord doesn't like having a lot of messages sent in a short span of time.
 		"antikick-jump": Having this set to true, will make the Bot jump every "antikick-jump-interval" milliseconds.
 		"look-entities": Having this set to true, will make the Bot look at nearby players.
-		"pathfind-range": Number of blocks the Bot should stay away from the target when it's following him.
     
 	"timeouts": Timeouts on various events. All of them have to be in milliseconds.
 		"on-kicked": Milliseconds that will pass before the Bot will reconnect to the server if it's kicked.
