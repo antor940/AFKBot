@@ -48,6 +48,8 @@ All the options of the config.json:
     
 	"viewer": Viewer options.
 		"enable": Having this set to false, the Bot won't create a Viewer.
+		"first-person": If the viewer should be on first person.
+		"view-distance": Same as render distance in chunks.
 		"port": Number of a port. Can be left as default: 3000.
     
 	"low-health": Low-Health options.
