@@ -1,5 +1,4 @@
 const config = require('../config.json');
-const { performance } = require('perf_hooks');
 const { Vec3 } = require('vec3');
 const { pingServer } = require('./Ping');
 const { startBot } = require('./Bot');
@@ -16,8 +15,6 @@ if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bo
 if (config.debug) log(`<src/DiscordFunctions.js> logged in`);
 logToFile('<src/DiscordFunctions.js> Started', dir);
 
-let pingTimerStart;
-let pingTimerEnd;
 global.pathfindingNow = false;
 let commandList = [
     `${config.discord.prefix}ping`,
@@ -67,8 +64,7 @@ client.on('message', async (message) =>
     {
         case `${config.discord.prefix}ping`:
             logToFile('<src/DiscordFunctions.js> Ping executed', dir);
-            pingTimerStart = performance.now();
-            returnPing();
+            pingServer();
         break;
         case `${config.discord.prefix}start`:
             logToFile('<src/DiscordFunctions.js> Start executed', dir);
@@ -132,36 +128,6 @@ client.on('message', async (message) =>
         gotoCoord(vecCoords);
     };
 });
-
-function returnPing()
-{
-    if (config.debug) log(`<src/DiscordFunctions.js> function returnPing`);
-    pingServer().then(async res =>
-    {
-        pingTimerEnd = performance.now();
-
-        const resEmbed = new Discord.MessageEmbed()
-        .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-        .setColor(config.discord['embed-hex-color'])
-        .setTitle('Ping results')
-        .setThumbnail(client.user.avatarURL())
-        .addFields(
-            { name: 'Host', value: config.server.host, inline: true },
-            { name: 'Port', value: config.server.port, inline: true },
-            { name: 'Version', value: res.version.name, inline: true },
-            { name: 'Latency', value: `${res.latency} ms`, inline: true },
-            { name: 'Time taken to ping', value: `${Math.round(pingTimerEnd-pingTimerStart)} ms`, inline: true }
-        );
-        
-        await channel.send(resEmbed);
-        logToFile('<src/DiscordFunctions.js> Sent resEmbed', dir);
-    })
-    .catch(err =>
-    {
-        logToFile(`<src/DiscordFunctions.js> Error ${err}`, dir);
-        errEmbed(err, `- Check the IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
-    });
-};
 
 module.exports = {
     Discord,
