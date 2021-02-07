@@ -69,8 +69,8 @@ All the options of the config.json:
 		"on-banned": Having this set to true, will make the Bot send a Windows Notification when it's banned.
 		"on-kicked": Having this set to true, will make the Bot send a Windows Notification when it's kicked.
 		"on-death": Having this set to true, will make the Bot send a Windows Notification when it dies or it's killed.
-    
-    	"pathfind": Pathfinding options.
+		
+	"pathfind": Pathfinding options.
 		"pathfind-range": Number of blocks the Bot should stay away from the target when it's following him.
 		"max-dropdown-blocks": Maximum height the bot can fall while pathfinding. Default is 4.
 		
