@@ -50,7 +50,7 @@ function startBotFunctions()
         if (config.logs['log-chat-to-console']) console.log(`<CHAT> ${message.toAnsi()}`);
     
         if (!config['misc-options']['send-chat-to-ds']) return;
-        channel.send(message.toString());
+        channel.send(`<CHAT> ${message.toString()}`);
     });
     
     let pauseOnSent = false;
