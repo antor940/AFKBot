@@ -21,7 +21,7 @@
     "prismarine-viewer": "^1.13.3"
   },
   "engines": {
-    "node": "14.x"
+    "node": ">=14.x"
   },
   "description": "V2 of the AFKBot"
 }
