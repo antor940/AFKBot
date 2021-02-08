@@ -57,9 +57,6 @@ All the options of the config.json:
 		"health-points": Critical health level.
 		"disconnect-on-low-health": Having this set to true, will make the Bot disconnect when his health goes below "health-points".
     
-	"imitate-crouching": Imitate crouching options.
-		"enable": Having this set to true, will make the Bot try to imitate if a player crouches near him. Trying to show a sign of Peace.
-    
 	"message-on-interval": Interval message options.
 		"enable": Having this set to true, will make the Bot say a message every "interval" milliseconds.
 		"inteval": Milliseconds between each message is sent.
