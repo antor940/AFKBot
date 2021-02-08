@@ -15,7 +15,6 @@ if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bo
 if (config.debug) log(`<src/DiscordFunctions.js> logged in`);
 logToFile('<src/DiscordFunctions.js> Started', dir);
 
-global.pathfindingNow = false;
 let commandList = [
     `${config.discord.prefix}ping`,
     `${config.discord.prefix}start`,
@@ -132,6 +131,5 @@ client.on('message', async (message) =>
 module.exports = {
     Discord,
     client,
-    commandList,
-    pathfindingNow
+    commandList
 };

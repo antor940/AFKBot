@@ -16,7 +16,6 @@ function startBotFunctions()
     if (config.debug) log(`<src/EventFunctions.js> load functions`);
     if (config.whispers['enable-answer']) autoWhisper();
     if (config.logs['log-chat-to-file']) logChat();
-    if (config['imitate-crouching'].enable) imitateOnCrouch();
     if (config['auto-eat'].enable) autoEat();
     if (config['misc-options']['look-entities']) autoLook();
     if (config.pvp.enable) autoPvP();
@@ -202,7 +201,7 @@ function startBotFunctions()
         logToFile('<src/BotFunctions.js> autoLook loaded', dir);
         bot.on('entityMoved', (entity) =>
         {
-            if (pathfindingNow) return;
+            if (bot.pathfinder.isMoving()) return;
             if (entity.type !== 'player' || bot.entity.position.distanceTo(entity.position) > 5) return;
             bot.lookAt(entity.position.offset(0, 1.6, 0));
         });
@@ -213,7 +212,7 @@ function startBotFunctions()
         logToFile('<src/BotFunctions.js> autoPvP loaded', dir);
         bot.on('entityMoved', (entity) =>
         {
-            if (!config.pvp.enable || bot.entity.position.distanceTo(entity.position) > 5 || pathfindingNow) return;
+            if (!config.pvp.enable || bot.entity.position.distanceTo(entity.position) > 5 || bot.pathfinder.isMoving()) return;
             if (!config.pvp['attack-endermans'] && entity.mobType === 'Enderman') return;
             if (config.pvp['attack-players'])
             {
@@ -255,30 +254,6 @@ function startBotFunctions()
             logToFile(`<src/BotFunctions.js> Error: ${err}`, dir);
             errEmbed(err, `- Check the config for the message-interval`);
         };
-    };
-    
-    function imitateOnCrouch()
-    {
-        bot.on('entityCrouch', (entity) =>
-        {
-            if (pathfindingNow) return;
-            if (entity.type !== 'player' || bot.entity.position.distanceTo(entity.position) > 3) return;
-            bot.setControlState('sneak', true);
-    
-            bot.on('entityUncrouch', (entity) =>
-            {
-                if (entity.type !== 'player' || bot.entity.position.distanceTo(entity.position) > 3) return;
-                setTimeout(() => {
-                    bot.setControlState('sneak', false);
-                    clearTimeout(cancelSneak);
-                    bot.removeAllListeners('entityUncrouch');
-                }, Math.random()*10000);
-            });
-    
-            const cancelSneak = setTimeout(() => {
-                bot.setControlState('sneak', false);
-            }, 10000);
-        });
     };
     
     function logChat()

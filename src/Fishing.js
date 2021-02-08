@@ -30,12 +30,10 @@ async function autoFish()
 
         if (!waterBlock) return errEmbed('No water blocks in a radius of 5 blocks', '- Move the bot near water');
 
-        pathfindingNow = true;
         fishingNow = true;
         await bot.lookAt(waterBlock.position.offset(0, 2, 0), false);
         await bot.fish();
         fishingNow = false;
-        pathfindingNow = false;
         setTimeout(autoFish, 500);
     }
     catch (err)
@@ -59,7 +57,6 @@ function stopFishing()
     if (config.debug) log('<src/Fishing.js> stopped autoFish');
     logToFile('<src/Fishing.js> stopFishing executed', dir);
     const { bot } = require('./Bot');
-    pathfindingNow = false;
     if (!fishingNow) return;
     bot.activateItem();
     stopFishingNow = true;

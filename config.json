@@ -71,10 +71,6 @@
         "disconnect-on-low-health": false
     },
 
-    "imitate-crouching": {
-        "enable": true
-    },
-
     "message-on-interval": {
         "enable": false,
         "interval": 10000,

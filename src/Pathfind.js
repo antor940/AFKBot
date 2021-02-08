@@ -13,7 +13,6 @@ async function followPlayer(username)
         const { bot, goals } = require('./Bot');
         const playerToFollow = bot.players[username].entity;
 
-        pathfindingNow = true;
         bot.pvp.stop();
         bot.pathfinder.setGoal(new goals.GoalFollow(playerToFollow, config.pathfind['pathfind-range']), true);
         bot.on('diggingAborted', () =>
@@ -57,11 +56,10 @@ function gotoCoord(vec3)
             bot.removeAllListeners('diggingAborted');
         });
 
-        pathfindingNow = true;
         bot.pvp.stop();
         bot.pathfinder.goto(new goals.GoalBlock(vec3.x, vec3.y, vec3.z), () =>
         {
-            pathfindingNow = false;
+            null
         });
     }
     catch (err)
@@ -77,7 +75,6 @@ function stopPathfind()
     if (config.debug) log(`<src/Pathfind.js> stop pathfind`);
     try
     {
-        pathfindingNow = false;
         const { bot } = require('./Bot');
         bot.pathfinder.setGoal(null);
     }
