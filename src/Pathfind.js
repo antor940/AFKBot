@@ -57,10 +57,7 @@ function gotoCoord(vec3)
         });
 
         bot.pvp.stop();
-        bot.pathfinder.goto(new goals.GoalBlock(vec3.x, vec3.y, vec3.z), () =>
-        {
-            null
-        });
+        bot.pathfinder.goto(new goals.GoalBlock(vec3.x, vec3.y, vec3.z));
     }
     catch (err)
     {
