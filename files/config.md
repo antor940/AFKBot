@@ -26,7 +26,7 @@ All the options of the config.json:
       
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
 	
-	"auto-login": Auto-Login features for plugins like AuthMe.
+	"auto-login": Auto-Login features for plugins like AuthMe. Can only do /login for now. You have to /register it manually before-hand.
 		"enable": Having this set to true, the bot will execute the /login [password] command on spawn Default is false.
 		"password": Password for the /login [password] command.
     
