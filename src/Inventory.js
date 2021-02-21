@@ -39,10 +39,10 @@ function emptyInventory()
         if (config.debug) log('<src/Inventory.js> emptyInventory executed');
         const { bot } = require('./Bot');
 
-        if (bot.inventory.items().length === 0) return;
         tossEach();
         function tossEach()
         {
+            if (bot.inventory.items().length === 0) return;
             bot.tossStack(bot.inventory.items()[0], (err) =>
             {
                 if (err) 

@@ -13,7 +13,11 @@ function startViewer()
         logToFile('<src/BotFunctions.js> startViewer loaded', dir);
         
         const { bot, mineflayerViewer } = require('./Bot');
-        mineflayerViewer(bot, { port: port, firstPerson: config.viewer['first-person'], viewDistance: config.viewer['view-distance'] });
+        mineflayerViewer(bot, {
+            port: port,
+            firstPerson: config.viewer['first-person'],
+            viewDistance: config.viewer['view-distance']
+        });
 
         bot.on('path_update', (res) =>
         {
@@ -30,7 +34,7 @@ function startViewer()
         {
             if (button !== 1) return;
             const blockPos = block.position.offset(0, 1, 0);
-        
+    
             gotoCoord(blockPos);
         });
     }

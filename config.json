@@ -30,6 +30,11 @@
         "send-chat-to-minecraft": false
     },
 
+    "auto-login": {
+        "enable": false,
+        "password": "" 
+    },
+
     "whispers": {
         "enable-answer": true,
         "timeout-on-whisper": 1000,
