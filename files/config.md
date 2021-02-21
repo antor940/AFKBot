@@ -25,6 +25,10 @@ All the options of the config.json:
 			"text": Text to show in the Rich Presence.
       
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
+	
+	"auto-login": Auto-Login features for plugins like AuthMe.
+		"enable": Having this set to true, the bot will execute the /login [password] command on spawn Default is false.
+		"password": Password for the /login [password] command.
     
 	"whispers": How the Bot will handle whispers.
 		"enable-answer": Having this set to false, will make the Bot ignore all whispers that are for him.
