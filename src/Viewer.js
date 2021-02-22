@@ -1,4 +1,3 @@
-process.setMaxListeners(0);
 const config = require('../config.json');
 const { Discord, client, channel, errEmbed } = require('./Discord');
 const { logToFile, fetch } = require('../index');
