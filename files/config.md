@@ -45,7 +45,7 @@ All the options of the config.json:
 		"send-status": Having this set to true, will make the Bot send status updates of this plugin in the form of Discord Embeds.
 		"priority": "saturation" or "foodPoints".
 		"start-at": 1-20. Food level to start eating at.
-		"banned-foods": [Array of banned foods](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
+		"banned-foods": Array of banned foods.
     
 	"bloodhound": Bloodhound options.
 		"enable": Having this set to false, the Bot won't find out who attacked it before killing it.
