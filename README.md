@@ -9,7 +9,7 @@ Written in Node.js
 
 <img alt="logo" src="https://github.com/DrMoraschi/AFKBot/raw/master/files/logo.png" height="200" />
 
-## Features
+<h2 align="center">Features</h2>
 
  * Supports up to 1.16.5.
  * Windows Desktop Notifications for events like death. These can be disabled inside config.json. Thanks to [node-notifier](https://github.com/mikaelbr/node-notifier).
@@ -24,7 +24,7 @@ Written in Node.js
  * Shows who attacked the Bot and with what weapon. Thanks to [mineflayer-bloodhound](https://github.com/Nixes/mineflayer-bloodhound).
  * View AFKBot's view in a webpage, and control him with the middle button of the mouse. Can be disabled in config.json. Thanks to [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer).
 
-## Install
+<h2 align="center">Install</h2>
 
  1. Make sure you have installed **Node** on your PC, once you have installed it, you can proceed to the next step. You can download Node [here](https://nodejs.org/).
  1. Create a folder somewhere in you PC.
@@ -39,11 +39,11 @@ Written in Node.js
 
  6. Now that all the things have been installed, the Bot is ready to run and go AFK.
 
-## Commands
+<h2 align="center">Commands</h2>
 
  Commands will be sent to the channel on startup. You can choose.
  
-## How to Use
+<h2 align="center">How to Use</h2>
 
 This Bot requires a Discord Bot to be set up beforehand, if you don't know how to do it. [Discord Bot Tutorial](https://www.writebots.com/discord-bot-token/)
  1. Before starting the Bot, please take a look at all the options of the [config.json](https://github.com/DrMoraschi/AFKBot/blob/master/files/config.md).
@@ -54,7 +54,7 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
 
  3. Once you've written all, hit ENTER and watch as the GUI starts and the bot connects to the server.
 
- ### WARNING
+<h2 align="center">WARNING</h2>
  
   I am not responsible of any problems that this Bot may cause, when you are downloading it, it's up to you and to be responsible of your own actions.
   
