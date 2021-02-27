@@ -62,7 +62,7 @@ async function returnViewer()
         const portEmbed = new Discord.MessageEmbed()
         .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
         .setColor(config.discord['embed-hex-color'])
-        .setTitle('Wolrd Viewer')
+        .setTitle('World Viewer')
         .setThumbnail(client.user.avatarURL())
         .addFields(
             { name: 'URL', value: `http://localhost:${port}/`, inline: true },
