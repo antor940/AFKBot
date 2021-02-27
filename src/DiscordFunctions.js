@@ -115,7 +115,7 @@ client.on('message', async (message) =>
     if (message.cleanContent.startsWith(`${config.discord.prefix}follow `))
     {
         logToFile('<src/DiscordFunctions.js> Follow executed', dir);
-        const usernameToFollow = message.content.replace(`${config.discord.prefix}follow `, '');
+        const usernameToFollow = message.cleanContent.replace(`${config.discord.prefix}follow `, '');
         followPlayer(usernameToFollow);
     }
     else if(message.cleanContent.startsWith(`${config.discord.prefix}goto `))
