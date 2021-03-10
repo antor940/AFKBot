@@ -24,6 +24,14 @@ Written in Node.js
  * Shows who attacked the Bot and with what weapon. Thanks to [mineflayer-bloodhound](https://github.com/Nixes/mineflayer-bloodhound).
  * View AFKBot's view in a webpage, and control him with the middle button of the mouse. Can be disabled in config.json. Thanks to [prismarine-viewer](https://github.com/PrismarineJS/prismarine-viewer).
 
+<h2 align="center">Downloads</h2>
+
+I highly advise to download the latest version:
+	[Latest release](https://github.com/DrMoraschi/AFKBot/releases/latest)
+
+But you can always check out the older versions:
+	[Older releases](https://github.com/DrMoraschi/AFKBot/releases)
+
 <h2 align="center">Install</h2>
 
  1. Make sure you have installed **Node** on your PC, once you have installed it, you can proceed to the next step. You can download Node [here](https://nodejs.org/).
