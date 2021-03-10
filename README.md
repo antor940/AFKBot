@@ -60,7 +60,7 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
 	
 	```node index.js```
 
- 3. Once you've written all, hit ENTER and watch as the GUI starts and the bot connects to the server.
+ 3. Once you've written all, hit ENTER and watch as the Bot starts and the bot connects to the server.
 
 <h2 align="center">WARNING</h2>
  
