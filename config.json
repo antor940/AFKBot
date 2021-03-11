@@ -5,7 +5,7 @@
     },
 
     "server": {
-        "host": "localhost",
+        "host": "play.lemoncloud.org",
         "port": 25565
     },
 
@@ -16,9 +16,9 @@
     },
 
     "discord": {
-        "token": "",
-        "guild-id": "",
-        "channel-id": "",
+        "token": "Nzk4MjczMDI0MzY4NDQzNDIz.X_ynsA.tnrGOW2xNIWtMCRO4jxVsb2L9hI",
+        "guild-id": "779713804652380191",
+        "channel-id": "809477441642299413",
         "embed-hex-color": "#000ff",
         "prefix": "+",
 
@@ -101,7 +101,6 @@
 
     "timeouts": {
         "on-kicked": 5000,
-        "connect-timeout": 10000,
         "antikick-jump-interval": 600000
     },
 
