@@ -18,9 +18,32 @@ function pingServer()
     {
         logToFile('<src/Ping.js> Pinged server', dir);
         if (config.debug) log(`<src/Ping.js> pinged server`);
-        if (err) return reject(err);
+        if (err) return errorPing(err);
         return returnPing(res);
     });
+
+    async function errorPing(err)
+    {
+        try
+        {
+            const pingErrEmbed = new Discord.MessageEmbed()
+            .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
+            .setColor(config.discord['embed-hex-color'])
+            .setTitle('Bot warning')
+            .setThumbnail(client.user.avatarURL())
+            .addFields(
+                { name: `Warning`, value: `Couldn't ping server`, inline: true }
+            );
+            
+            await channel.send(pingErrEmbed);
+            logToFile('<src/DiscordFunctions.js> Sent pingErrEmbed', dir);
+        }
+        catch (err)
+        {
+            logToFile(`<src/DiscordFunctions.js> Error ${err}`, dir);
+            errEmbed(err, `- Check the IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
+        };
+    }
 
     async function returnPing(res)
     {

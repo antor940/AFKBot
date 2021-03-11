@@ -51,15 +51,10 @@ function startBot()
             logToFile('<src/Bot.js> Initializing BotFunctions', dir);
             const { startBotFunctions } = require('./BotFunctions');
             startBotFunctions();
-            clearTimeout(errorTimeout);
             return resolve(bot);
         });
 
-        const errorTimeout = setTimeout(() =>
-        {
-            logToFile(`Server not reachable after ${config.timeouts['connect-timeout']/1000} seconds`);
-            reject(`Server not reachable after ${config.timeouts['connect-timeout']/1000} seconds`);
-        }, config.timeouts['connect-timeout']);
+        
     });
 };
 
