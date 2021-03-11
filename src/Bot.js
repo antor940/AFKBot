@@ -22,6 +22,7 @@ function startBot()
         });
 
         bot.on('error', (err) => reject(err));
+        bot.on('kicked', (reason) => reject(reason));
 
         bot.once('spawn', () =>
         {
