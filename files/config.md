@@ -82,7 +82,6 @@ All the options of the config.json:
     
 	"timeouts": Timeouts on various events. All of them have to be in milliseconds.
 		"on-kicked": Milliseconds that will pass before the Bot will reconnect to the server if it's kicked.
-		"conenct-timeout": Milliseconds that have to pass before the Bot will stop trying to connect to the server if it's unreachable.
 		"antikick-jump-interval": Milliseconds that will pass between each "antikick-jump" jump.
     
 	"debug": Having this set to true will make the Bot print some useless extra information in the console.
