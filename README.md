@@ -13,7 +13,7 @@ Written in Node.js
 
 <h2 align="center">Features</h2>
 
- * Supports up to 1.16.5.
+ * Supports up to 1.16.5, recommended to use the latest MC versions.
  * Windows Desktop Notifications for events like death. These can be disabled inside config.json. Thanks to [node-notifier](https://github.com/mikaelbr/node-notifier).
  * Use a Discord Bot to control the AFKBot. Can be configured in config.json. Thanks to [discord.js](https://github.com/discordjs/discord.js).
  * Pathfinding ability to make your AFKBot follow you from one place to another, thanks to [mineflayer-pathfinder](https://github.com/Karang/mineflayer-pathfinder).
