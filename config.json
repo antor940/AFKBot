@@ -5,7 +5,7 @@
     },
 
     "server": {
-        "host": "play.lemoncloud.org",
+        "host": "localhost",
         "port": 25565
     },
 
@@ -16,9 +16,9 @@
     },
 
     "discord": {
-        "token": "Nzk4MjczMDI0MzY4NDQzNDIz.X_ynsA.tnrGOW2xNIWtMCRO4jxVsb2L9hI",
-        "guild-id": "779713804652380191",
-        "channel-id": "809477441642299413",
+        "token": "",
+        "guild-id": "",
+        "channel-id": "",
         "embed-hex-color": "#000ff",
         "prefix": "+",
 
