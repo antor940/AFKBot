@@ -1,6 +1,6 @@
 const config = require('../config.json');
 const { performance } = require('perf_hooks');
-const { Discord, client, channel } = require('./Discord');
+const { Discord, client, channel, errEmbed } = require('./Discord');
 const { mc, logToFile } = require('../index');
 
 let pingTimerStart;
