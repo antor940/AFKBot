@@ -11,11 +11,12 @@ const { performance } = require('perf_hooks');
 const logToFile = require('log-to-file');
 const fetch = require('node-fetch');
 const { checkLatestLog } = require('./src/Logging');
+const { checkUpdate } = require('./src/Update');
 
-checkLatestLog().then(() =>
+checkLatestLog().then(async() =>
 {
     if (config.debug) log(`<index.js> starting up`);
-
+    
     module.exports = {
         logToFile,
         Discord,
@@ -25,6 +26,7 @@ checkLatestLog().then(() =>
         fetch
     };
     
+    await checkUpdate();
     logToFile('<index.js> Initializing Discord', dir);
     require('./src/Discord');
 });

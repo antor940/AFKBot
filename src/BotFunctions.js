@@ -13,7 +13,6 @@ function startBotFunctions()
     logToFile('<src/BotFunctions.js> Started', dir);
     logToFile('<src/BotFunctions.js> Starting functions', dir);
     if (config.debug) log(`<src/EventFunctions.js> load functions`);
-    if (config['auto-login'].enable) autoLogin();
     if (config.whispers['enable-answer']) autoWhisper();
     if (config.logs['log-chat-to-file']) logChat();
     if (config['auto-eat'].enable) autoEat();
@@ -196,11 +195,6 @@ function startBotFunctions()
     });
     
     if (config.debug) log(`<src/BotFunctions.js> load functions`);
-    function autoLogin()
-    {
-        bot.chat(`/login ${config['auto-login'].password}`);
-    };
-
     function autoLook()
     {
         logToFile('<src/BotFunctions.js> autoLook loaded', dir);
