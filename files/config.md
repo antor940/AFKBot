@@ -29,6 +29,7 @@ All the options of the config.json:
 	"auto-login": Auto-Login features for plugins like AuthMe. Can only do /login for now. You have to /register it manually before-hand.
 		"enable": Having this set to true, the bot will execute the /login [password] command on spawn Default is false.
 		"password": Password for the /login [password] command.
+		"repeat-password-on-register": Repeat the password when registering, example: true: /register pass pass, false: /register pass
     
 	"whispers": How the Bot will handle whispers.
 		"enable-answer": Having this set to false, will make the Bot ignore all whispers that are for him.
