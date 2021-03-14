@@ -19,7 +19,7 @@ async function listInventory()
         .setColor(config.discord['embed-hex-color'])
         .setTitle('Inventory')
         .setThumbnail(client.user.avatarURL())
-        .setDescription(botInv)
+        .setDescription(botInv);
         
         await channel.send(inventoryEmbed);
         logToFile('<src/Inventory.js> Sent inventoryEmbed', dir);
