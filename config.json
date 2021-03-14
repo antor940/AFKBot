@@ -35,6 +35,13 @@
         "password": "",
         "repeat-password-on-register": true
     },
+    
+    "notify-on-user": {
+        "enable": false,
+        "list": [
+            "AFKBotEnemy"
+        ]
+    },
 
     "whispers": {
         "enable-answer": true,
