@@ -13,6 +13,7 @@ function startBotFunctions()
     logToFile('<src/BotFunctions.js> Started', dir);
     logToFile('<src/BotFunctions.js> Starting functions', dir);
     if (config.debug) log(`<src/EventFunctions.js> load functions`);
+    if (config['notify-on-user'].enable) notifyUsers();
     if (config.whispers['enable-answer']) autoWhisper();
     if (config.logs['log-chat-to-file']) logChat();
     if (config['auto-eat'].enable) autoEat();
@@ -195,6 +196,18 @@ function startBotFunctions()
     });
     
     if (config.debug) log(`<src/BotFunctions.js> load functions`);
+    function notifyUsers()
+    {
+        logToFile('<src/BotFunctions.js> notifyUsers loaded', dir);
+        bot.on('playerJoined', (player) =>
+        {
+            if (config['notify-on-user'].list.includes(player.username))
+            {
+                //Continue here
+            };
+        });
+    };
+    
     function autoLook()
     {
         logToFile('<src/BotFunctions.js> autoLook loaded', dir);
