@@ -16,9 +16,9 @@
     },
 
     "discord": {
-        "token": "",
-        "guild-id": "",
-        "channel-id": "",
+        "token": "Nzk4MjczMDI0MzY4NDQzNDIz.X_ynsA.o8sS68LyJHZ_1fV1Zk-3GC-BehU",
+        "guild-id": "779713804652380191",
+        "channel-id": "809477441642299413",
         "embed-hex-color": "#000ff",
         "prefix": "+",
 

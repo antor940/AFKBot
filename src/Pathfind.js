@@ -1,6 +1,7 @@
 const config = require('../config.json');
 const { Discord, client, channel, errEmbed } = require('./Discord');
 const { logToFile } = require('../index');
+const { fieldEmbed } = require('./Embed');
 
 logToFile('<src/Pathfind.js> Started', dir);
 if (config.debug) log(`<src/Pathfind.js> load pathfind`);
@@ -25,17 +26,18 @@ async function followPlayer(username)
             bot.removeAllListeners('goal_reached');
         });
 
-        const followEmbed = new Discord.MessageEmbed()
-        .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-        .setColor(config.discord['embed-hex-color'])
-        .setTitle('Following')
-        .setThumbnail(client.user.avatarURL())
-        .addFields(
-            { name: 'Player', value: playerToFollow.username, inline: true },
-            { name: 'Position', value: `x: ${Math.floor(playerToFollow.position.x)} y: ${Math.floor(playerToFollow.position.y)} z: ${Math.floor(playerToFollow.position.z)} `, inline: true },
-        );
+        const fieldArr = [
+            {
+                name: 'Player',
+                value: playerToFollow.username
+            },
+            {
+                name: 'Position',
+                value: `x: ${Math.floor(playerToFollow.position.x)} y: ${Math.floor(playerToFollow.position.y)} z: ${Math.floor(playerToFollow.position.z)}`
+            }
+        ];
         
-        await channel.send(followEmbed);
+        await fieldEmbed('Following', fieldArr, '');
     }
     catch (err)
     {

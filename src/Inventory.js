@@ -1,6 +1,7 @@
 const config = require('../config.json');
-const { Discord, client, channel, errEmbed } = require('./Discord');
+const { errEmbed } = require('./Discord');
 const { logToFile } = require('../index');
+const { descEmbed } = require('./Embed');
 
 if (config.debug) log('<src/Inventory.js> Started');
 async function listInventory()
@@ -14,14 +15,7 @@ async function listInventory()
     
         if (!botInv) botInv = 'Inventory empty';
     
-        const inventoryEmbed = new Discord.MessageEmbed()
-        .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-        .setColor(config.discord['embed-hex-color'])
-        .setTitle('Inventory')
-        .setThumbnail(client.user.avatarURL())
-        .setDescription(botInv)
-        
-        await channel.send(inventoryEmbed);
+        await descEmbed('Bot inventory', botInv);
         logToFile('<src/Inventory.js> Sent inventoryEmbed', dir);
     }
     catch (err)

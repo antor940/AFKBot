@@ -2,6 +2,7 @@ const config = require('../config.json');
 const { bot, mcData } = require('./Bot');
 const { Discord, client, channel } = require('./Discord');
 const { logToFile } = require('../index');
+const { fieldEmbed } = require('./Embed');
 
 let alreadyEnabled = true;
 let alreadyDisabled = false;
@@ -34,16 +35,14 @@ async function enablePlugin()
     logToFile('<src/Eat.js> autoEat enabled', dir);
     if (config.debug) log(`<src/Eat.js> enable autoEat`);
 
-    const foodEmbed = new Discord.MessageEmbed()
-    .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-    .setColor(config.discord['embed-hex-color'])
-    .setTitle('Bot status')
-    .setThumbnail(client.user.avatarURL())
-    .addFields(
-        { name: `Status`, value: `Bot received food, enabling plugin again`, inline: true }
-    );
+    const fieldArr = [
+        {
+            name: 'Status',
+            value: 'Bot received food, enabling plugin again'
+        }
+    ];
 
-    if (config['auto-eat']['send-status']) await channel.send(foodEmbed);
+    if (config['auto-eat']['send-status']) await fieldEmbed('Bot status', fieldArr, '');
 };
 
 async function disablePlugin()
@@ -55,16 +54,14 @@ async function disablePlugin()
     logToFile('<src/Eat.js> autoEat disabled', dir);
     if (config.debug) log(`<src/Eat.js> disable autoEat`);
 
-    const foodEmbed = new Discord.MessageEmbed()
-    .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-    .setColor(config.discord['embed-hex-color'])
-    .setTitle('Bot warning')
-    .setThumbnail(client.user.avatarURL())
-    .addFields(
-        { name: `Warning`, value: `Bot doesn't have food for the autoeat plugin, the bot will enable the plugin again when it detects it has received food`, inline: true }
-    );
+    const fieldArr = [
+        {
+            name: 'Warning',
+            value: `Bot doesn't have food for the autoeat plugin, the bot will enable the plugin again when it detects it has received food`
+        }
+    ];
 
-    if (config['auto-eat']['send-status']) await channel.send(foodEmbed);
+    if (config['auto-eat']['send-status']) await fieldEmbed('Bot warning', fieldArr, '');
 };
 
 module.exports = {

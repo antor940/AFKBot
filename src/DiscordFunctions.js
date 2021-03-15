@@ -9,6 +9,7 @@ const { clearLogFolder } = require('./Logging');
 const { autoFish, stopFishing } = require('./Fishing');
 const { listInventory, emptyInventory } = require('./Inventory');
 const { returnViewer } = require('./Viewer');
+const { fieldEmbed } = require('./Embed');
 
 console.log(`<DISCORD> Logged in: ${client.user.tag}`);
 if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bot-rpc'].text);
@@ -32,12 +33,7 @@ let commandList = [
     `${config.discord.prefix}exit`
 ];
 
-const startEmbed = new Discord.MessageEmbed()
-.setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-.setColor(config.discord['embed-hex-color'])
-.setTitle('Commands')
-.setThumbnail(client.user.avatarURL())
-.addFields(
+const fieldArr = [
     { name: `${config.discord.prefix}ping`, value: `Ping the server specified in the config.json, returning the results`, inline: true },
     { name: `${config.discord.prefix}start`, value: `Start the bot`, inline: true },
     { name: `${config.discord.prefix}status`, value: `Status of the bot`, inline: true },
@@ -52,9 +48,9 @@ const startEmbed = new Discord.MessageEmbed()
     { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
     { name: `${config.discord.prefix}stop`, value: `Stops any kind of pathfinding`, inline: true },
     { name: `${config.discord.prefix}exit`, value: `Stops the program`, inline: true }
-);
+];
     
-channel.send(startEmbed);
+fieldEmbed('Commands', fieldArr, '');
 if (config.debug) log(`<src/DiscordFunctions.js> sent command list`);
 logToFile('<src/DiscordFunctions.js> Sent startEmbed', dir);
 
