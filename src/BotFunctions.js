@@ -7,6 +7,7 @@ function startBotFunctions()
     const { commandList } = require('./DiscordFunctions');
     const { sendNotification } = require('./Windows');
     const { autoEat, enablePlugin, disablePlugin } = require('./Eat');
+    const { fieldEmbed } = require('./Embed');
     const { logToFile } = require('../index');
     
     //Minecraft
@@ -54,20 +55,24 @@ function startBotFunctions()
     
     let pauseOnSent = false;
     let onConnectDont = true;
-    bot.once('health', () =>
+    bot.once('health', async () =>
     {
-        const botStartEmbed = new Discord.MessageEmbed()
-        .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-        .setColor(config.discord['embed-hex-color'])
-        .setTitle('Bot started')
-        .setThumbnail(client.user.avatarURL())
-        .addFields(
-            { name: `Time`, value: bot.time.timeOfDay, inline: true },
-            { name: `Spawn position`, value: `x: ${Math.round(bot.entity.position.x)} y: ${Math.round(bot.entity.position.y)} z: ${Math.round(bot.entity.position.z)}`, inline: true },
-            { name: `Health`, value: Math.floor(bot.health), inline: true }
-        );
-            
-        channel.send(botStartEmbed);
+        const embedArr = [
+            {
+                name: 'Time',
+                value: bot.time.timeOfDay
+            },
+            {
+                name: 'Spawn position',
+                value: `x: ${Math.round(bot.entity.position.x)} y: ${Math.round(bot.entity.position.y)} z: ${Math.round(bot.entity.position.z)}`
+            },
+            {
+                name: 'Health',
+                value: Math.floor(bot.health)
+            }
+        ];
+
+        await fieldEmbed('Bot started', embedArr, '');
         logToFile('<src/BotFunctions.js> Sent botStartEmbed', dir);
         
         setTimeout(() => {
@@ -81,17 +86,15 @@ function startBotFunctions()
         {
             if (pauseOnSent) return;
             if (!config['low-health']['warn-on-low-health']) return;
-            const healthWarnEmbed = new Discord.MessageEmbed()
-            .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-            .setColor(config.discord['embed-hex-color'])
-            .setTitle('Bot warning')
-            .setThumbnail(client.user.avatarURL())
-            .addFields(
-                { name: `Health`, value: `Below or equal to ${Math.floor(bot.health)}, bot will disconnect if the setting is enabled in the config`, inline: true }
-            );
+            const embedArr = [
+                {
+                    name: 'Health',
+                    value: `Below or equal to ${Math.floor(bot.health)}, bot will disconnect if the setting is enabled in the config`
+                }
+            ];
     
+            await fieldEmbed('Bot warning', embedArr, '');
             logToFile('<src/BotFunctions.js> Sent healthWarnEmbed', dir);
-            await channel.send(healthWarnEmbed);
             pauseOnSent = true;
     
             if (config['low-health']['disconnect-on-low-health'] && !onConnectDont) process.exit(1);
@@ -107,35 +110,31 @@ function startBotFunctions()
         if (reason.match(/(banned)/ig))
         {
             console.log(`Banned from the server: ${reason}`);
-            const kickedEmbed = new Discord.MessageEmbed()
-            .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-            .setColor(config.discord['embed-hex-color'])
-            .setTitle('Bot warning')
-            .setThumbnail(client.user.avatarURL())
-            .addFields(
-                { name: `Warning`, value: `Banned from the server: ${reason}`, inline: true }
-            );
+            const embedArr = [
+                {
+                    name: 'Warning',
+                    value: `Banned from the server: ${reason}`
+                }
+            ];
     
+            await fieldEmbed('Bot warning', embedArr, '');
             logToFile('<src/BotFunctions.js> Banned, shutting down', dir);
-            if (config['windows-notifications']['on-banned']) sendNotification('Banned', reason);
-            await channel.send(kickedEmbed);
+            if (config['windows-notifications']['on-banned']) await sendNotification('Banned', reason);
             process.exit(1);
         }
         else
         {
             console.log(`Kicked from the server: ${reason}`);
-            const kickedEmbed = new Discord.MessageEmbed()
-            .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-            .setColor(config.discord['embed-hex-color'])
-            .setTitle('Bot warning')
-            .setThumbnail(client.user.avatarURL())
-            .addFields(
-                { name: `Warning`, value: `Kicked from the server, reconnecting in ${config.timeouts['on-kicked']/1000} seconds. Reason: ${reason}`, inline: true }
-            );
+            const embedArr = [
+                {
+                    name: 'Warning',
+                    value: `Kicked from the server, reconnecting in ${config.timeouts['on-kicked']/1000} seconds. Reason: ${reason}`
+                }
+            ];
     
+            await fieldEmbed('Bot warning', embedArr, '');
             logToFile(`<src/BotFunctions.js> Kicked, reconnecting in ${config.timeouts['on-kicked']/1000} seconds`, dir);
             if (config['windows-notifications']['on-kicked']) sendNotification('Kicked', reason);
-            await channel.send(kickedEmbed);
             port++;
             
             setTimeout(() => {
@@ -180,18 +179,13 @@ function startBotFunctions()
     
     bot.on('death', async () =>
     {
-        const bloodhoundEmbed = new Discord.MessageEmbed()
-        .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-        .setColor(config.discord['embed-hex-color'])
-        .setTitle('Bot warning')
-        .setDescription('Died or killed')
-        .setThumbnail(client.user.avatarURL())
+        const embedArr = [];
+
+        if (config.bloodhound.enable && bloodhoundInfo.attacker) embedArr.push({ name: `Killed by`, value: bloodhoundInfo.attacker.username || bloodhoundInfo.weapon.name });
+        if (config.bloodhound.enable && bloodhoundInfo.weapon) embedArr.push({ name: `Weapon`, value: bloodhoundInfo.weapon.name || bloodhoundInfo.weapon.displayName });
     
-        if (config.bloodhound.enable && bloodhoundInfo.attacker) bloodhoundEmbed.addField(`Killed by`, bloodhoundInfo.attacker.username || bloodhoundInfo.weapon.name, true);
-        if (config.bloodhound.enable && bloodhoundInfo.weapon) bloodhoundEmbed.addField(`Weapon`, bloodhoundInfo.weapon.name || bloodhoundInfo.weapon.displayName, true);
-    
+        if (config.bloodhound.enable) await fieldEmbed('Bot warning', embedArr, 'Died or killed');
         logToFile('<src/BotFunctions.js> Will send bloodhoundEmbed if specified', dir);
-        await channel.send(bloodhoundEmbed);
         if (config['windows-notifications']['on-death']) sendNotification('Warning', 'Died or killed');
     });
     
@@ -199,11 +193,18 @@ function startBotFunctions()
     function notifyUsers()
     {
         logToFile('<src/BotFunctions.js> notifyUsers loaded', dir);
-        bot.on('playerJoined', (player) =>
+        bot.on('playerJoined', async (player) =>
         {
             if (config['notify-on-user'].list.includes(player.username))
             {
-                //Continue here
+                const embedArr = [
+                    {
+                        name: 'Player that joined',
+                        value: player.username
+                    }
+                ];
+
+                await fieldEmbed('Specified player joined', embedArr, 'A player specified in the config has joined');
             };
         });
     };
