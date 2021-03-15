@@ -37,9 +37,9 @@
     },
     
     "notify-on-user": {
-        "enable": true,
+        "enable": false,
         "list": [
-            "DrMoraschi"
+            "AFKBotEnemy"
         ]
     },
 
