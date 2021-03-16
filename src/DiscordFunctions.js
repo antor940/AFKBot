@@ -7,7 +7,7 @@ const { Discord, client, errEmbed, channel } = require('./Discord');
 const { logToFile } = require('../index');
 const { clearLogFolder } = require('./Logging');
 const { autoFish, stopFishing } = require('./Fishing');
-const { listInventory, emptyInventory } = require('./Inventory');
+const { listInventory, rawInventory, emptyInventory } = require('./Inventory');
 const { returnViewer } = require('./Viewer');
 const { fieldEmbed } = require('./Embed');
 
@@ -30,7 +30,8 @@ let commandList = [
     `${config.discord.prefix}status`,
     `${config.discord.prefix}clearlogs`,
     `${config.discord.prefix}viewer`,
-    `${config.discord.prefix}exit`
+    `${config.discord.prefix}exit`,
+    `${config.discord.prefix}rawinv`
 ];
 
 const fieldArr = [
@@ -43,6 +44,7 @@ const fieldArr = [
     { name: `${config.discord.prefix}stopfish`, value: `Stop fishing`, inline: true },
     { name: `${config.discord.prefix}goto [x] [y] [z]`, value: `Go to [x] [y] [z] coordinates`, inline: true },
     { name: `${config.discord.prefix}list`, value: `List inventory`, inline: true },
+    { name: `${config.discord.prefix}rawinv`, value: `List raw inventory in JSON`, inline: true },
     { name: `${config.discord.prefix}empty`, value: `Empty inventory`, inline: true },
     { name: `${config.discord.prefix}viewer`, value: `Returns the port and the URL in which the current world viewer is running`, inline: true },
     { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
@@ -89,6 +91,10 @@ client.on('message', async (message) =>
         case `${config.discord.prefix}list`:
             logToFile('<src/DiscordFunctions.js> List executed', dir);
             listInventory();
+        break;
+        case `${config.discord.prefix}rawinv`:
+            logToFile('<src/DiscordFunctions.js> Rawinv executed', dir);
+            rawInventory();
         break;
         case `${config.discord.prefix}empty`:
             logToFile('<src/DiscordFunctions.js> Empty executed', dir);
