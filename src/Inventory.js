@@ -12,7 +12,7 @@ async function listInventory()
         if (config.debug) log('<src/Inventory.js> listInventory executed');
         const { bot } = require('./Bot');
         let botInv = bot.inventory.items().map(item => `${item.name} x ${item.count}`).join('\n');
-    
+        if (botInv.length > 2000) botInv = botInv.slice(1, 2000);
         if (!botInv) botInv = 'Inventory empty';
     
         await descEmbed('Bot inventory', botInv);
@@ -32,10 +32,21 @@ async function rawInventory()
         logToFile('<src/Inventory.js> rawInventory executed', dir);
         if (config.debug) log('<src/Inventory.js> listInventory executed');
         const { bot } = require('./Bot');
+        const { logInv } = require('./Logging');
         let rawInv = JSON.stringify(bot.inventory.items(), null, 2);
-        
-        await descEmbed('Raw Bot inventory', rawInv);
+        if (rawInv.length > 2000)
+        {
+            logInventory();
+            rawInv = rawInv.slice(1, 1900);
+        };
+
+        await descEmbed('Raw Bot inventory', '```js\n'+rawInv+'\n```\nIf inventory is cut off, it\'s because of the Discord Character Limit, you can view the full message inside /files/InventoryJSON.json');
         logToFile('<src/Inventory.js> Sent inventoryEmbed', dir);
+
+        async function logInventory()
+        {
+            await logInv(rawInv);
+        };
     }
     catch (err)
     {
