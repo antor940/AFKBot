@@ -17,6 +17,7 @@ if (config.debug) log(`<src/DiscordFunctions.js> logged in`);
 logToFile('<src/DiscordFunctions.js> Started', dir);
 
 let commandList = [
+    `${config.discord.prefix}help`,
     `${config.discord.prefix}ping`,
     `${config.discord.prefix}start`,
     `${config.discord.prefix}follow`,
@@ -35,6 +36,7 @@ let commandList = [
 ];
 
 const fieldArr = [
+    { name: `${config.discord.prefix}help`, value: `Shows this command list` },
     { name: `${config.discord.prefix}ping`, value: `Ping the server specified in the config.json, returning the results`, inline: true },
     { name: `${config.discord.prefix}start`, value: `Start the bot`, inline: true },
     { name: `${config.discord.prefix}status`, value: `Status of the bot`, inline: true },
@@ -61,6 +63,10 @@ client.on('message', async (message) =>
     if (message.author.bot || message.channel.id !== config.discord['channel-id']) return;
     switch (message.cleanContent)
     {
+        case `${config.discord.prefix}help`:
+            logToFile('<src/DiscordFunctions.js> Help executed', dir);
+            fieldEmbed('Commands', fieldArr, '');
+        break;
         case `${config.discord.prefix}ping`:
             logToFile('<src/DiscordFunctions.js> Ping executed', dir);
             pingServer();
