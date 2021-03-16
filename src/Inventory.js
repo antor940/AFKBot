@@ -81,5 +81,6 @@ function emptyInventory()
 
 module.exports = {
     listInventory,
+    rawInventory,
     emptyInventory
 };
