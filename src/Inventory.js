@@ -25,6 +25,25 @@ async function listInventory()
     };
 };
 
+async function rawInventory()
+{
+    try
+    {
+        logToFile('<src/Inventory.js> rawInventory executed', dir);
+        if (config.debug) log('<src/Inventory.js> listInventory executed');
+        const { bot } = require('./Bot');
+        let rawInv = JSON.stringify(bot.inventory.items(), null, 2);
+        
+        await descEmbed('Raw Bot inventory', rawInv);
+        logToFile('<src/Inventory.js> Sent inventoryEmbed', dir);
+    }
+    catch (err)
+    {
+        logToFile(`<src/Inventory.js> Error ${err}`, dir);
+        errEmbed(err, '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
+    };
+};
+
 function emptyInventory()
 {
     try
