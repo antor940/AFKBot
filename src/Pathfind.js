@@ -1,5 +1,5 @@
 const config = require('../config.json');
-const { Discord, client, channel, errEmbed } = require('./Discord');
+const { errEmbed } = require('./Discord');
 const { logToFile } = require('../index');
 const { fieldEmbed } = require('./Embed');
 

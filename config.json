@@ -37,9 +37,9 @@
     },
     
     "notify-on-user": {
-        "enable": false,
+        "enable": true,
         "list": [
-            "AFKBotEnemy"
+            "DrMoraschi"
         ]
     },
 
@@ -74,8 +74,7 @@
     "viewer": {
         "enable": true,
         "first-person": false,
-        "view-distance": 6,
-        "port": 3000
+        "view-distance": 6
     },
 
     "low-health": {

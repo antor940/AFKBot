@@ -135,7 +135,6 @@ function startBotFunctions()
             await fieldEmbed('Bot warning', embedArr, '');
             logToFile(`<src/BotFunctions.js> Kicked, reconnecting in ${config.timeouts['on-kicked']/1000} seconds`, dir);
             if (config['windows-notifications']['on-kicked']) sendNotification('Kicked', reason);
-            port++;
             
             setTimeout(() => {
                 startBot();    
