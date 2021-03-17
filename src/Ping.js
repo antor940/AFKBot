@@ -2,6 +2,7 @@ const config = require('../config.json');
 const { performance } = require('perf_hooks');
 const { Discord, client, channel, errEmbed } = require('./Discord');
 const { mc, logToFile } = require('../index');
+const { fieldEmbed } = require('./Embed');
 
 let pingTimerStart;
 let pingTimerEnd;
@@ -26,16 +27,14 @@ function pingServer()
     {
         try
         {
-            const pingErrEmbed = new Discord.MessageEmbed()
-            .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-            .setColor(config.discord['embed-hex-color'])
-            .setTitle('Bot warning')
-            .setThumbnail(client.user.avatarURL())
-            .addFields(
-                { name: `Warning`, value: `Couldn't ping server`, inline: true }
-            );
+            const fieldArr = [
+                {
+                    name: 'Warning',
+                    value: `Couldn't ping server: ${err}`
+                }
+            ];
             
-            await channel.send(pingErrEmbed);
+            await fieldEmbed('Bot warning', fieldArr, '');
             logToFile('<src/DiscordFunctions.js> Sent pingErrEmbed', dir);
         }
         catch (err)
@@ -51,20 +50,15 @@ function pingServer()
         {
             pingTimerEnd = performance.now();
 
-            const resEmbed = new Discord.MessageEmbed()
-            .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-            .setColor(config.discord['embed-hex-color'])
-            .setTitle('Ping results')
-            .setThumbnail(client.user.avatarURL())
-            .addFields(
-                { name: 'Host', value: config.server.host, inline: true },
-                { name: 'Port', value: config.server.port, inline: true },
-                { name: 'Version', value: res.version.name, inline: true },
-                { name: 'Latency', value: `${res.latency} ms`, inline: true },
-                { name: 'Time taken to ping', value: `${Math.round(pingTimerEnd-pingTimerStart)} ms`, inline: true }
-            );
+            const fieldArr = [
+                { name: 'Host', value: config.server.host },
+                { name: 'Port', value: config.server.port },
+                { name: 'Version', value: res.version.name },
+                { name: 'Latency', value: `${res.latency} ms` },
+                { name: 'Time taken to ping', value: `${Math.round(pingTimerEnd-pingTimerStart)} ms` }
+            ];
             
-            await channel.send(resEmbed);
+            await fieldEmbed('Ping results', fieldArr, '');
             logToFile('<src/DiscordFunctions.js> Sent resEmbed', dir);
         }
         catch (err)

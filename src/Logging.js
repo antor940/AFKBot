@@ -54,7 +54,28 @@ function clearLogFolder()
     };
 };
 
+function logInv(botInvJSON)
+{
+    if (config.debug) log('<src/Logging.js> function logInv');
+    try
+    {
+        return new Promise((resolve) =>
+        {
+            fs.writeFileSync('./files/InventoryJSON.json', botInvJSON);
+            resolve();
+        });
+    }
+    catch (err)
+    {
+        const { errEmbed } = require('./Discord');
+        
+        logToFile(`<src/Logging.js> Error: ${err}`, dir);
+        errEmbed(err, '- Give the program or NODE permission to write and delete files\n - This error was caused by a dependency, please report it as a bug');
+    };
+};
+
 module.exports = {
     checkLatestLog,
-    clearLogFolder
+    clearLogFolder,
+    logInv
 };

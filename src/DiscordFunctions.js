@@ -7,8 +7,9 @@ const { Discord, client, errEmbed, channel } = require('./Discord');
 const { logToFile } = require('../index');
 const { clearLogFolder } = require('./Logging');
 const { autoFish, stopFishing } = require('./Fishing');
-const { listInventory, emptyInventory } = require('./Inventory');
+const { listInventory, rawInventory, emptyInventory } = require('./Inventory');
 const { returnViewer } = require('./Viewer');
+const { fieldEmbed } = require('./Embed');
 
 console.log(`<DISCORD> Logged in: ${client.user.tag}`);
 if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bot-rpc'].text);
@@ -16,6 +17,7 @@ if (config.debug) log(`<src/DiscordFunctions.js> logged in`);
 logToFile('<src/DiscordFunctions.js> Started', dir);
 
 let commandList = [
+    `${config.discord.prefix}help`,
     `${config.discord.prefix}ping`,
     `${config.discord.prefix}start`,
     `${config.discord.prefix}follow`,
@@ -29,15 +31,12 @@ let commandList = [
     `${config.discord.prefix}status`,
     `${config.discord.prefix}clearlogs`,
     `${config.discord.prefix}viewer`,
-    `${config.discord.prefix}exit`
+    `${config.discord.prefix}exit`,
+    `${config.discord.prefix}rawinv`
 ];
 
-const startEmbed = new Discord.MessageEmbed()
-.setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
-.setColor(config.discord['embed-hex-color'])
-.setTitle('Commands')
-.setThumbnail(client.user.avatarURL())
-.addFields(
+const fieldArr = [
+    { name: `${config.discord.prefix}help`, value: `Shows this command list` },
     { name: `${config.discord.prefix}ping`, value: `Ping the server specified in the config.json, returning the results`, inline: true },
     { name: `${config.discord.prefix}start`, value: `Start the bot`, inline: true },
     { name: `${config.discord.prefix}status`, value: `Status of the bot`, inline: true },
@@ -47,14 +46,15 @@ const startEmbed = new Discord.MessageEmbed()
     { name: `${config.discord.prefix}stopfish`, value: `Stop fishing`, inline: true },
     { name: `${config.discord.prefix}goto [x] [y] [z]`, value: `Go to [x] [y] [z] coordinates`, inline: true },
     { name: `${config.discord.prefix}list`, value: `List inventory`, inline: true },
+    { name: `${config.discord.prefix}rawinv`, value: `List raw inventory in JSON`, inline: true },
     { name: `${config.discord.prefix}empty`, value: `Empty inventory`, inline: true },
     { name: `${config.discord.prefix}viewer`, value: `Returns the port and the URL in which the current world viewer is running`, inline: true },
     { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
     { name: `${config.discord.prefix}stop`, value: `Stops any kind of pathfinding`, inline: true },
     { name: `${config.discord.prefix}exit`, value: `Stops the program`, inline: true }
-);
+];
     
-channel.send(startEmbed);
+fieldEmbed('Commands', fieldArr, '');
 if (config.debug) log(`<src/DiscordFunctions.js> sent command list`);
 logToFile('<src/DiscordFunctions.js> Sent startEmbed', dir);
 
@@ -63,6 +63,10 @@ client.on('message', async (message) =>
     if (message.author.bot || message.channel.id !== config.discord['channel-id']) return;
     switch (message.cleanContent)
     {
+        case `${config.discord.prefix}help`:
+            logToFile('<src/DiscordFunctions.js> Help executed', dir);
+            fieldEmbed('Commands', fieldArr, '');
+        break;
         case `${config.discord.prefix}ping`:
             logToFile('<src/DiscordFunctions.js> Ping executed', dir);
             pingServer();
@@ -93,6 +97,10 @@ client.on('message', async (message) =>
         case `${config.discord.prefix}list`:
             logToFile('<src/DiscordFunctions.js> List executed', dir);
             listInventory();
+        break;
+        case `${config.discord.prefix}rawinv`:
+            logToFile('<src/DiscordFunctions.js> Rawinv executed', dir);
+            rawInventory();
         break;
         case `${config.discord.prefix}empty`:
             logToFile('<src/DiscordFunctions.js> Empty executed', dir);

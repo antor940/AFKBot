@@ -18,6 +18,7 @@
     "mineflayer-pvp": "^1.0.2",
     "node-fetch": "^2.6.1",
     "node-notifier": "^9.0.0",
+    "portfinder": "^1.0.28",
     "prismarine-viewer": "^1.13.3"
   },
   "engines": {

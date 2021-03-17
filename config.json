@@ -35,6 +35,13 @@
         "password": "",
         "repeat-password-on-register": true
     },
+    
+    "notify-on-user": {
+        "enable": true,
+        "list": [
+            "AFKBotEnemy"
+        ]
+    },
 
     "whispers": {
         "enable-answer": true,
@@ -67,8 +74,7 @@
     "viewer": {
         "enable": true,
         "first-person": false,
-        "view-distance": 6,
-        "port": 3000
+        "view-distance": 6
     },
 
     "low-health": {
@@ -96,13 +102,14 @@
 
     "misc-options": {
         "send-chat-to-ds": false,
-        "antikick-jump": true,
+        "antikick": false,
+        "antikick-radius": 3,
         "look-entities": true
     },
 
     "timeouts": {
         "on-kicked": 5000,
-        "antikick-jump-interval": 600000
+        "antikick-interval": 600000
     },
 
     "debug": false,

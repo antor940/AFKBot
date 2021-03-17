@@ -16,7 +16,7 @@ function getStatus()
             const statusEmbed = new Discord.MessageEmbed()
             .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
             .setColor(config.discord['embed-hex-color'])
-            .setTitle('Ping results')
+            .setTitle('Status results')
             .setThumbnail(client.user.avatarURL())
             .addFields(
                 { name: 'Username', value: bot.username, inline: true },

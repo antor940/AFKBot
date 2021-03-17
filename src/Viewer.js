@@ -1,10 +1,12 @@
 const config = require('../config.json');
+const portfinder = require('portfinder');
 const { Discord, client, channel, errEmbed } = require('./Discord');
 const { logToFile, fetch } = require('../index');
 const { gotoCoord } = require('./Pathfind');
+var getPort;
 
 logToFile('<src/Viewer.js> Started', dir);
-function startViewer()
+async function startViewer()
 {
     try
     {
@@ -12,8 +14,10 @@ function startViewer()
         logToFile('<src/BotFunctions.js> startViewer loaded', dir);
         
         const { bot, mineflayerViewer } = require('./Bot');
+        getPort = await portfinder.getPortPromise();
+        
         mineflayerViewer(bot, {
-            port: port,
+            port: getPort,
             firstPerson: config.viewer['first-person'],
             viewDistance: config.viewer['view-distance']
         });
@@ -49,7 +53,7 @@ async function returnViewer()
 {
     try
     {
-        await fetch.default(`http://localhost:${port}/`).then(res =>
+        await fetch.default(`http://localhost:${getPort}/`).then(res =>
         {
             resText = res.statusText;
         })
@@ -64,13 +68,13 @@ async function returnViewer()
         .setColor(config.discord['embed-hex-color'])
         .setTitle('World Viewer')
         .setThumbnail(client.user.avatarURL())
-        .addFields(
-            { name: 'URL', value: `http://localhost:${port}/`, inline: true },
-            { name: 'Port', value: port, inline: true },
-        );
 
         if (resText === 'OK')
         {
+            portEmbed.addFields(
+                { name: 'URL', value: `http://localhost:${getPort}/`, inline: true },
+                { name: 'Port', value: getPort, inline: true }
+            );
             portEmbed.setDescription(`✅ Viewer Online`);
         }
         else
