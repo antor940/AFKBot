@@ -1,7 +1,7 @@
 [![Discord](https://img.shields.io/badge/Discord-blue.svg)](https://discord.gg/JQeVxbQT5G)
 
 [![Release](https://img.shields.io/badge/Download-brightgreen)](https://github.com/DrMoraschi/AFKBot/releases/download/v2.2/AFKBot.v2.zip)
-<h1 align="center">AFKBot</h1>
+<h1 align="center"><img src="https://static.wikia.nocookie.net/minecraft_gamepedia/images/d/dc/Water_Bucket_JE2_BE2.png/revision/latest/scale-to-width-down/150?cb=20190430112051" width="32.5" height="32.5">AFKBot<img src="https://lh3.googleusercontent.com/proxy/e4bcJIBg4MuldgHDECZlNl5SAU9z5KoyaU8MY60LJl8j6n96oZkXgTQ08Vio_b11orzPQvgyv2zp8rJDslKJRJMXuDBTAvt6ddiJTdupx9hnaMb7WWA_4zuDgmpzMTFxn3kH_xctnSbNZhRU5kZCRbuGjyykbTC9FH1RaftJeRk5TCxOtI-Oo44plLO8y9KKrag" width="32.5" height="32.5"></h1>
 
 A Bot for Minecraft to stay AFK thanks to [mineflayer](https://github.com/PrismarineJS/mineflayer). Mainly for Windows, but should work on macOS and Linux.
 
