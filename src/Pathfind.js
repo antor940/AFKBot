@@ -16,6 +16,7 @@ async function followPlayer(username)
 
         await bot.pvp.stop();
         await bot.pathfinder.setGoal(null);
+        bot.removeAllListeners('goal_reached');
         bot.pathfinder.setGoal(new goals.GoalFollow(playerToFollow, config.pathfind['pathfind-range']), true);
 
         const fieldArr = [
@@ -65,6 +66,7 @@ function stopPathfind()
     {
         const { bot } = require('./Bot');
         bot.pathfinder.setGoal(null);
+        bot.removeAllListeners('goal_reached');
     }
     catch (err)
     {
