@@ -26,10 +26,6 @@ All the options of the config.json:
       
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
 	
-	"notify-users": Send a notification to Discord when a player with a username included in "list" joins.
-		"enable": Having this set to true, the bot will send a notification when the user/s join. Default is false.
-		"list": Array of usernames.
-	
 	"auto-login": Auto-Login features for plugins like AuthMe. Can only do /login for now. You have to /register it manually before-hand.
 		"enable": Having this set to true, the bot will execute the /login [password] command on spawn Default is false.
 		"password": Password for the /login [password] command.
@@ -59,7 +55,6 @@ All the options of the config.json:
 		"enable": Having this set to false, the Bot won't create a Viewer.
 		"first-person": If the viewer should be on first person.
 		"view-distance": Same as render distance in chunks.
-		"port": Number of a port. Can be left as default: 3000.
     
 	"low-health": Low-Health options.
 		"warn-on-low-health": Having this set to true, will make the Bot send a message if his health goes below "health-points".
@@ -82,11 +77,12 @@ All the options of the config.json:
 		
 	"misc-options". Miscellaneous options.
 		"send-chat-to-ds": Having this set to true, will make the Bot send the minecraft chat to Discord, not recommended as Discord doesn't like having a lot of messages sent in a short span of time.
-		"antikick-jump": Having this set to true, will make the Bot jump every "antikick-jump-interval" milliseconds.
+		"antikick": Having this set to true, will make the Bot move every "antikick-interval" milliseconds, "antikick-radius" blocks.
+		"antikick-radius": The antikick makes the Bot go in circles, the radius in blocks.
 		"look-entities": Having this set to true, will make the Bot look at nearby players.
     
 	"timeouts": Timeouts on various events. All of them have to be in milliseconds.
 		"on-kicked": Milliseconds that will pass before the Bot will reconnect to the server if it's kicked.
-		"antikick-jump-interval": Milliseconds that will pass between each "antikick-jump" jump.
+		"antikick-interval": Milliseconds that will pass between each "antikick".
     
 	"debug": Having this set to true will make the Bot print some useless extra information in the console.
