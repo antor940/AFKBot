@@ -1,6 +1,10 @@
-<a href="https://discord.gg/JQeVxbQT5G"><img src="https://img.shields.io/badge/Discord-blue.svg" align="left"></a><a href="https://github.com/DrMoraschi/AFKBot/releases/download/v2.2/AFKBot.v2.zip"><img src="https://img.shields.io/badge/Download-brightgreen.svg" align="left"></a>
+<a href="https://discord.gg/JQeVxbQT5G"><img src="https://img.shields.io/badge/Discord-blue.svg" align="left"></a>
+<br>
+<a href="https://github.com/DrMoraschi/AFKBot/releases/download/v2.2/AFKBot.v2.zip"><img src="https://img.shields.io/badge/Download-brightgreen.svg" align="right"></a>
 
-<a href="https://drmoraschi.github.io/AFKBot/"><img src="https://img.shields.io/badge/Page-fc0303.svg" align="right"></a><a href="https://github.com/DrMoraschi/AFKBot/releases"><img src="https://img.shields.io/badge/Releases-f4fc03.svg" align="right"></a>
+<a href="https://drmoraschi.github.io/AFKBot/"><img src="https://img.shields.io/badge/Page-fc0303.svg" align="left"></a>
+<br>
+<a href="https://github.com/DrMoraschi/AFKBot/releases"><img src="https://img.shields.io/badge/Releases-f4fc03.svg" align="right"></a>
 <h1 align="center">AFKBot</h1>
 
 A Bot for Minecraft to stay AFK thanks to [mineflayer](https://github.com/PrismarineJS/mineflayer). Mainly for Windows, but should work on macOS and Linux.
