@@ -102,13 +102,14 @@
 
     "misc-options": {
         "send-chat-to-ds": false,
-        "antikick-jump": true,
+        "antikick": false,
+        "antikick-radius": 3,
         "look-entities": true
     },
 
     "timeouts": {
         "on-kicked": 5000,
-        "antikick-jump-interval": 600000
+        "antikick-interval": 600000
     },
 
     "debug": false,

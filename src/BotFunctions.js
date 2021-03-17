@@ -1,7 +1,7 @@
 function startBotFunctions()
 {
     const config = require('../config.json');
-    const { bot, mcData, startBot } = require('./Bot');
+    const { bot, mcData, goals, startBot } = require('./Bot');
     const { startViewer } = require('./Viewer');
     const { Discord, client, channel, errEmbed } = require('./Discord');
     const { commandList } = require('./DiscordFunctions');
@@ -20,7 +20,7 @@ function startBotFunctions()
     if (config['auto-eat'].enable) autoEat();
     if (config['misc-options']['look-entities']) autoLook();
     if (config.pvp.enable) autoPvP();
-    if (config['misc-options']['antikick-jump']) antiKick();
+    if (config['misc-options']['antikick']) antiKick();
     if (config['message-on-interval'].enable) intervalMessage();
     if (config.viewer.enable) startViewer();
     
@@ -244,12 +244,35 @@ function startBotFunctions()
     function antiKick()
     {
         logToFile('<src/BotFunctions.js> antiKick loaded', dir);
-        setInterval(() => {
-            bot.setControlState('jump', true);
-            setTimeout(() => {
-                bot.setControlState('jump', false);    
-            }, 250);
-        }, config.timeouts['antikick-jump-interval']);
+        goRandom();
+        async function goRandom()
+        {
+            await sleep(config.timeouts['antikick-interval']);
+            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x + config['misc-options']['antikick-radius'], bot.entity.position.z));
+            await waitForGoal();
+            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x, bot.entity.position.z + config['misc-options']['antikick-radius']));
+            await waitForGoal();
+            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x - config['misc-options']['antikick-radius'], bot.entity.position.z));
+            await waitForGoal();
+            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x, bot.entity.position.z - config['misc-options']['antikick-radius']));
+            await waitForGoal();
+            
+            bot.removeAllListeners('goal_reached');
+            goRandom();
+        };
+
+        function waitForGoal()
+        {
+            return new Promise((resolve) =>
+            {
+                bot.on('goal_reached', resolve);
+            });
+        };
+
+        function sleep(ms)
+        {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+        };
     };
     
     function intervalMessage()
