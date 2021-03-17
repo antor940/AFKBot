@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const config = require('../config.json');
-const thisVer = 22;
+const thisVer = 23;
 
 function checkUpdate()
 {
