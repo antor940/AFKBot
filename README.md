@@ -71,3 +71,5 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
   I am not responsible of any problems that this Bot may cause, when you are downloading it, it's up to you and to be responsible of your own actions.
   
   Thank you.
+  
+  <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/DrMoraschi/AFKBot/total?style=for-the-badge">
