@@ -17,7 +17,7 @@
 
     "discord": {
         "token": "",
-        "guild-id": "",
+        "server-id": "",
         "channel-id": "",
         "embed-hex-color": "#000ff",
         "prefix": "+",

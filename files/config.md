@@ -15,7 +15,7 @@ All the options of the config.json:
     
 	"discord": Discord Bot options.
 		"token": Token of the Discord Bot.
-		"guild-id": ID of the server. WARNING: It's the ID of the DISCORD SERVER, to get this, you must have Developer Mode turned On.
+		"server-id": ID of the server. WARNING: It's the ID of the DISCORD SERVER, to get this, you must have Developer Mode turned On.
 		"channel-id": ID of the channel where the Bot will print the chat, or where it will listen for commands.
 		"embed-hex-color": Hex color of the embeds that the Bot will send.
 		"prefix": Prefix for the Bot Commands.
