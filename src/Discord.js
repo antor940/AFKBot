@@ -5,8 +5,8 @@ const { logToFile } = require('../index');
 logToFile('<src/Discord.js> Trying to start Discord Bot', dir);
 
 const notEnoughCreds = 'Please specify a Discord Bot Token, a Discord Server ID and a Discord Channel ID';
-const neededCreds = !config.discord.token || !config.discord['guild-id'] || !config.discord['channel-id'];
-if (neededCreds) throw new Error(notEnoughCreds);
+const neededCreds = config.discord.token || config.discord['guild-id'] || config.discord['channel-id'];
+if (!neededCreds) return console.log(notEnoughCreds);
 
 const client = new Discord.Client();
 client.login(config.discord.token);
