@@ -72,6 +72,6 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
   
   Thank you.
   
-  This project may be considered as a continuation of [JPenuchot's AFKBot](https://github.com/JPenuchot/AFKBot), but I didn't know of the existence of this Repo when I named mine.
+  This project may be considered as a continuation of [JPenuchot's AFKBot](https://github.com/JPenuchot/AFKBot), but I didn't know of the existence of that Repo when I named mine.
   
   <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/DrMoraschi/AFKBot/total?style=for-the-badge">
