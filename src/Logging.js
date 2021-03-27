@@ -1,46 +1,21 @@
-const config = require('../config.json');
 const fs = require('fs');
 const logToFile = require('log-to-file');
-const fileNumberRegex = /\d/;
-let lastNumber;
 
-if (config.debug) log('<src/Logging.js> started');
 function checkLatestLog()
 {
-    if (!fs.existsSync('./logs'))
-    {
-        if (config.debug) log(`<src/Logging.js> logs directory doesn't exist, creating one`);
-        fs.mkdirSync('./logs');
-    };
+    if (!fs.existsSync('./logs')) fs.mkdirSync('./logs');
 
     fs.writeFileSync('./chat.log', '');
-    if (config.debug) log('<src/Logging.js> function checkLatestLog');
     return new Promise((resolve) =>
     {
-        fs.readdirSync('./logs').forEach(file =>
-        {
-            if (file.match(fileNumberRegex))
-            {
-                lastNumber = file.match(fileNumberRegex);
-            };
-        });
-            
-        if (!lastNumber) 
-        {
-            fs.writeFileSync('./logs/log0.log', '');
-            resolve();
-        }
-        else
-        {
-            dir = `./logs/log${parseInt(lastNumber[0]) + 1}.log`;
-            resolve();
-        };
+        fs.writeFileSync('./logs/log0.log', '');
+        dir = './logs/log0.log';
+        resolve();
     });
 };
 
 function clearLogFolder()
 {
-    if (config.debug) log('<src/Logging.js> function clearLogFolder');
     try
     {
         fs.rmdirSync('./logs', { recursive: true });
@@ -54,9 +29,18 @@ function clearLogFolder()
     };
 };
 
+function logToLog(content)
+{
+    logToFile(content, dir);
+};
+
+function logToChat(content)
+{
+    logToFile(content, 'chat.log');
+};
+
 function logInv(botInvJSON)
 {
-    if (config.debug) log('<src/Logging.js> function logInv');
     try
     {
         return new Promise((resolve) =>
@@ -69,7 +53,7 @@ function logInv(botInvJSON)
     {
         const { errEmbed } = require('./Discord');
         
-        logToFile(`<src/Logging.js> Error: ${err}`, dir);
+        logToFile(`<src/Logging.js/function logInv> Error: ${err}`, dir);
         errEmbed(err, '- Give the program or NODE permission to write and delete files\n - This error was caused by a dependency, please report it as a bug');
     };
 };
@@ -77,5 +61,7 @@ function logInv(botInvJSON)
 module.exports = {
     checkLatestLog,
     clearLogFolder,
+    logToLog,
+    logToChat,
     logInv
 };

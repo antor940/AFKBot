@@ -1,10 +1,9 @@
 const config = require('../config.json');
-const { logToFile } = require('../index');
+const { logToLog } = require('./Logging');
 
+logToLog('<src/Embed.js> Passed');
 async function fieldEmbed(embedTitle, fieldArray, embedDesc)
 {
-    if (config.debug) log('<src/Embed.js> fieldEmbed executed');
-    logToFile('<src/Embed.js> fieldEmbed executed', dir);
     const { Discord, client, channel, errEmbed } = require('./Discord');
     try
     {
@@ -23,8 +22,7 @@ async function fieldEmbed(embedTitle, fieldArray, embedDesc)
             if (embedDesc !== '') fieldEmbed.setDescription(embedDesc);
     
             await channel.send(fieldEmbed);
-            if (config.debug) log('<src/Embed.js> fieldEmbed sent');
-            logToFile('<src/Embed.js> fieldEmbed sent', dir);
+            logToLog('<src/Embed.js/Function fieldEmbed> Passed');
             resolve();
         });
     }
@@ -36,8 +34,6 @@ async function fieldEmbed(embedTitle, fieldArray, embedDesc)
 
 async function descEmbed(embedTitle, embedDesc)
 {
-    if (config.debug) log('<src/Embed.js> descEmbed executed');
-    logToFile('<src/Embed.js> fieldEmbed executed', dir);
     const { Discord, client, channel, errEmbed } = require('./Discord');
     try
     {
@@ -51,8 +47,7 @@ async function descEmbed(embedTitle, embedDesc)
             .setThumbnail(client.user.avatarURL());
     
             await channel.send(descEmbed);
-            if (config.debug) log('<src/Embed.js> descEmbed sent');
-            logToFile('<src/Embed.js> descEmbed sent', dir);
+            logToLog('<src/Embed.js/Function descEmbed> Passed');
             resolve();
         });
     }

@@ -1,9 +1,8 @@
 const config = require('../config.json');
 const Discord = require('discord.js');
-const { logToFile } = require('../index');
+const { logToLog } = require('./Logging');
 
-logToFile('<src/Discord.js> Trying to start Discord Bot', dir);
-
+logToLog('<src/Discord.js> Passed');
 const notEnoughCreds = `ERROR: Please specify a Discord Bot Token, a Discord Server ID and a Discord Channel ID`;
 const notCorrectIds = `ERROR: server ID or channel ID is incorrect, or I cannot access them, please check again\n`;
 const neededCreds = config.discord.token || config.discord['server-id'] || config.discord['channel-id'];
@@ -17,13 +16,10 @@ client.login(config.discord.token)
     process.exit(0);
 });
 
-if (config.debug) log(`<src/Discord.js> creating bot`);
 client.on('ready', () =>
 {
     try
     {
-        logToFile(`<src/Discord.js> Bot started as: ${client.user.tag}`, dir);
-        if (config.debug) log(`<src/Discord.js> retrieving channel`);
         const channel = client.channels.cache.get(config.discord['channel-id']);
         const guild = client.guilds.cache.get(config.discord['server-id']);
         if (!guild || !channel) return console.log(notCorrectIds);
@@ -51,13 +47,12 @@ client.on('ready', () =>
             errEmbed
         };
     
-        if (config.debug) log(`<src/Discord.js> starting ./DiscordFunctions`);
-        logToFile('<src/Discord.js> Starting src/DiscordFunctions.js', dir);
+        logToLog(`<src/Discord.js/Event on ready> Passed`);
         require('./DiscordFunctions');
     }
     catch (err)
     {
-        logToFile(`<src/Discord.js> ERROR INITIALIZING: ${err}`, dir);
+        logToLog(`<src/Discord.js/ERROR Event on ready> ERROR: ${err}`);
         console.log(`ERROR INITIALIZING: ${err}`);
     };
 });

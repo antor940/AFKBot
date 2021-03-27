@@ -1,26 +1,24 @@
 const config = require('../config.json');
 const { errEmbed } = require('./Discord');
-const { logToFile } = require('../index');
 const { descEmbed } = require('./Embed');
+const { logInv, logToLog } = require('./Logging');
 
-if (config.debug) log('<src/Inventory.js> Started');
+logToLog('<src/Inventory.js> Passed');
 async function listInventory()
 {
     try
     {
-        logToFile('<src/Inventory.js> listInventory executed', dir);
-        if (config.debug) log('<src/Inventory.js> listInventory executed');
         const { bot } = require('./Bot');
         let botInv = bot.inventory.items().map(item => `${item.name} x ${item.count}`).join('\n');
         if (botInv.length > 2000) botInv = botInv.slice(1, 2000);
         if (!botInv) botInv = 'Inventory empty';
     
         await descEmbed('Bot inventory', botInv);
-        logToFile('<src/Inventory.js> Sent inventoryEmbed', dir);
+        logToLog('<src/Inventory.js/Function listInventory> Passed');
     }
     catch (err)
     {
-        logToFile(`<src/Inventory.js> Error ${err}`, dir);
+        logToLog(`<src/Inventory.js/ERROR Function listInventory> ERROR: ${err}`);
         errEmbed(err, '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
     };
 };
@@ -29,10 +27,7 @@ async function rawInventory()
 {
     try
     {
-        logToFile('<src/Inventory.js> rawInventory executed', dir);
-        if (config.debug) log('<src/Inventory.js> listInventory executed');
         const { bot } = require('./Bot');
-        const { logInv } = require('./Logging');
         let rawInv = JSON.stringify(bot.inventory.items(), null, 2);
         if (rawInv.length > 2000)
         {
@@ -41,7 +36,7 @@ async function rawInventory()
         };
 
         await descEmbed('Raw Bot inventory', '```js\n'+rawInv+'\n```\nIf inventory is cut off, it\'s because of the Discord Character Limit, you can view the full message inside /files/InventoryJSON.json');
-        logToFile('<src/Inventory.js> Sent inventoryEmbed', dir);
+        logToLog('<src/Inventory.js/Function rawInventory> Passed');
 
         async function logInventory()
         {
@@ -50,7 +45,7 @@ async function rawInventory()
     }
     catch (err)
     {
-        logToFile(`<src/Inventory.js> Error ${err}`, dir);
+        logToLog(`<src/Inventory.js/ERROR Function rawInventory> ERROR: ${err}`);
         errEmbed(err, '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
     };
 };
@@ -59,8 +54,7 @@ function emptyInventory()
 {
     try
     {
-        logToFile('<src/Inventory.js> emptyInventory executed', dir);
-        if (config.debug) log('<src/Inventory.js> emptyInventory executed');
+        logToLog('<src/Inventory.js/Function emptyInventory> Passed');
         const { bot } = require('./Bot');
 
         tossEach();
@@ -85,7 +79,7 @@ function emptyInventory()
     }
     catch (err)
     {
-        logToFile(`<src/Inventory.js> Error ${err}`, dir);
+        logToLog(`<src/Inventory.js/ERROR Function emptyInventory> ERROR: ${err}`);
         errEmbed(err, '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
     };
 };

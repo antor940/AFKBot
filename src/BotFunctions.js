@@ -3,17 +3,15 @@ function startBotFunctions()
     const config = require('../config.json');
     const { bot, mcData, goals, startBot } = require('./Bot');
     const { startViewer } = require('./Viewer');
-    const { Discord, client, channel, errEmbed } = require('./Discord');
+    const { client, channel, errEmbed } = require('./Discord');
     const { commandList } = require('./DiscordFunctions');
     const { sendNotification } = require('./Windows');
     const { autoEat, enablePlugin, disablePlugin } = require('./Eat');
     const { fieldEmbed } = require('./Embed');
-    const { logToFile } = require('../index');
+    const { logToLog, logToChat } = require('./Logging');
     
     //Minecraft
-    logToFile('<src/BotFunctions.js> Started', dir);
-    logToFile('<src/BotFunctions.js> Starting functions', dir);
-    if (config.debug) log(`<src/EventFunctions.js> load functions`);
+    logToLog('<src/BotFunctions.js/Function startBotFunctions> Passed');
     if (config['notify-on-user'].enable) notifyUsers();
     if (config.whispers['enable-answer']) autoWhisper();
     if (config.logs['log-chat-to-file']) logChat();
@@ -24,7 +22,6 @@ function startBotFunctions()
     if (config['message-on-interval'].enable) intervalMessage();
     if (config.viewer.enable) startViewer();
     
-    if (config.debug) log(`<src/BotFunctions.js> load resource pack`);
     bot.on('error', (err) =>
     {
         errEmbed(err, `- This was caused by something that interacted with the bot\n - If it persists, please report in on Discord or create an issue`);
@@ -32,7 +29,7 @@ function startBotFunctions()
 
     bot._client.on('resource_pack_send', () =>
     {
-        logToFile('<src/BotFunctions.js> Loading resource pack', dir);
+        logToLog('<src/BotFunctions.js/Event on resource_pack_send> Passed');
         bot._client.write('resource_pack_receive',
         {
             result: 3
@@ -44,7 +41,6 @@ function startBotFunctions()
         });
     });
     
-    if (config.debug) log(`<src/BotFunctions.js> load events`);
     bot.on('message', (message) =>
     {
         if (config.logs['log-chat-to-console']) console.log(`<CHAT> ${message.toAnsi()}`);
@@ -73,7 +69,7 @@ function startBotFunctions()
         ];
 
         await fieldEmbed('Bot started', embedArr, '');
-        logToFile('<src/BotFunctions.js> Sent botStartEmbed', dir);
+        logToLog('<src/BotFunctions.js/Event once health> Passed');
         
         setTimeout(() => {
             onConnectDont = false;
@@ -94,7 +90,7 @@ function startBotFunctions()
             ];
     
             await fieldEmbed('Bot warning', embedArr, '');
-            logToFile('<src/BotFunctions.js> Sent healthWarnEmbed', dir);
+            logToLog('<src/BotFunctions.js/Event on health> Passed');
             pauseOnSent = true;
     
             if (config['low-health']['disconnect-on-low-health'] && !onConnectDont) process.exit(1);
@@ -118,7 +114,7 @@ function startBotFunctions()
             ];
     
             await fieldEmbed('Bot warning', embedArr, '');
-            logToFile('<src/BotFunctions.js> Banned, shutting down', dir);
+            logToLog('<src/BotFunctions.js/Event on kicked> Passed');
             if (config['windows-notifications']['on-banned']) await sendNotification('Banned', reason);
             process.exit(1);
         }
@@ -133,7 +129,7 @@ function startBotFunctions()
             ];
     
             await fieldEmbed('Bot warning', embedArr, '');
-            logToFile(`<src/BotFunctions.js> Kicked, reconnecting in ${config.timeouts['on-kicked']/1000} seconds`, dir);
+            logToLog(`<src/BotFunctions.js/Event on kicked> Passed`);
             if (config['windows-notifications']['on-kicked']) sendNotification('Kicked', reason);
             
             setTimeout(() => {
@@ -184,14 +180,13 @@ function startBotFunctions()
         if (config.bloodhound.enable && bloodhoundInfo.weapon) embedArr.push({ name: `Weapon`, value: bloodhoundInfo.weapon.name || bloodhoundInfo.weapon.displayName });
     
         if (config.bloodhound.enable) await fieldEmbed('Bot warning', embedArr, 'Died or killed');
-        logToFile('<src/BotFunctions.js> Will send bloodhoundEmbed if specified', dir);
+        logToLog('<src/BotFunctions.js/Event on death> Passed');
         if (config['windows-notifications']['on-death']) sendNotification('Warning', 'Died or killed');
     });
     
-    if (config.debug) log(`<src/BotFunctions.js> load functions`);
     function notifyUsers()
     {
-        logToFile('<src/BotFunctions.js> notifyUsers loaded', dir);
+        logToLog('<src/BotFunctions.js/Function notifyUsers> Passed');
         bot.on('playerJoined', async (player) =>
         {
             if (config['notify-on-user'].list.includes(player.username))
@@ -210,7 +205,7 @@ function startBotFunctions()
     
     function autoLook()
     {
-        logToFile('<src/BotFunctions.js> autoLook loaded', dir);
+        logToLog('<src/BotFunctions.js/Function autoLook> Passed');
         bot.on('entityMoved', (entity) =>
         {
             if (bot.pathfinder.isMoving()) return;
@@ -221,7 +216,7 @@ function startBotFunctions()
     
     function autoPvP()
     {
-        logToFile('<src/BotFunctions.js> autoPvP loaded', dir);
+        logToLog('<src/BotFunctions.js/Function autoPvP> Passed');
         bot.on('entityMoved', (entity) =>
         {
             if (!config.pvp.enable || bot.entity.position.distanceTo(entity.position) > 5 || bot.pathfinder.isMoving()) return;
@@ -243,7 +238,7 @@ function startBotFunctions()
     
     function antiKick()
     {
-        logToFile('<src/BotFunctions.js> antiKick loaded', dir);
+        logToLog('<src/BotFunctions.js/Function antiKick> Passed');
         goRandom();
         async function goRandom()
         {
@@ -279,14 +274,14 @@ function startBotFunctions()
     {
         try
         {
-            logToFile('<src/BotFunctions.js> intervalMessage loaded', dir);
+            logToLog('<src/BotFunctions.js/Function intervalMessage> Passed');
             setInterval(() => {
                 bot.chat(config['message-on-interval'].message);
             }, config['message-on-interval'].interval);
         }
         catch (err)
         {
-            logToFile(`<src/BotFunctions.js> Error: ${err}`, dir);
+            logToLog(`<src/BotFunctions.js/ERROR Function intervalMessage> ERROR: ${err}`);
             errEmbed(err, `- Check the config for the message-interval`);
         };
     };
@@ -295,7 +290,7 @@ function startBotFunctions()
     {
         bot.on('message', (message) =>
         {
-            logToFile(message, 'chat.log');
+            logToChat(message.toString());
         });
     };
     

@@ -5,13 +5,13 @@ const pvp = require('mineflayer-pvp').plugin;
 const autoeat = require('mineflayer-auto-eat');
 const bloodhoundPlugin = require('mineflayer-bloodhound')(mineflayer);
 const mineflayerViewer = require('prismarine-viewer').mineflayer;
-const { logToFile } = require('../index');
 const { registerBot, loginBot } = require('./Login');
+const { logToLog } = require('./Logging');
 
+logToLog('<src/Bot.js> Passed');
 function startBot()
 {
-    if (config.debug) log(`<src/Bot.js> starting bot`);
-    logToFile('<src/Bot.js> Starting bot', dir);
+    logToLog('<src/Bot.js/Function startBot> Passed');
     return new Promise((resolve, reject) =>
     {
         const bot = mineflayer.createBot({
@@ -27,7 +27,6 @@ function startBot()
 
         bot.once('spawn', () =>
         {
-            logToFile('<src/Bot.js> Bot spawned', dir);
             const mcData = require('minecraft-data')(bot.version);
             bot.loadPlugin(pathfinder);
             bot.loadPlugin(pvp);
@@ -55,7 +54,7 @@ function startBot()
                 startBot
             };
 
-            logToFile('<src/Bot.js> Initializing BotFunctions', dir);
+            logToLog('<src/Bot.js/Event once spawn> Passed');
             const { startBotFunctions } = require('./BotFunctions');
             startBotFunctions();
             return resolve(bot);

@@ -4,8 +4,7 @@ const { pingServer } = require('./Ping');
 const { startBot } = require('./Bot');
 const { followPlayer, gotoCoord, stopPathfind } = require('./Pathfind');
 const { Discord, client, errEmbed, channel } = require('./Discord');
-const { logToFile } = require('../index');
-const { clearLogFolder } = require('./Logging');
+const { clearLogFolder, logToLog } = require('./Logging');
 const { autoFish, stopFishing } = require('./Fishing');
 const { listInventory, rawInventory, emptyInventory } = require('./Inventory');
 const { returnViewer } = require('./Viewer');
@@ -13,8 +12,6 @@ const { fieldEmbed } = require('./Embed');
 
 console.log(`<DISCORD> Logged in: ${client.user.tag}`);
 if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bot-rpc'].text);
-if (config.debug) log(`<src/DiscordFunctions.js> logged in`);
-logToFile('<src/DiscordFunctions.js> Started', dir);
 
 let commandList = [
     `${config.discord.prefix}help`,
@@ -55,67 +52,66 @@ const fieldArr = [
 ];
     
 fieldEmbed('Commands', fieldArr, '');
-if (config.debug) log(`<src/DiscordFunctions.js> sent command list`);
-logToFile('<src/DiscordFunctions.js> Sent startEmbed', dir);
+logToLog('<src/DiscordFunctions.js> Passed');
 
 client.on('message', async (message) =>
 {
     if (message.author.bot || message.channel.id !== config.discord['channel-id']) return;
+    if (!config.discord['owners-ids'].includes(message.author.id)) return;
     switch (message.cleanContent)
     {
         case `${config.discord.prefix}help`:
-            logToFile('<src/DiscordFunctions.js> Help executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Help> Passed');
             fieldEmbed('Commands', fieldArr, '');
         break;
         case `${config.discord.prefix}ping`:
-            logToFile('<src/DiscordFunctions.js> Ping executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Ping> Passed');
             pingServer();
         break;
         case `${config.discord.prefix}start`:
-            logToFile('<src/DiscordFunctions.js> Start executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Start> Passed');
             startBot()
             .catch(err =>
             {
-                logToFile(`<src/DiscordFunctions.js> Error: ${err}`, dir);
-                errEmbed(err, `- Check credentials, IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
+                logToLog(`<src/DiscordFunctions.js/ERROR Case Start> ERROR: ${err}`);
+                errEmbed(err, `- Check credentials, IP and Port\n - If error persists, ask on Discord or report it as a bug`);
             });
         break;
         case `${config.discord.prefix}status`:
-            logToFile('<src/DiscordFunctions.js> Status executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Status> Passed');
             const { getStatus } = require('./Status');
             getStatus().then(statusEmbed => channel.send(statusEmbed));
-            logToFile('<src/Status.js> Sent statusEmbed', dir);
         break;
         case `${config.discord.prefix}fish`:
-            logToFile('<src/DiscordFunctions.js> Fish executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Fish> Passed');
             autoFish();
         break;
         case `${config.discord.prefix}stopfish`:
-            logToFile('<src/DiscordFunctions.js> Stopfish executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Stopfish> Passed');
             stopFishing();
         break;
         case `${config.discord.prefix}list`:
-            logToFile('<src/DiscordFunctions.js> List executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case List> Passed');
             listInventory();
         break;
         case `${config.discord.prefix}rawinv`:
-            logToFile('<src/DiscordFunctions.js> Rawinv executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Rawinv> Passed');
             rawInventory();
         break;
         case `${config.discord.prefix}empty`:
-            logToFile('<src/DiscordFunctions.js> Empty executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Empty> Passed');
             emptyInventory();
         break;
         case `${config.discord.prefix}viewer`:
-            logToFile('<src/DiscordFunctions.js> Viewer executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Viewer> Passed');
             returnViewer();
         break;
         case `${config.discord.prefix}clearlogs`:
-            logToFile('<src/DiscordFunctions.js> Clearlogs executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Clearlogs> Passed');
             clearLogFolder();
         break;
         case `${config.discord.prefix}stop`:
-            logToFile('<src/DiscordFunctions.js> Stop executed', dir);
+            logToLog('<src/DiscordFunctions.js/Case Stop> Passed');
             stopPathfind();
         break;
         case `${config.discord.prefix}exit`:
@@ -124,13 +120,13 @@ client.on('message', async (message) =>
 
     if (message.cleanContent.startsWith(`${config.discord.prefix}follow `))
     {
-        logToFile('<src/DiscordFunctions.js> Follow executed', dir);
+        logToLog('<src/DiscordFunctions.js/If Follow> Passed');
         const usernameToFollow = message.cleanContent.replace(`${config.discord.prefix}follow `, '');
         followPlayer(usernameToFollow);
     }
     else if(message.cleanContent.startsWith(`${config.discord.prefix}goto `))
     {
-        logToFile('Goto executed', dir);
+        logToLog('<src/DiscordFunctions.js/If Goto> Passed');
         const coordsFromMessage = message.cleanContent.split(' ');
         if (!coordsFromMessage[3]) return errEmbed(`Not a valid position`, `- Make sure the command is written like this, ${config.discord.prefix}goto [x] [y] [z], without the brackets`);
         const vecCoords = new Vec3(coordsFromMessage[1], coordsFromMessage[2], coordsFromMessage[3]);

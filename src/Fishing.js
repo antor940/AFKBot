@@ -1,16 +1,14 @@
 const config = require('../config.json');
 const { errEmbed } = require('./Discord');
-const { logToFile } = require('../index');
+const { logToLog } = require('./Logging');
 let stopFishingNow = false;
 let fishingNow = false;
 
-logToFile('<src/Fishing.js> Started', dir);
-if (config.debug) log('<src/Fishing.js> started');
+logToLog('<src/Fishing.js> Passed');
 async function autoFish()
 {
     try
     {
-        if (config.debug) log('<src/Fishing.js> started autoFish');
         const { bot } = require('./Bot');
         if (stopFishingNow) return stopFishingNow = false;
         if (bot.inventory.emptySlotCount() === 0)
@@ -45,7 +43,7 @@ async function autoFish()
             return;
         };
 
-        logToFile(`<src/Fishing.js> Error: ${err}`, dir);
+        logToLog(`<src/Fishing.js/ERROR Function autoFish> ERROR: ${err}`);
         errEmbed(err, '- Start the bot before\n - Give the bot a fishing rod\n - Wait and send the command again');
         stopFishingNow = false;
         fishingNow = false;
@@ -54,8 +52,7 @@ async function autoFish()
 
 function stopFishing()
 {
-    if (config.debug) log('<src/Fishing.js> stopped autoFish');
-    logToFile('<src/Fishing.js> stopFishing executed', dir);
+    logToLog('<src/Fishing.js/Function stopFishing> Passed');
     const { bot } = require('./Bot');
     if (!fishingNow) return;
     bot.activateItem();

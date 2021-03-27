@@ -1,18 +1,16 @@
 const config = require('../config.json');
 const portfinder = require('portfinder');
 const { Discord, client, channel, errEmbed } = require('./Discord');
-const { logToFile, fetch } = require('../index');
+const { fetch } = require('../index');
 const { gotoCoord } = require('./Pathfind');
+const { logToLog } = require('./Logging');
 var getPort;
 
-logToFile('<src/Viewer.js> Started', dir);
+logToLog('<src/Viewer.js> Passed');
 async function startViewer()
 {
     try
     {
-        if (config.debug) log(`<src/Viewer.js> function startviewer`);
-        logToFile('<src/BotFunctions.js> startViewer loaded', dir);
-        
         const { bot, mineflayerViewer } = require('./Bot');
         getPort = await portfinder.getPortPromise();
         
@@ -40,10 +38,11 @@ async function startViewer()
     
             gotoCoord(blockPos);
         });
+        logToLog('<src/BotFunctions.js/Function startViewer> Passed');
     }
     catch (err)
     {
-        logToFile(`<src/Viewer.js> ERROR: ${err}`, dir);
+        logToLog(`<src/Viewer.js/ERROR Function startViewer> ERROR: ${err}`);
         errEmbed(err, '- Port is taken, change the port in the config');
     };
 };
@@ -62,7 +61,6 @@ async function returnViewer()
             resText = err;
         });
 
-        if (config.debug) log(`<src/Viewer.js> function returnPort`);
         const portEmbed = new Discord.MessageEmbed()
         .setAuthor(client.user.username, '', 'https://github.com/DrMoraschi/AFKBot')
         .setColor(config.discord['embed-hex-color'])
@@ -83,11 +81,11 @@ async function returnViewer()
         };
 
         await channel.send(portEmbed);
-        logToFile('<src/Viewer.js> Sent portEmbed', dir);
+        logToLog('<src/Viewer.js/Function returnViewer> Passed');
     }
     catch (err)
     {
-        logToFile(`<src/Viewer.js> ERROR: ${err}`, dir);
+        logToLog(`<src/Viewer.js/ERROR Function returnViewer> ERROR: ${err}`);
         errEmbed(err, '- Start the bot before');
     };
 };

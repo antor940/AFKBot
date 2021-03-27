@@ -1,24 +1,23 @@
 const config = require('../config.json');
 const { performance } = require('perf_hooks');
-const { Discord, client, channel, errEmbed } = require('./Discord');
-const { mc, logToFile } = require('../index');
+const { errEmbed } = require('./Discord');
+const { mc } = require('../index');
 const { fieldEmbed } = require('./Embed');
+const { logToLog } = require('./Logging');
 
 let pingTimerStart;
 let pingTimerEnd;
+logToLog('<src/Ping.js> Passed');
 function pingServer()
 {
     pingTimerStart = performance.now();
-    logToFile('<src/Ping.js> Pinging...', dir);
-    if (config.debug) log(`<src/Ping.js> pinging server`);
 
     mc.ping({
         host: config.server.host,
         port: config.server.port
     }, (err, res) =>
     {
-        logToFile('<src/Ping.js> Pinged server', dir);
-        if (config.debug) log(`<src/Ping.js> pinged server`);
+        logToLog('<src/Ping.js/Function pingServer> Passed');
         if (err) return errorPing(err);
         return returnPing(res);
     });
@@ -35,11 +34,11 @@ function pingServer()
             ];
             
             await fieldEmbed('Bot warning', fieldArr, '');
-            logToFile('<src/DiscordFunctions.js> Sent pingErrEmbed', dir);
+            logToLog('<src/Ping.js/Function errorPing> Passed');
         }
         catch (err)
         {
-            logToFile(`<src/DiscordFunctions.js> Error ${err}`, dir);
+            logToLog(`<src/Ping.js/ERROR Function errorPing> ERROR: ${err}`);
             errEmbed(err, `- Check the IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
         };
     }
@@ -59,11 +58,11 @@ function pingServer()
             ];
             
             await fieldEmbed('Ping results', fieldArr, '');
-            logToFile('<src/DiscordFunctions.js> Sent resEmbed', dir);
+            logToLog('<src/DiscordFunctions.js/Function returnPing> Passed');
         }
         catch (err)
         {
-            logToFile(`<src/DiscordFunctions.js> Error ${err}`, dir);
+            logToLog(`<src/DiscordFunctions.js/ERROR Function returnPing> ERROR: ${err}`);
             errEmbed(err, `- Check the IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
         };
     };
