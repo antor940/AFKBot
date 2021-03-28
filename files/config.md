@@ -15,7 +15,7 @@ All the options of the config.json:
     
 	"discord": Discord Bot options.
 		"token": Token of the Discord Bot.
-		"guild-id": ID of the server. WARNING: It's the ID of the DISCORD SERVER, to get this, you must have Developer Mode turned On.
+		"server-id": ID of the server. WARNING: It's the ID of the DISCORD SERVER, to get this, you must have Developer Mode turned On.
 		"channel-id": ID of the channel where the Bot will print the chat, or where it will listen for commands.
 		"embed-hex-color": Hex color of the embeds that the Bot will send.
 		"prefix": Prefix for the Bot Commands.
@@ -25,6 +25,8 @@ All the options of the config.json:
 			"text": Text to show in the Rich Presence.
       
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
+		
+	"owners-ids": Array of ID's of the owners, commands will only work when these users use them. 
 		
 	"notify-users": Send a notification to Discord when a player with a username included in "list" joins.
 		"enable": Having this set to true, the bot will send a notification when the user/s join. Default is false.
@@ -54,6 +56,11 @@ All the options of the config.json:
     
 	"bloodhound": Bloodhound options.
 		"enable": Having this set to false, the Bot won't find out who attacked it before killing it.
+    
+    	"message-on-death": Message sent on death.
+		"enable": Default is false.
+		"delay": How much time it will pass after the Bot has died and before it sends the message, in milliseconds.
+		"message": Message to send.
     
 	"viewer": Viewer options.
 		"enable": Having this set to false, the Bot won't create a Viewer.
