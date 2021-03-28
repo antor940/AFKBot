@@ -68,7 +68,8 @@
             "rotten_flesh",
             "poisonous_potato",
             "pufferfish"
-        ]
+        ],
+        "search-chests": true
     },
 
     "bloodhound": {
