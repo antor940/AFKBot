@@ -45,7 +45,7 @@ function logInv(botInvJSON)
     {
         return new Promise((resolve) =>
         {
-            fs.writeFileSync('../../files/InventoryJSON.json', botInvJSON);
+            fs.writeFileSync('./files/InventoryJSON.json', botInvJSON);
             resolve();
         });
     }
