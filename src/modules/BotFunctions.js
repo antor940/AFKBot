@@ -176,6 +176,7 @@ function startBotFunctions()
     
     bot.on('death', async () =>
     {
+        await bot.pathfinder.setGoal(null);
         if (config['message-on-death'].enable)
         {
             setTimeout(() => {
