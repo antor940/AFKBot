@@ -55,6 +55,11 @@ All the options of the config.json:
 	"bloodhound": Bloodhound options.
 		"enable": Having this set to false, the Bot won't find out who attacked it before killing it.
     
+    	"message-on-death": Message that is sent with a [delay] after the Bot has died.
+		"enable": Default is false.
+		"delay": How much time it will pass after the Bot has died and the [message] gets sent, in milliseconds.
+		"message": The message to be sent.
+    
 	"viewer": Viewer options.
 		"enable": Having this set to false, the Bot won't create a Viewer.
 		"first-person": If the viewer should be on first person.
