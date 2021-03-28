@@ -62,9 +62,9 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
  2. In your Command Line, repeat number 4 from "Install"; navigate to the folder where the files are located.
  3. To start the bot, just type in:
 	
-	```node index.js```
+	```npm start```
 
- 3. Once you've written all, hit ENTER and watch as the Bot starts and the bot connects to the server.
+ 3. Once you've written all, hit ENTER and watch as the Bot starts.
 
 <h2 align="center">WARNING</h2>
  
