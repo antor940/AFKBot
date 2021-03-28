@@ -1,4 +1,4 @@
-[![Discord](https://img.shields.io/badge/Discord-blue.svg)](https://discord.gg/JQeVxbQT5G)
+[![Discord](https://img.shields.io/badge/Discord-blue.svg)](https://discord.gg/fFNVp7n8W4)
 <a href="https://drmoraschi.github.io/AFKBot/"><img src="https://img.shields.io/badge/Page-fc0303.svg" align="right"></a>
 
 [![Release](https://img.shields.io/badge/Download-brightgreen)](https://github.com/DrMoraschi/AFKBot/releases/download/v2.2/AFKBot.v2.zip)
@@ -74,4 +74,7 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
   
   This project may be considered as a continuation of [JPenuchot's AFKBot](https://github.com/JPenuchot/AFKBot), but I didn't know of the existence of that Repo when I named mine.
   
-  <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/DrMoraschi/AFKBot/total?style=for-the-badge">
+#### Stats
+<a href="https://discord.gg/fFNVp7n8W4"><img alt="Discord online users" src="https://img.shields.io/discord/746844033120469062?logo=discord&color=blueviolet&label=Discord"></a>
+<a href="https://github.com/DrMoraschi/AFKBot/releases"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/DrMoraschi/AFKBot/total?logo=github&color=brightgreen&label=Downloads"></a>
+<a href=""><img alt="Latest version" src="https://img.shields.io/github/v/release/DrMoraschi/AFKBot"></a>
