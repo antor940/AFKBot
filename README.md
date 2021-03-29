@@ -59,7 +59,7 @@ But you can always check out the older versions:
 
 This Bot requires a Discord Bot to be set up beforehand, if you don't know how to do it. [Discord Bot Tutorial](https://www.writebots.com/discord-bot-token/)
  1. Before starting the Bot, please take a look at all the options of the [config.json](https://github.com/DrMoraschi/AFKBot/blob/master/files/config.md).
- 2. In your Command Line, repeat number 4 from "Install"; navigate to the folder where the files are located.
+ 2. In your Command Line, repeat number 4 from **Install**; navigate to the folder where the files are located.
  3. To start the bot, just type in:
 	
 	```npm start```
