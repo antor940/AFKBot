@@ -1,3 +1,5 @@
+const errors = require('../data/errors.json');
+
 const { errEmbed } = require('./Discord');
 
 const { descEmbed } = require('../utils/Embed');
@@ -19,7 +21,7 @@ async function listInventory()
     catch (err)
     {
         logToLog(`<src/modules/Inventory.js/ERROR Function listInventory> ERROR: ${err}`);
-        errEmbed(err, '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
+        errEmbed(errors.inventory['TypeError: Cannot read property \'inventory\' of undefined'], '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
     };
 };
 
@@ -46,7 +48,7 @@ async function rawInventory()
     catch (err)
     {
         logToLog(`<src/modules/Inventory.js/ERROR Function rawInventory> ERROR: ${err}`);
-        errEmbed(err, '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
+        errEmbed(errors.inventory['TypeError: Cannot read property \'inventory\' of undefined'], '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
     };
 };
 
@@ -80,7 +82,7 @@ function emptyInventory()
     catch (err)
     {
         logToLog(`<src/modules/Inventory.js/ERROR Function emptyInventory> ERROR: ${err}`);
-        errEmbed(err, '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
+        errEmbed(errors.inventory['TypeError: Cannot read property \'inventory\' of undefined'], '- Start the bot before using this command\n- If the bot had started when this error ocurred, please report it as a bug');
     };
 };
 

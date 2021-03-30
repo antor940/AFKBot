@@ -1,4 +1,5 @@
 const config = require('../../config.json');
+const errors = require('../data/errors.json');
 
 const { Discord, client, errEmbed } = require('./Discord');
 
@@ -34,7 +35,7 @@ function getStatus()
         catch (err)
         {
             logToLog(`<src/modules/Status.js/ERROR Function getStatus> ERROR: ${err}`);
-            errEmbed(err, `- Make sure the bot is started`);
+            errEmbed(errors.status['TypeError: Cannot read property \'username\' of undefined'], `- Make sure the bot is started`);
         };
     });
 };

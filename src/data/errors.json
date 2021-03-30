@@ -1,0 +1,21 @@
+{
+    "pathfind": {
+        "TypeError: Cannot read property 'pvp' of undefined": "This is because the bot hasn't started yet",
+        "TypeError: Cannot read property 'pathfinder' of undefined": "This is because the bot hasn't started yet",
+        "TypeError: Cannot read property 'players' of undefined": "This is because the bot hasn't started yet",
+        "TypeError: Cannot read property 'entity' of undefined": "Couldn't find an entity with that username",
+        "TypeError: Cannot read property 'position' of null": "Player is not in render distance, cannot retrieve position"
+    },
+    "fishing": {
+        "Error: Invalid item object in equip": "No fishing rod in inventory"
+    },
+    "server": {
+        "Error: connect ECONNREFUSED": "Connection rejected by the server, couldn't connect"
+    },
+    "status": {
+        "TypeError: Cannot read property 'username' of undefined": "This is because the bot hasn't started yet"
+    },
+    "inventory": {
+        "TypeError: Cannot read property 'inventory' of undefined": "This is because the bot hasn't started yet"
+    }
+}

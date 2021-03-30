@@ -1,4 +1,5 @@
 const config = require('../../config.json');
+const errors = require('../data/errors.json');
 
 const { Vec3 } = require('vec3');
 
@@ -78,7 +79,7 @@ client.on('message', async (message) =>
             .catch(err =>
             {
                 logToLog(`<src/modules/DiscordFunctions.js/ERROR Case Start> ERROR: ${err}`);
-                errEmbed(err, `- Check credentials, IP and Port\n - If error persists, ask on Discord or report it as a bug`);
+                errEmbed(`Couldn't start: ${errors.server['Error: connect ECONNREFUSED']}`, `- Check credentials, IP and Port\n - If error persists, ask on Discord or report it as a bug`);
             });
         break;
         case `${config.discord.prefix}status`:

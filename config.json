@@ -94,7 +94,7 @@
     },
 
     "message-on-interval": {
-        "enable": false,
+        "enable": true,
         "interval": 10000,
         "message": "I am an AFKBot"
     },
@@ -107,7 +107,11 @@
 
     "pathfind": {
         "pathfind-range": 1.5,
-        "max-dropdown-blocks": 4
+        "max-dropdown-blocks": 4,
+        "scaffolding-blocks":[
+            "dirt",
+            "stone"
+        ]
     },
 
     "misc-options": {

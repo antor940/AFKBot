@@ -1,3 +1,5 @@
+const errors = require('../data/errors.json');
+
 const { errEmbed } = require('./Discord');
 
 const { logToLog } = require('../utils/Logging');
@@ -45,7 +47,7 @@ async function autoFish()
         };
 
         logToLog(`<src/modules/Fishing.js/ERROR Function autoFish> ERROR: ${err}`);
-        errEmbed(err, '- Start the bot before\n - Give the bot a fishing rod\n - Wait and send the command again');
+        errEmbed(errors.fishing['Error: Invalid item object in equip'], '- Start the bot before\n - Give the bot a fishing rod\n - Wait and send the command again');
         stopFishingNow = false;
         fishingNow = false;
     };

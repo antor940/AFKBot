@@ -1,4 +1,5 @@
 const config = require('../../config.json');
+const errors = require('../data/errors.json');
 
 const { performance } = require('perf_hooks');
 
@@ -21,22 +22,15 @@ function pingServer()
     }, (err, res) =>
     {
         logToLog('<src/utils/Ping.js/Function pingServer> Passed');
-        if (err) return errorPing(err);
+        if (err) return errorPing();
         return returnPing(res);
     });
 
-    async function errorPing(err)
+    async function errorPing()
     {
         try
         {
-            const fieldArr = [
-                {
-                    name: 'Warning',
-                    value: `Couldn't ping server: ${err}`
-                }
-            ];
-            
-            await fieldEmbed('Bot warning', fieldArr, '');
+            await errEmbed(`Couldn't ping: ${errors.server['Error: connect ECONNREFUSED']}`, '- Check IP and Port');
             logToLog('<src/utils/Ping.js/Function errorPing> Passed');
         }
         catch (err)
@@ -66,7 +60,7 @@ function pingServer()
         catch (err)
         {
             logToLog(`<src/utils/DiscordFunctions.js/ERROR Function returnPing> ERROR: ${err}`);
-            errEmbed(err, `- Check the IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
+            errEmbed(err, `- Check the IP and Port\n - If error persists, ask on Discord or report it as a bug`);
         };
     };
 };

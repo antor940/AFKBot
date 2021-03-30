@@ -7,6 +7,8 @@ const autoeat = require('mineflayer-auto-eat');
 const bloodhoundPlugin = require('mineflayer-bloodhound')(mineflayer);
 const mineflayerViewer = require('prismarine-viewer').mineflayer;
 
+const { startBotFunctions } = require('./BotFunctions');
+
 const { registerBot, loginBot } = require('../modules/Login');
 const { logToLog } = require('../utils/Logging');
 
@@ -38,6 +40,11 @@ function startBot()
             const defaultMove = new Movements(bot, mcData);
             bot.pathfinder.setMovements(defaultMove);
             bot.pathfinder.movements.maxDropDown = config.pathfind['max-dropdown-blocks'];
+            bot.pathfinder.movements.scafoldingBlocks = [];
+            config.pathfind['scaffolding-blocks'].forEach(block =>
+                {
+                    bot.pathfinder.movements.scafoldingBlocks.push(mcData.itemsByName[block].id);
+                });
             bot.pvp.followRange = 10000;
             bot.pvp.attackRange = 5;
             bot.bloodhound.yaw_correlation_enabled = true;
@@ -57,7 +64,6 @@ function startBot()
             };
 
             logToLog('<src/modules/Bot.js/Event once spawn> Passed');
-            const { startBotFunctions } = require('./BotFunctions');
             startBotFunctions();
             return resolve(bot);
         });
