@@ -5,7 +5,7 @@ const { Vec3 } = require('vec3');
 
 const { startBot } = require('./Bot');
 const { followPlayer, gotoCoord, stopPathfind } = require('./Pathfind');
-const { Discord, client, errEmbed, channel } = require('./Discord');
+const { Discord, client, errEmbed, channel, guild } = require('./Discord');
 const { autoFish, stopFishing } = require('./Fishing');
 const { listInventory, rawInventory, emptyInventory } = require('./Inventory');
 const { returnViewer } = require('./Viewer');
@@ -62,7 +62,7 @@ logToLog('<src/modules/DiscordFunctions.js> Passed');
 client.on('message', async (message) =>
 {
     if (message.author.bot || message.channel.id !== config.discord['channel-id']) return;
-    if (!config.discord['owners-ids'].includes(message.author.id)) return;
+    if (!guild.members.cache.get(message.author.id).roles.cache.has(config.discord['owner-role-id'])) return;
     switch (message.cleanContent)
     {
         case `${config.discord.prefix}help`:

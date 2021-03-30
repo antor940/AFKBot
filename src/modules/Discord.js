@@ -46,6 +46,7 @@ client.on('ready', () =>
             Discord,
             client,
             channel,
+            guild,
             errEmbed
         };
     

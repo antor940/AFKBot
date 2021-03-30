@@ -27,9 +27,7 @@
             "text": "Being AFK is my profession"
         },
 
-        "owners-ids": [
-            
-        ],
+        "owner-role-id": "",
 
         "send-chat-to-minecraft": false
     },
@@ -94,7 +92,7 @@
     },
 
     "message-on-interval": {
-        "enable": false,
+        "enable": true,
         "interval": 10000,
         "message": "I am an AFKBot"
     },
