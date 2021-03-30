@@ -26,8 +26,6 @@ All the options of the config.json:
       
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
 		
-	"owners-ids": Array of ID's of the owners, commands will only work when these users use them. 
-		
 	"notify-users": Send a notification to Discord when a player with a username included in "list" joins.
 		"enable": Having this set to true, the bot will send a notification when the user/s join. Default is false.
 		"list": Array of usernames.
@@ -56,11 +54,6 @@ All the options of the config.json:
     
 	"bloodhound": Bloodhound options.
 		"enable": Having this set to false, the Bot won't find out who attacked it before killing it.
-    
-    	"message-on-death": Message sent on death.
-		"enable": Default is false.
-		"delay": How much time it will pass after the Bot has died and before it sends the message, in milliseconds.
-		"message": Message to send.
     
 	"viewer": Viewer options.
 		"enable": Having this set to false, the Bot won't create a Viewer.
