@@ -24,6 +24,8 @@ All the options of the config.json:
 			"enable": Having this set to true, will enable the Rich Presence of the Bot.
 			"text": Text to show in the Rich Presence.
       
+      	"owner-role-id": ID of the role that can use the Bot, messages or commands from users that don't have that role will get ignored.
+      
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
 		
 	"notify-users": Send a notification to Discord when a player with a username included in "list" joins.
@@ -83,6 +85,7 @@ All the options of the config.json:
 	"pathfind": Pathfinding options.
 		"pathfind-range": Number of blocks the Bot should stay away from the target when it's following him.
 		"max-dropdown-blocks": Maximum height the bot can fall while pathfinding. Default is 4.
+		"scaffolding-blocks": Array of blocks to use when pathfinder has to build or scaffold to get to a goal, default are dirt and stone.
 		
 	"misc-options". Miscellaneous options.
 		"send-chat-to-ds": Having this set to true, will make the Bot send the minecraft chat to Discord, not recommended as Discord doesn't like having a lot of messages sent in a short span of time.
@@ -94,4 +97,4 @@ All the options of the config.json:
 		"on-kicked": Milliseconds that will pass before the Bot will reconnect to the server if it's kicked.
 		"antikick-interval": Milliseconds that will pass between each "antikick".
     
-	"debug": Having this set to true will make the Bot print some useless extra information in the console.
+	"check-updates": true/false. If the Bot should check for version updates on each start.
