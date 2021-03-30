@@ -92,7 +92,7 @@
     },
 
     "message-on-interval": {
-        "enable": true,
+        "enable": false,
         "interval": 10000,
         "message": "I am an AFKBot"
     },
