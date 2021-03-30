@@ -124,6 +124,5 @@
         "antikick-interval": 600000
     },
 
-    "debug": false,
     "check-updates": true
 }

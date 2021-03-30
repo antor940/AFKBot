@@ -4,7 +4,7 @@ function startBotFunctions()
 
     const { bot, mcData, goals, startBot } = require('./Bot');
     const { startViewer } = require('./Viewer');
-    const { client, channel, errEmbed } = require('./Discord');
+    const { client, channel, guild, errEmbed } = require('./Discord');
     const { commandList } = require('./DiscordFunctions');
     const { sendNotification } = require('./Windows');
     const { autoEat, enablePlugin, disablePlugin } = require('./Eat');
@@ -315,9 +315,10 @@ function startBotFunctions()
     };
     
     //Discord
-    if (config.debug) log(`<src/BotFunctions.js> load discord event`);
     client.on('message', (message) =>
     {
+        if (message.author.bot || message.channel.id !== config.discord['channel-id']) return;
+        if (!guild.members.cache.get(message.author.id).roles.cache.has(config.discord['owner-role-id'])) return;
         if (message.cleanContent.startsWith(`${config.discord.prefix}say `))
         {
             if (config.discord['send-chat-to-minecraft']) return;
