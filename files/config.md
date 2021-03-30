@@ -24,7 +24,7 @@ All the options of the config.json:
 			"enable": Having this set to true, will enable the Rich Presence of the Bot.
 			"text": Text to show in the Rich Presence.
       
-      	"owner-role-id": ID of the role that can use the Bot, messages or commands from users that don't have that role will get ignored.
+      	"owner-role-id": ID of the role that can use the Bot, can also be @everyone's Role ID. Messages or commands from users that don't have that role will get ignored.
       
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
 		
