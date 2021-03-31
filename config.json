@@ -114,7 +114,7 @@
     "pathfind": {
         "pathfind-range": 1.5,
         "max-dropdown-blocks": 4,
-        "scaffolding-blocks":[
+        "scaffolding-blocks": [
             "dirt",
             "stone"
         ]
