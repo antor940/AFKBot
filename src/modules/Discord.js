@@ -5,7 +5,7 @@ const Discord = require('discord.js');
 const { logToLog } = require('../utils/Logging');
 
 logToLog('<src/modules/Discord.js> Passed');
-const notEnoughCreds = `ERROR: Please specify a Discord Bot Token, a Discord Server ID and a Discord Channel ID`;
+const notEnoughCreds = `ERROR: Please specify a Discord Bot Token, a Discord Server ID, a Discord Channel ID and an Owner Role ID`;
 const notCorrectIds = `ERROR: server ID, channel ID or Owner Role ID is incorrect, or I cannot access them, please check again\n`;
 const neededCreds = !config.discord.token || !config.discord['server-id'] || !config.discord['channel-id'] || !config.discord['owner-role-id'];
 if (neededCreds) return console.log(notEnoughCreds);

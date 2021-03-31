@@ -14,6 +14,7 @@ const { getStatus } = require('./Status');
 const { clearLogFolder, logToLog } = require('../utils/Logging');
 const { pingServer } = require('../utils/Ping');
 const { fieldEmbed } = require('../utils/Embed');
+const { mineGenerator, stopGenerator } = require('./Mining');
 
 console.log(`<DISCORD> Logged in: ${client.user.tag}`);
 if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bot-rpc'].text);
@@ -29,6 +30,8 @@ let commandList = [
     `${config.discord.prefix}goto`,
     `${config.discord.prefix}list`,
     `${config.discord.prefix}empty`,
+    `${config.discord.prefix}generator`,
+    `${config.discord.prefix}stopgen`,
     `${config.discord.prefix}say`,
     `${config.discord.prefix}status`,
     `${config.discord.prefix}clearlogs`,
@@ -50,6 +53,8 @@ const fieldArr = [
     { name: `${config.discord.prefix}list`, value: `List inventory`, inline: true },
     { name: `${config.discord.prefix}rawinv`, value: `List raw inventory in JSON`, inline: true },
     { name: `${config.discord.prefix}empty`, value: `Empty inventory`, inline: true },
+    { name: `${config.discord.prefix}generator`, value: `Breaks the block specified in the config continuously`, inline: true },
+    { name: `${config.discord.prefix}stopgen`, value: `Stops the breaking process of the Generator command`, inline: true },
     { name: `${config.discord.prefix}viewer`, value: `Returns the port and the URL in which the current world viewer is running`, inline: true },
     { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
     { name: `${config.discord.prefix}stop`, value: `Stops any kind of pathfinding`, inline: true },
@@ -109,6 +114,14 @@ client.on('message', async (message) =>
         case `${config.discord.prefix}viewer`:
             logToLog('<src/modules/DiscordFunctions.js/Case Viewer> Passed');
             returnViewer();
+        break;
+        case `${config.discord.prefix}generator`:
+            logToLog('<src/modules/DiscordFunctions.js/Case Generator> Passed');
+            mineGenerator();
+        break;
+        case `${config.discord.prefix}stopgen`:
+            logToLog('<src/modules/DiscordFunctions.js/Case Stopgen> Passed');
+            stopGenerator();
         break;
         case `${config.discord.prefix}clearlogs`:
             logToLog('<src/modules/DiscordFunctions.js/Case Clearlogs> Passed');
