@@ -1,6 +1,6 @@
 console.clear();
-const config = require('./config.json');
-global.log = console.log;
+const config = require('../config.json');
+
 global.dir = './logs/log0.log';
 global.port = config.viewer.port;
 
@@ -10,13 +10,12 @@ const mineflayer = require('mineflayer');
 const { performance } = require('perf_hooks');
 const logToFile = require('log-to-file');
 const fetch = require('node-fetch');
-const { checkLatestLog } = require('./src/Logging');
-const { checkUpdate } = require('./src/Update');
+
+const { checkLatestLog, logToLog } = require('./utils/Logging');
+const { checkUpdate } = require('./utils/Update');
 
 checkLatestLog().then(async() =>
 {
-    if (config.debug) log(`<index.js> starting up`);
-    
     module.exports = {
         logToFile,
         Discord,
@@ -27,6 +26,6 @@ checkLatestLog().then(async() =>
     };
     
     await checkUpdate();
-    logToFile('<index.js> Initializing Discord', dir);
-    require('./src/Discord');
+    logToLog('<src/index.js/Promise checkLatestLog> Passed');
+    require('./modules/Discord');
 });

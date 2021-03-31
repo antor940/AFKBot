@@ -1,20 +1,23 @@
-const config = require('../config.json');
+const config = require('../../config.json');
+const errors = require('../data/errors.json');
+
 const { Vec3 } = require('vec3');
-const { pingServer } = require('./Ping');
-const { startBot } = require('./Bot');
+
+const { startBot, stopBot } = require('./Bot');
 const { followPlayer, gotoCoord, stopPathfind } = require('./Pathfind');
-const { Discord, client, errEmbed, channel } = require('./Discord');
-const { logToFile } = require('../index');
-const { clearLogFolder } = require('./Logging');
+const { Discord, client, errEmbed, channel, guild } = require('./Discord');
 const { autoFish, stopFishing } = require('./Fishing');
 const { listInventory, rawInventory, emptyInventory } = require('./Inventory');
 const { returnViewer } = require('./Viewer');
-const { fieldEmbed } = require('./Embed');
+const { getStatus } = require('./Status');
+
+const { clearLogFolder, logToLog } = require('../utils/Logging');
+const { pingServer } = require('../utils/Ping');
+const { fieldEmbed } = require('../utils/Embed');
+const { mineGenerator, stopGenerator } = require('./Mining');
 
 console.log(`<DISCORD> Logged in: ${client.user.tag}`);
 if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bot-rpc'].text);
-if (config.debug) log(`<src/DiscordFunctions.js> logged in`);
-logToFile('<src/DiscordFunctions.js> Started', dir);
 
 let commandList = [
     `${config.discord.prefix}help`,
@@ -27,11 +30,14 @@ let commandList = [
     `${config.discord.prefix}goto`,
     `${config.discord.prefix}list`,
     `${config.discord.prefix}empty`,
+    `${config.discord.prefix}generator`,
+    `${config.discord.prefix}stopgen`,
     `${config.discord.prefix}say`,
     `${config.discord.prefix}status`,
     `${config.discord.prefix}clearlogs`,
     `${config.discord.prefix}viewer`,
     `${config.discord.prefix}exit`,
+    `${config.discord.prefix}leave`,
     `${config.discord.prefix}rawinv`
 ];
 
@@ -48,75 +54,87 @@ const fieldArr = [
     { name: `${config.discord.prefix}list`, value: `List inventory`, inline: true },
     { name: `${config.discord.prefix}rawinv`, value: `List raw inventory in JSON`, inline: true },
     { name: `${config.discord.prefix}empty`, value: `Empty inventory`, inline: true },
+    { name: `${config.discord.prefix}generator`, value: `Breaks the block specified in the config continuously`, inline: true },
+    { name: `${config.discord.prefix}stopgen`, value: `Stops the breaking process of the Generator command`, inline: true },
     { name: `${config.discord.prefix}viewer`, value: `Returns the port and the URL in which the current world viewer is running`, inline: true },
     { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
     { name: `${config.discord.prefix}stop`, value: `Stops any kind of pathfinding`, inline: true },
+    { name: `${config.discord.prefix}leave`, value: `Makes the Bot leave the server, Discord Bot will stay on`, inline: true },
     { name: `${config.discord.prefix}exit`, value: `Stops the program`, inline: true }
 ];
     
 fieldEmbed('Commands', fieldArr, '');
-if (config.debug) log(`<src/DiscordFunctions.js> sent command list`);
-logToFile('<src/DiscordFunctions.js> Sent startEmbed', dir);
+logToLog('<src/modules/DiscordFunctions.js> Passed');
 
 client.on('message', async (message) =>
 {
     if (message.author.bot || message.channel.id !== config.discord['channel-id']) return;
+    if (!guild.members.cache.get(message.author.id).roles.cache.has(config.discord['owner-role-id'])) return;
     switch (message.cleanContent)
     {
         case `${config.discord.prefix}help`:
-            logToFile('<src/DiscordFunctions.js> Help executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Help> Passed');
             fieldEmbed('Commands', fieldArr, '');
         break;
         case `${config.discord.prefix}ping`:
-            logToFile('<src/DiscordFunctions.js> Ping executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Ping> Passed');
             pingServer();
         break;
         case `${config.discord.prefix}start`:
-            logToFile('<src/DiscordFunctions.js> Start executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Start> Passed');
             startBot()
             .catch(err =>
             {
-                logToFile(`<src/DiscordFunctions.js> Error: ${err}`, dir);
-                errEmbed(err, `- Check credentials, IP and PORT\n - If error persists, ask on Discord or report it as a bug`);
+                logToLog(`<src/modules/DiscordFunctions.js/ERROR Case Start> ERROR: ${err}`);
+                errEmbed(`Couldn't start: ${errors.server['Error: connect ECONNREFUSED']}`, `- Check credentials, IP and Port\n - If error persists, ask on Discord or report it as a bug`);
             });
         break;
         case `${config.discord.prefix}status`:
-            logToFile('<src/DiscordFunctions.js> Status executed', dir);
-            const { getStatus } = require('./Status');
+            logToLog('<src/modules/DiscordFunctions.js/Case Status> Passed');
             getStatus().then(statusEmbed => channel.send(statusEmbed));
-            logToFile('<src/Status.js> Sent statusEmbed', dir);
         break;
         case `${config.discord.prefix}fish`:
-            logToFile('<src/DiscordFunctions.js> Fish executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Fish> Passed');
             autoFish();
         break;
         case `${config.discord.prefix}stopfish`:
-            logToFile('<src/DiscordFunctions.js> Stopfish executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Stopfish> Passed');
             stopFishing();
         break;
         case `${config.discord.prefix}list`:
-            logToFile('<src/DiscordFunctions.js> List executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case List> Passed');
             listInventory();
         break;
         case `${config.discord.prefix}rawinv`:
-            logToFile('<src/DiscordFunctions.js> Rawinv executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Rawinv> Passed');
             rawInventory();
         break;
         case `${config.discord.prefix}empty`:
-            logToFile('<src/DiscordFunctions.js> Empty executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Empty> Passed');
             emptyInventory();
         break;
         case `${config.discord.prefix}viewer`:
-            logToFile('<src/DiscordFunctions.js> Viewer executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Viewer> Passed');
             returnViewer();
         break;
+        case `${config.discord.prefix}generator`:
+            logToLog('<src/modules/DiscordFunctions.js/Case Generator> Passed');
+            mineGenerator();
+        break;
+        case `${config.discord.prefix}stopgen`:
+            logToLog('<src/modules/DiscordFunctions.js/Case Stopgen> Passed');
+            stopGenerator();
+        break;
         case `${config.discord.prefix}clearlogs`:
-            logToFile('<src/DiscordFunctions.js> Clearlogs executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Clearlogs> Passed');
             clearLogFolder();
         break;
         case `${config.discord.prefix}stop`:
-            logToFile('<src/DiscordFunctions.js> Stop executed', dir);
+            logToLog('<src/modules/DiscordFunctions.js/Case Stop> Passed');
             stopPathfind();
+        break;
+        case `${config.discord.prefix}leave`:
+            stopBot();
         break;
         case `${config.discord.prefix}exit`:
             process.exit(0);
@@ -124,13 +142,13 @@ client.on('message', async (message) =>
 
     if (message.cleanContent.startsWith(`${config.discord.prefix}follow `))
     {
-        logToFile('<src/DiscordFunctions.js> Follow executed', dir);
+        logToLog('<src/modules/DiscordFunctions.js/If Follow> Passed');
         const usernameToFollow = message.cleanContent.replace(`${config.discord.prefix}follow `, '');
         followPlayer(usernameToFollow);
     }
     else if(message.cleanContent.startsWith(`${config.discord.prefix}goto `))
     {
-        logToFile('Goto executed', dir);
+        logToLog('<src/modules/DiscordFunctions.js/If Goto> Passed');
         const coordsFromMessage = message.cleanContent.split(' ');
         if (!coordsFromMessage[3]) return errEmbed(`Not a valid position`, `- Make sure the command is written like this, ${config.discord.prefix}goto [x] [y] [z], without the brackets`);
         const vecCoords = new Vec3(coordsFromMessage[1], coordsFromMessage[2], coordsFromMessage[3]);

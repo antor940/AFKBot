@@ -17,7 +17,7 @@
 
     "discord": {
         "token": "",
-        "guild-id": "",
+        "server-id": "",
         "channel-id": "",
         "embed-hex-color": "#000ff",
         "prefix": "+",
@@ -26,6 +26,8 @@
             "enable": true,
             "text": "Being AFK is my profession"
         },
+
+        "owner-role-id": "",
 
         "send-chat-to-minecraft": false
     },
@@ -71,6 +73,20 @@
         "enable": true
     },
 
+    "message-on-death": {
+        "enable": false, 
+        "delay": 10000,
+        "message": "I died!"
+    },
+
+    "block-generators": {
+        "block-to-break": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+        }
+    },
+
     "viewer": {
         "enable": true,
         "first-person": false,
@@ -97,7 +113,11 @@
 
     "pathfind": {
         "pathfind-range": 1.5,
-        "max-dropdown-blocks": 4
+        "max-dropdown-blocks": 4,
+        "scaffolding-blocks": [
+            "dirt",
+            "stone"
+        ]
     },
 
     "misc-options": {
@@ -112,6 +132,5 @@
         "antikick-interval": 600000
     },
 
-    "debug": false,
     "check-updates": true
 }

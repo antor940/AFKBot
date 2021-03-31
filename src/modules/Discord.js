@@ -1,25 +1,32 @@
-const config = require('../config.json');
+const config = require('../../config.json');
+
 const Discord = require('discord.js');
-const { logToFile } = require('../index');
 
-logToFile('<src/Discord.js> Trying to start Discord Bot', dir);
+const { logToLog } = require('../utils/Logging');
 
-const notEnoughCreds = 'Please specify a Discord Bot Token, a Discord Server ID and a Discord Channel ID';
-const neededCreds = !config.discord.token || !config.discord['guild-id'] || !config.discord['channel-id'];
-if (neededCreds) throw new Error(notEnoughCreds);
+logToLog('<src/modules/Discord.js> Passed');
+const notEnoughCreds = `ERROR: Please specify a Discord Bot Token, a Discord Server ID, a Discord Channel ID and an Owner Role ID`;
+const notCorrectIds = `ERROR: server ID, channel ID or Owner Role ID is incorrect, or I cannot access them, please check again\n`;
+const neededCreds = !config.discord.token || !config.discord['server-id'] || !config.discord['channel-id'] || !config.discord['owner-role-id'];
+if (neededCreds) return console.log(notEnoughCreds);
 
 const client = new Discord.Client();
-client.login(config.discord.token);
+client.login(config.discord.token)
+.catch(error =>
+{
+    console.log(`Error trying to initialize Discord Bot: ${error} Process will exit.`);
+    process.exit(0);
+});
 
-if (config.debug) log(`<src/Discord.js> creating bot`);
 client.on('ready', () =>
 {
     try
     {
-        logToFile(`<src/Discord.js> Bot started as: ${client.user.tag}`, dir);
-        if (config.debug) log(`<src/Discord.js> retrieving channel`);
         const channel = client.channels.cache.get(config.discord['channel-id']);
-        const guild = client.guilds.cache.get(config.discord['guild-id']);
+        const guild = client.guilds.cache.get(config.discord['server-id']);
+        if (!guild || !channel) return console.log(notCorrectIds);
+        const ownerRole = guild.roles.cache.get(config.discord['owner-role-id']);
+        if (!ownerRole) return console.log(notCorrectIds);
         if (!guild.members.cache.get(client.user.id).hasPermission('ADMINISTRATOR')) return errEmbed(`Missing permissions`, `- Make sure I have Administrator permissions`);
     
         function errEmbed(err, solutionList)
@@ -41,16 +48,16 @@ client.on('ready', () =>
             Discord,
             client,
             channel,
+            guild,
             errEmbed
         };
     
-        if (config.debug) log(`<src/Discord.js> starting ./DiscordFunctions`);
-        logToFile('<src/Discord.js> Starting src/DiscordFunctions.js', dir);
+        logToLog(`<src/modules/Discord.js/Event on ready> Passed`);
         require('./DiscordFunctions');
     }
     catch (err)
     {
-        logToFile(`<src/Discord.js> ERROR INITIALIZING: ${err}`, dir);
+        logToLog(`<src/modules/Discord.js/ERROR Event on ready> ERROR: ${err}`);
         console.log(`ERROR INITIALIZING: ${err}`);
     };
 });

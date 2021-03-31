@@ -1,4 +1,4 @@
-[![Discord](https://img.shields.io/badge/Discord-blue.svg)](https://discord.gg/JQeVxbQT5G)
+[![Discord](https://img.shields.io/badge/Discord-blue.svg)](https://discord.gg/fFNVp7n8W4)
 <a href="https://drmoraschi.github.io/AFKBot/"><img src="https://img.shields.io/badge/Page-fc0303.svg" align="right"></a>
 
 [![Release](https://img.shields.io/badge/Download-brightgreen)](https://github.com/DrMoraschi/AFKBot/releases/download/v2.2/AFKBot.v2.zip)
@@ -43,7 +43,7 @@ But you can always check out the older versions:
  2. Extract the downloaded .zip in the folder, there should be a folder named AFKBot-master, take the files and paste them where you want, like a folder.
  3. Now, open the command prompt (press WIN + R, it should open a window, type in "cmd" and hit ENTER).
  4. [Navigate](https://www.techwalla.com/articles/how-to-use-quotcdquot-command-in-command-prompt-window) to the folder where you put the files (Example: type "cd C:\Users\DrMoraschi\Desktop\BotFolder" and hit ENTER).
- 5. Now where are going to install **Mineflayer** and the other dependencies, type:
+ 5. Now where are going to install **mineflayer** and the other dependencies, type:
 	
 	`npm install`
     
@@ -59,12 +59,12 @@ But you can always check out the older versions:
 
 This Bot requires a Discord Bot to be set up beforehand, if you don't know how to do it. [Discord Bot Tutorial](https://www.writebots.com/discord-bot-token/)
  1. Before starting the Bot, please take a look at all the options of the [config.json](https://github.com/DrMoraschi/AFKBot/blob/master/files/config.md).
- 2. In your Command Line, repeat number 4 from "Install"; navigate to the folder where the files are located.
+ 2. In your Command Line, repeat number 4 from **Install**; navigate to the folder where the files are located.
  3. To start the bot, just type in:
 	
-	```node index.js```
+	```npm start```
 
- 3. Once you've written all, hit ENTER and watch as the Bot starts and the bot connects to the server.
+ 3. Once you've written all, hit ENTER and watch as the Bot starts.
 
 <h2 align="center">WARNING</h2>
  
@@ -73,5 +73,7 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
   Thank you.
   
   This project may be considered as a continuation of [JPenuchot's AFKBot](https://github.com/JPenuchot/AFKBot), but I didn't know of the existence of that Repo when I named mine.
-  
-  <img alt="GitHub all releases" src="https://img.shields.io/github/downloads/DrMoraschi/AFKBot/total?style=for-the-badge">
+
+<a href="https://discord.gg/fFNVp7n8W4"><img alt="Discord Online Users" src="https://img.shields.io/discord/746844033120469062?logo=discord&color=blueviolet&label=Discord" align="left"></a>
+
+<a href="https://github.com/DrMoraschi/AFKBot/releases"><img alt="GitHub all releases" src="https://img.shields.io/github/downloads/DrMoraschi/AFKBot/total?logo=github&color=brightgreen&label=Downloads" align="right"></a>

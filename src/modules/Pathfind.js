@@ -1,14 +1,15 @@
-const config = require('../config.json');
-const { errEmbed } = require('./Discord');
-const { logToFile } = require('../index');
-const { fieldEmbed } = require('./Embed');
+const config = require('../../config.json');
+const errors = require('../data/errors.json');
 
-logToFile('<src/Pathfind.js> Started', dir);
-if (config.debug) log(`<src/Pathfind.js> load pathfind`);
+const { errEmbed } = require('./Discord');
+
+const { fieldEmbed } = require('../utils/Embed');
+const { logToLog } = require('../utils/Logging');
+
+logToLog('<src/modules/Pathfind.js> Passed');
 async function followPlayer(username)
 {
-    logToFile('<src/Pathfind.js> followPlayer started', dir);
-    if (config.debug) log(`<src/Pathfind.js> start pathfind`);
+    logToLog('<src/modules/Pathfind.js/Function followPlayer> Passed');
     try
     {
         const { bot, goals } = require('./Bot');
@@ -34,15 +35,17 @@ async function followPlayer(username)
     }
     catch (err)
     {
-        logToFile(`<src/Pathfind.js> Error: ${err}`, dir);
+        logToLog(`<src/modules/Pathfind.js/ERROR Function followPlayer> ERROR: ${err}`);
+        if (err.toString().includes('players')) err = errors.pathfind['TypeError: Cannot read property \'players\' of undefined'];
+        if (err.toString().includes('entity')) err = errors.pathfind['TypeError: Cannot read property \'entity\' of undefined'];
+        if (err.toString().includes('position')) err = errors.pathfind['TypeError: Cannot read property \'position\' of null'];
         errEmbed(err, `- Start the bot before using this command\n- Write the username correctly`);
     };
 };
 
 async function gotoCoord(vec3)
 {
-    logToFile('<src/Pathfind.js> gotoCoord started', dir);
-    if (config.debug) log(`<src/Pathfind.js> start goto`);
+    logToLog('<src/modules/Pathfind.js/Function gotoCoord> Passed');
     try
     {
         const { bot, goals } = require('./Bot');
@@ -53,15 +56,14 @@ async function gotoCoord(vec3)
     }
     catch (err)
     {
-        logToFile(`<src/Pathfind.js> Error: ${err}`, dir);
-        errEmbed(err, `- Start the bot before using this command\n- Write the username correctly`);
+        logToLog(`<src/modules/Pathfind.js/ERROR Function gotoCoord> ERROR: ${err}`);
+        errEmbed(errors.pathfind['TypeError: Cannot read property \'pvp\' of undefined'], `- Start the bot before using this command\n- Write the username correctly`);
     };
 };
 
 function stopPathfind()
 {
-    logToFile('<src/Pathfind.js> Stop pathfinding', dir);
-    if (config.debug) log(`<src/Pathfind.js> stop pathfind`);
+    logToLog('<src/modules/Pathfind.js/Function stopPathfind> Passed');
     try
     {
         const { bot } = require('./Bot');
@@ -70,8 +72,8 @@ function stopPathfind()
     }
     catch (err)
     {
-        logToFile(`<src/Pathfind.js> Error: ${err}`, dir);
-        errEmbed(err, `- Start the bot before using this command\n- Write the username correctly`);
+        logToLog(`<src/modules/Pathfind.js/ERROR Function stopPathfind> ERROR: ${err}`);
+        errEmbed(errors.pathfind['TypeError: Cannot read property \'pathfinder\' of undefined'], `- Start the bot before using this command\n- Write the username correctly`);
     };
 };
 

@@ -15,7 +15,7 @@ All the options of the config.json:
     
 	"discord": Discord Bot options.
 		"token": Token of the Discord Bot.
-		"guild-id": ID of the server. WARNING: It's the ID of the DISCORD SERVER, to get this, you must have Developer Mode turned On.
+		"server-id": ID of the server. WARNING: It's the ID of the DISCORD SERVER, to get this, you must have Developer Mode turned On.
 		"channel-id": ID of the channel where the Bot will print the chat, or where it will listen for commands.
 		"embed-hex-color": Hex color of the embeds that the Bot will send.
 		"prefix": Prefix for the Bot Commands.
@@ -23,6 +23,8 @@ All the options of the config.json:
 		"bot-rpc": Bot's Rich Presence options.
 			"enable": Having this set to true, will enable the Rich Presence of the Bot.
 			"text": Text to show in the Rich Presence.
+      
+      	"owner-role-id": ID of the role that can use the Bot, can also be @everyone's Role ID. Messages or commands from users that don't have that role will get ignored.
       
 		"send-chat-to-minecraft": Having this set to true, the Bot will read all non-commands messages and send it to Minecraft.
 		
@@ -55,6 +57,17 @@ All the options of the config.json:
 	"bloodhound": Bloodhound options.
 		"enable": Having this set to false, the Bot won't find out who attacked it before killing it.
     
+    	"message-on-death": Message that is sent with a [delay] after the Bot has died.
+		"enable": Default is false.
+		"delay": How much time it will pass after the Bot has died and the [message] gets sent, in milliseconds.
+		"message": The message to be sent.
+    
+    "block-generators": Options for the module that breaks blocks continuosly. Supports only one block at the time.
+		"block-to-break": Coordinates of the block. Bot won't do anything if the block is out of his reach. You have to move him first.
+			"x": X coordinate of the block.
+			"y": Y coordinate of the block.
+			"z": Z coordinate of the block.
+    
 	"viewer": Viewer options.
 		"enable": Having this set to false, the Bot won't create a Viewer.
 		"first-person": If the viewer should be on first person.
@@ -78,6 +91,7 @@ All the options of the config.json:
 	"pathfind": Pathfinding options.
 		"pathfind-range": Number of blocks the Bot should stay away from the target when it's following him.
 		"max-dropdown-blocks": Maximum height the bot can fall while pathfinding. Default is 4.
+		"scaffolding-blocks": Array of blocks to use when pathfinder has to build or scaffold to get to a goal, default are dirt and stone.
 		
 	"misc-options". Miscellaneous options.
 		"send-chat-to-ds": Having this set to true, will make the Bot send the minecraft chat to Discord, not recommended as Discord doesn't like having a lot of messages sent in a short span of time.
@@ -89,4 +103,4 @@ All the options of the config.json:
 		"on-kicked": Milliseconds that will pass before the Bot will reconnect to the server if it's kicked.
 		"antikick-interval": Milliseconds that will pass between each "antikick".
     
-	"debug": Having this set to true will make the Bot print some useless extra information in the console.
+	"check-updates": true/false. If the Bot should check for version updates on each start.

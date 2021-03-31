@@ -1,11 +1,10 @@
-const config = require('../config.json');
-const { logToFile } = require('../index');
+const config = require('../../config.json');
+const { logToLog } = require('./Logging');
 
+logToLog('<src/utils/Embed.js> Passed');
 async function fieldEmbed(embedTitle, fieldArray, embedDesc)
 {
-    if (config.debug) log('<src/Embed.js> fieldEmbed executed');
-    logToFile('<src/Embed.js> fieldEmbed executed', dir);
-    const { Discord, client, channel, errEmbed } = require('./Discord');
+    const { Discord, client, channel, errEmbed } = require('../modules/Discord');
     try
     {
         return new Promise(async(resolve) =>
@@ -23,22 +22,20 @@ async function fieldEmbed(embedTitle, fieldArray, embedDesc)
             if (embedDesc !== '') fieldEmbed.setDescription(embedDesc);
     
             await channel.send(fieldEmbed);
-            if (config.debug) log('<src/Embed.js> fieldEmbed sent');
-            logToFile('<src/Embed.js> fieldEmbed sent', dir);
+            logToLog('<src/utils/Embed.js/Function fieldEmbed> Passed');
             resolve();
         });
     }
     catch(err)
     {
+        logToLog(`<src/utils/Embed.js/ERROR Function fieldEmbed> ERROR: ${err}`);
         errEmbed(err, '- This error was caused by one of the modules, if it persists please report it on the Discord server or as a Github Issue');
     };
 };
 
 async function descEmbed(embedTitle, embedDesc)
 {
-    if (config.debug) log('<src/Embed.js> descEmbed executed');
-    logToFile('<src/Embed.js> fieldEmbed executed', dir);
-    const { Discord, client, channel, errEmbed } = require('./Discord');
+    const { Discord, client, channel, errEmbed } = require('../modules/Discord');
     try
     {
         return new Promise(async(resolve) =>
@@ -51,13 +48,13 @@ async function descEmbed(embedTitle, embedDesc)
             .setThumbnail(client.user.avatarURL());
     
             await channel.send(descEmbed);
-            if (config.debug) log('<src/Embed.js> descEmbed sent');
-            logToFile('<src/Embed.js> descEmbed sent', dir);
+            logToLog('<src/utils/Embed.js/Function descEmbed> Passed');
             resolve();
         });
     }
     catch(err)
     {
+        logToLog(`<src/utils/Embed.js/ERROR Function descEmbed> ERROR: ${err}`);
         errEmbed(err, '- This error was caused by one of the modules, if it persists please report it on the Discord server or as a Github Issue');
     };
 };
