@@ -11,14 +11,16 @@ const { startBotFunctions } = require('./BotFunctions');
 
 const { registerBot, loginBot } = require('../modules/Login');
 const { logToLog } = require('../utils/Logging');
+const { descEmbed } = require('../utils/Embed');
 
+let bot;
 logToLog('<src/modules/Bot.js> Passed');
 function startBot()
 {
     logToLog('<src/modules/Bot.js/Function startBot> Passed');
     return new Promise((resolve, reject) =>
     {
-        const bot = mineflayer.createBot({
+        bot = mineflayer.createBot({
             host: config.server.host,
             port: config.server.port ? config.server.port: 25565,
             username: config.afkbot.username ? config.afkbot.username: 'AFKBot',
@@ -70,6 +72,21 @@ function startBot()
     });
 };
 
+async function stopBot()
+{
+    try
+    {
+        bot.quit();
+        bot = null;
+        await descEmbed('Bot status', 'Bot has correctly left the server');
+    }
+    catch (err)
+    {
+        logToLog(`<src/modules/Bot.js/ERROR Function stopBot> ERROR ${err}`);
+    };
+};
+
 module.exports = {
-    startBot
+    startBot,
+    stopBot
 };

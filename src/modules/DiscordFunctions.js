@@ -3,7 +3,7 @@ const errors = require('../data/errors.json');
 
 const { Vec3 } = require('vec3');
 
-const { startBot } = require('./Bot');
+const { startBot, stopBot } = require('./Bot');
 const { followPlayer, gotoCoord, stopPathfind } = require('./Pathfind');
 const { Discord, client, errEmbed, channel, guild } = require('./Discord');
 const { autoFish, stopFishing } = require('./Fishing');
@@ -37,6 +37,7 @@ let commandList = [
     `${config.discord.prefix}clearlogs`,
     `${config.discord.prefix}viewer`,
     `${config.discord.prefix}exit`,
+    `${config.discord.prefix}leave`,
     `${config.discord.prefix}rawinv`
 ];
 
@@ -58,6 +59,7 @@ const fieldArr = [
     { name: `${config.discord.prefix}viewer`, value: `Returns the port and the URL in which the current world viewer is running`, inline: true },
     { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
     { name: `${config.discord.prefix}stop`, value: `Stops any kind of pathfinding`, inline: true },
+    { name: `${config.discord.prefix}leave`, value: `Makes the Bot leave the server, Discord Bot will stay on`, inline: true },
     { name: `${config.discord.prefix}exit`, value: `Stops the program`, inline: true }
 ];
     
@@ -130,6 +132,9 @@ client.on('message', async (message) =>
         case `${config.discord.prefix}stop`:
             logToLog('<src/modules/DiscordFunctions.js/Case Stop> Passed');
             stopPathfind();
+        break;
+        case `${config.discord.prefix}leave`:
+            stopBot();
         break;
         case `${config.discord.prefix}exit`:
             process.exit(0);
