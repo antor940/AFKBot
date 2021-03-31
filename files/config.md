@@ -62,6 +62,12 @@ All the options of the config.json:
 		"delay": How much time it will pass after the Bot has died and the [message] gets sent, in milliseconds.
 		"message": The message to be sent.
     
+    	"block-generators": Options for the module that breaks blocks continuosly.
+		"block-to-break": Coordinates of the block. Bot won't do anything if the block is out of his reach. You have to move him first.
+			"x": X coordinate of the block.
+			"y": Y coordinate of the block.
+			"z": Z coordinate of the block.
+    
 	"viewer": Viewer options.
 		"enable": Having this set to false, the Bot won't create a Viewer.
 		"first-person": If the viewer should be on first person.
