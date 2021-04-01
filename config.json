@@ -6,7 +6,8 @@
 
     "server": {
         "host": "localhost",
-        "port": 25565
+        "port": 25565,
+        "version": ""
     },
 
     "afkbot": {
@@ -114,7 +115,7 @@
     "pathfind": {
         "pathfind-range": 1.5,
         "max-dropdown-blocks": 4,
-        "scaffolding-blocks": [
+        "scaffolding-blocks":[
             "dirt",
             "stone"
         ]

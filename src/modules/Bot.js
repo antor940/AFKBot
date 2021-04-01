@@ -23,9 +23,10 @@ function startBot()
         bot = mineflayer.createBot({
             host: config.server.host,
             port: config.server.port ? config.server.port: 25565,
+            version: config.server.version ? config.server.version: false,
             username: config.afkbot.username ? config.afkbot.username: 'AFKBot',
             password: config.afkbot.password ? config.afkbot.password: null,
-            auth: config.afkbot['auth-method'] ? config.afkbot['auth-method']: 'mojang',
+            auth: config.afkbot['auth-method'] ? config.afkbot['auth-method']: 'mojang'
         });
 
         bot.on('error', (err) => reject(err));
