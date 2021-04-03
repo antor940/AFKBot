@@ -326,7 +326,7 @@ function startBotFunctions()
             bot.chat(msgToSay);
         };
     
-        if (message.cleanContent.includes(`${config.discord.prefix}follow`) || message.cleanContent.includes(`${config.discord.prefix}goto`)) return;
+        if (message.cleanContent.startsWith(`${config.discord.prefix}follow`) || message.cleanContent.startsWith(`${config.discord.prefix}goto`) || message.cleanContent.startsWith(`${config.discord.prefix}generator`)) return;
         if (!config.discord['send-chat-to-minecraft'] || commandList.indexOf(message.cleanContent) >= 0 || message.author.bot) return;
         bot.chat(message.cleanContent);
     });

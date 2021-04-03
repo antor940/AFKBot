@@ -18,6 +18,8 @@ async function followPlayer(username)
         await bot.pvp.stop();
         await bot.pathfinder.setGoal(null);
         bot.removeAllListeners('goal_reached');
+        bot.on('diggingCompleted', () => bot.removeAllListeners('diggingCompleted'));
+        bot.on('diggingAborted', () => bot.removeAllListeners('diggingAborted'));
         bot.pathfinder.setGoal(new goals.GoalFollow(playerToFollow, config.pathfind['pathfind-range']), true);
 
         const fieldArr = [
@@ -52,6 +54,8 @@ async function gotoCoord(vec3)
 
         await bot.pvp.stop();
         bot.removeAllListeners('goal_reached');
+        bot.on('diggingCompleted', () => bot.removeAllListeners('diggingCompleted'));
+        bot.on('diggingAborted', () => bot.removeAllListeners('diggingAborted'));
         bot.pathfinder.setGoal(new goals.GoalBlock(vec3.x, vec3.y, vec3.z));
     }
     catch (err)
@@ -69,6 +73,8 @@ function stopPathfind()
         const { bot } = require('./Bot');
         bot.pathfinder.setGoal(null);
         bot.removeAllListeners('goal_reached');
+        bot.removeAllListeners('diggingCompleted');
+        bot.removeAllListeners('diggingAborted');
     }
     catch (err)
     {

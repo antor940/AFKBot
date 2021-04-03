@@ -54,7 +54,7 @@ const fieldArr = [
     { name: `${config.discord.prefix}list`, value: `List inventory`, inline: true },
     { name: `${config.discord.prefix}rawinv`, value: `List raw inventory in JSON`, inline: true },
     { name: `${config.discord.prefix}empty`, value: `Empty inventory`, inline: true },
-    { name: `${config.discord.prefix}generator`, value: `Breaks the block specified in the config continuously`, inline: true },
+    { name: `${config.discord.prefix}generator [x] [y] [z]`, value: `Breaks the block at [x] [y] [z] continuously`, inline: true },
     { name: `${config.discord.prefix}stopgen`, value: `Stops the breaking process of the Generator command`, inline: true },
     { name: `${config.discord.prefix}viewer`, value: `Returns the port and the URL in which the current world viewer is running`, inline: true },
     { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
@@ -65,6 +65,16 @@ const fieldArr = [
     
 fieldEmbed('Commands', fieldArr, '');
 logToLog('<src/modules/DiscordFunctions.js> Passed');
+
+if (config['auto-start'])
+{
+    startBot()
+    .catch(err =>
+    {
+        logToLog(`<src/modules/DiscordFunctions.js/ERROR Case Start> ERROR: ${err}`);
+        errEmbed(err, `- Check credentials, IP, Port, and version\n - If error persists, ask on Discord or report it as a bug`);
+    });
+};
 
 client.on('message', async (message) =>
 {
@@ -91,7 +101,7 @@ client.on('message', async (message) =>
         break;
         case `${config.discord.prefix}status`:
             logToLog('<src/modules/DiscordFunctions.js/Case Status> Passed');
-            getStatus().then(statusEmbed => channel.send(statusEmbed));
+            getStatus();
         break;
         case `${config.discord.prefix}fish`:
             logToLog('<src/modules/DiscordFunctions.js/Case Fish> Passed');
@@ -116,10 +126,6 @@ client.on('message', async (message) =>
         case `${config.discord.prefix}viewer`:
             logToLog('<src/modules/DiscordFunctions.js/Case Viewer> Passed');
             returnViewer();
-        break;
-        case `${config.discord.prefix}generator`:
-            logToLog('<src/modules/DiscordFunctions.js/Case Generator> Passed');
-            mineGenerator();
         break;
         case `${config.discord.prefix}stopgen`:
             logToLog('<src/modules/DiscordFunctions.js/Case Stopgen> Passed');
@@ -153,6 +159,14 @@ client.on('message', async (message) =>
         if (!coordsFromMessage[3]) return errEmbed(`Not a valid position`, `- Make sure the command is written like this, ${config.discord.prefix}goto [x] [y] [z], without the brackets`);
         const vecCoords = new Vec3(coordsFromMessage[1], coordsFromMessage[2], coordsFromMessage[3]);
         gotoCoord(vecCoords);
+    }
+    else if (message.cleanContent.startsWith(`${config.discord.prefix}generator `))
+    {
+        logToLog('<src/modules/DiscordFunctions.js/If Generator> Passed');
+        const coordsFromMessage = message.cleanContent.split(' ');
+        if (!coordsFromMessage[3]) return errEmbed(`Not a valid position`, `- Make sure the command is written like this, ${config.discord.prefix}generator [x] [y] [z], without the brackets`);
+        const vecCoords = new Vec3(coordsFromMessage[1], coordsFromMessage[2], coordsFromMessage[3]);
+        mineGenerator(vecCoords);
     };
 });
 

@@ -80,14 +80,6 @@
         "message": "I died!"
     },
 
-    "block-generators": {
-        "block-to-break": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-        }
-    },
-
     "viewer": {
         "enable": true,
         "first-person": false,
@@ -133,5 +125,6 @@
         "antikick-interval": 600000
     },
 
+    "auto-start": false,
     "check-updates": true
 }

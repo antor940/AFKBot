@@ -52,11 +52,11 @@ function startBot()
             bot.pvp.attackRange = 5;
             bot.bloodhound.yaw_correlation_enabled = true;
 
-            bot.chatAddPattern(/(register)/ig, 'registerPattern', 'On register');
-            bot.chatAddPattern(/(login)/ig, 'loginPattern', 'On login');
+            bot.addChatPattern('registerPattern', /(register)/ig);
+            bot.addChatPattern('loginPattern', /(login)/ig, 'On login');
 
-            bot.on('registerPattern', registerBot);
-            bot.on('loginPattern', loginBot);
+            bot.on('chat:registerPattern', registerBot);
+            bot.on('chat:loginPattern', loginBot);
 
             module.exports = {
                 bot,
