@@ -1,0 +1,32 @@
+body {
+    background-color: black;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+    color: white;
+    size: 20cm;
+    margin-left: 47%;
+    margin-top: 5%;
+    transition: 1s;
+}
+h1:hover {
+    color: black;
+}
+
+hr.solid {
+    border-top: 3px solid;
+    margin-left: 50px;
+    margin-right: 50px;
+    color: white;
+}
+
+.command {
+    color: white;
+    size: 10cm;
+    margin-left: 50px;
+    transition: 1s;
+}
+.command:hover {
+    color: black;
+}
