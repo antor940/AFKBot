@@ -2,12 +2,13 @@ function startBotFunctions()
 {
     const config = require('../../config.json');
 
-    const { bot, mcData, goals, startBot } = require('./Bot');
+    const { bot, mcData, startBot } = require('./Bot');
     const { startViewer } = require('./Viewer');
     const { client, channel, guild, errEmbed } = require('./Discord');
     const { commandList } = require('./DiscordFunctions');
     const { sendNotification } = require('./Windows');
     const { autoEat, enablePlugin, disablePlugin } = require('./Eat');
+    const { moveRandom } = require('./AntiKick');
     
     const { fieldEmbed } = require('../utils/Embed');
     const { logToLog, logToChat } = require('../utils/Logging');
@@ -20,8 +21,9 @@ function startBotFunctions()
     if (config['auto-eat'].enable) autoEat();
     if (config['misc-options']['look-entities']) autoLook();
     if (config.pvp.enable) autoPvP();
-    if (config['misc-options']['antikick']) antiKick();
+    if (config['anti-kick'].enable) moveRandom();
     if (config['message-on-interval'].enable) intervalMessage();
+    if (config['message-on-spawn'].enable) spawnMessage();
     if (config.viewer.enable) startViewer();
     
     bot.on('error', (err) =>
@@ -134,6 +136,7 @@ function startBotFunctions()
             logToLog(`<src/modules/BotFunctions.js/Event on kicked> Passed`);
             if (config['windows-notifications']['on-kicked']) sendNotification('Kicked', reason);
             
+            if (!config['misc-options']['reconnect-on-kick']) return;
             setTimeout(() => {
                 startBot();    
             }, config.timeouts['on-kicked']);
@@ -154,26 +157,9 @@ function startBotFunctions()
         };
     });
     
-    let bloodhoundInfo = {};
-    bot.on('onCorrelateAttack', (attacker, victim, weapon) =>
-    {
-        if (weapon)
-        {
-            bloodhoundInfo = {
-                attacker: attacker,
-                victim: victim,
-                weapon: weapon
-            };  
-        }
-        else
-        {
-            bloodhoundInfo = {
-                attacker: attacker,
-                victim: victim
-            };
-        };
-    });
-    
+    let AttackerItem;
+    let AttackerUsername;
+    let EntityHurt;
     bot.on('death', async () =>
     {
         await bot.pathfinder.setGoal(null);
@@ -184,15 +170,41 @@ function startBotFunctions()
             }, config['message-on-death'].delay);
         };
 
-        const embedArr = [];
-
-        if (config.bloodhound.enable && bloodhoundInfo.attacker) embedArr.push({ name: `Killed by`, value: bloodhoundInfo.attacker.username || bloodhoundInfo.weapon.name });
-        if (config.bloodhound.enable && bloodhoundInfo.weapon) embedArr.push({ name: `Weapon`, value: bloodhoundInfo.weapon.name || bloodhoundInfo.weapon.displayName });
+        const embedArr = [
+            { name: 'Weapon', value: AttackerItem ? AttackerItem: `Coudln't find out` },
+            { name: 'Attacker', value: AttackerUsername ? AttackerUsername: `Coudln't find out` }
+        ];
     
-        if (config.bloodhound.enable) await fieldEmbed('Bot warning', embedArr, 'Died or killed');
+        await fieldEmbed('Bot warning', embedArr, 'Died or killed');
+        AttackerItem = null;
+        AttackerUsername = null;
         logToLog('<src/modules/BotFunctions.js/Event on death> Passed');
         if (config['windows-notifications']['on-death']) sendNotification('Warning', 'Died or killed');
     });
+
+    bot.on('entityHurt', (entityHurt) =>
+    {
+        if (entityHurt.username !== bot.username) return;
+        EntityHurt = entityHurt;
+        checkSwingArm();
+
+        function checkSwingArm()
+        {
+            bot.once('entitySwingArm', (entitySwingArm) =>
+            {
+                if (entitySwingArm.type !== 'player' || EntityHurt.username !== bot.username) return;
+                AttackerItem = entitySwingArm.heldItem ? entitySwingArm.heldItem.name: 'hand';
+                AttackerUsername = entitySwingArm.username;
+            });
+        };
+    });
+
+    function spawnMessage()
+    {
+        setTimeout(() => {
+            bot.chat(config['message-on-spawn'].message);
+        }, config['message-on-spawn'].delay);
+    };
     
     function notifyUsers()
     {
@@ -244,40 +256,6 @@ function startBotFunctions()
                 bot.pvp.attack(entity);
             };
         });
-    };
-    
-    function antiKick()
-    {
-        logToLog('<src/modules/BotFunctions.js/Function antiKick> Passed');
-        goRandom();
-        async function goRandom()
-        {
-            await sleep(config.timeouts['antikick-interval']);
-            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x + config['misc-options']['antikick-radius'], bot.entity.position.z));
-            await waitForGoal();
-            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x, bot.entity.position.z + config['misc-options']['antikick-radius']));
-            await waitForGoal();
-            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x - config['misc-options']['antikick-radius'], bot.entity.position.z));
-            await waitForGoal();
-            bot.pathfinder.setGoal(new goals.GoalXZ(bot.entity.position.x, bot.entity.position.z - config['misc-options']['antikick-radius']));
-            await waitForGoal();
-            
-            bot.removeAllListeners('goal_reached');
-            goRandom();
-        };
-
-        function waitForGoal()
-        {
-            return new Promise((resolve) =>
-            {
-                bot.on('goal_reached', resolve);
-            });
-        };
-
-        function sleep(ms)
-        {
-            return new Promise((resolve) => setTimeout(resolve, ms));
-        };
     };
     
     function intervalMessage()

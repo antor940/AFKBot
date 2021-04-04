@@ -70,8 +70,10 @@
         ]
     },
 
-    "bloodhound": {
-        "enable": true
+    "message-on-spawn": {
+        "enable": false,
+        "delay": 10000,
+        "message":"Hello World!"
     },
 
     "message-on-death": {
@@ -113,16 +115,20 @@
         ]
     },
 
+    "anti-kick": {
+        "enable": false,
+        "radius": 5,
+        "interval": 600000
+    },
+
     "misc-options": {
         "send-chat-to-ds": false,
-        "antikick": false,
-        "antikick-radius": 3,
+        "reconnect-on-kick": true,
         "look-entities": true
     },
 
     "timeouts": {
-        "on-kicked": 5000,
-        "antikick-interval": 600000
+        "on-kicked": 5000
     },
 
     "auto-start": false,

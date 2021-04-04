@@ -10,11 +10,11 @@ const { autoFish, stopFishing } = require('./Fishing');
 const { listInventory, rawInventory, emptyInventory } = require('./Inventory');
 const { returnViewer } = require('./Viewer');
 const { getStatus } = require('./Status');
+const { mineGenerator, stopGenerator } = require('./Mining');
 
 const { clearLogFolder, logToLog } = require('../utils/Logging');
 const { pingServer } = require('../utils/Ping');
 const { fieldEmbed } = require('../utils/Embed');
-const { mineGenerator, stopGenerator } = require('./Mining');
 
 console.log(`<DISCORD> Logged in: ${client.user.tag}`);
 if (config.discord['bot-rpc'].enable) client.user.setActivity(config.discord['bot-rpc'].text);
@@ -41,29 +41,11 @@ let commandList = [
     `${config.discord.prefix}rawinv`
 ];
 
-const fieldArr = [
-    { name: `${config.discord.prefix}help`, value: `Shows this command list` },
-    { name: `${config.discord.prefix}ping`, value: `Ping the server specified in the config.json, returning the results`, inline: true },
-    { name: `${config.discord.prefix}start`, value: `Start the bot`, inline: true },
-    { name: `${config.discord.prefix}status`, value: `Status of the bot`, inline: true },
-    { name: `${config.discord.prefix}follow [username]`, value: `Follows the player with the exact username`, inline: true },
-    { name: `${config.discord.prefix}say [message]`, value: `Says [message] in chat. Disabled if "send-chat-to-minecraft" is set to true`, inline: true },
-    { name: `${config.discord.prefix}fish`, value: `Start fishing and stop when inventory is full`, inline: true },
-    { name: `${config.discord.prefix}stopfish`, value: `Stop fishing`, inline: true },
-    { name: `${config.discord.prefix}goto [x] [y] [z]`, value: `Go to [x] [y] [z] coordinates`, inline: true },
-    { name: `${config.discord.prefix}list`, value: `List inventory`, inline: true },
-    { name: `${config.discord.prefix}rawinv`, value: `List raw inventory in JSON`, inline: true },
-    { name: `${config.discord.prefix}empty`, value: `Empty inventory`, inline: true },
-    { name: `${config.discord.prefix}generator [x] [y] [z]`, value: `Breaks the block at [x] [y] [z] continuously`, inline: true },
-    { name: `${config.discord.prefix}stopgen`, value: `Stops the breaking process of the Generator command`, inline: true },
-    { name: `${config.discord.prefix}viewer`, value: `Returns the port and the URL in which the current world viewer is running`, inline: true },
-    { name: `${config.discord.prefix}clearlogs`, value: `Clears the logs folder`, inline: true },
-    { name: `${config.discord.prefix}stop`, value: `Stops any kind of pathfinding`, inline: true },
-    { name: `${config.discord.prefix}leave`, value: `Makes the Bot leave the server, Discord Bot will stay on`, inline: true },
-    { name: `${config.discord.prefix}exit`, value: `Stops the program`, inline: true }
+const helpField = [
+    { name: 'Link', value: '[Commands](https://drmoraschi.github.io/AFKBot/files/page/)' }
 ];
-    
-fieldEmbed('Commands', fieldArr, '');
+
+fieldEmbed('Commands', helpField, 'This link will take you to the commands page');
 logToLog('<src/modules/DiscordFunctions.js> Passed');
 
 if (config['auto-start'])
@@ -84,7 +66,7 @@ client.on('message', async (message) =>
     {
         case `${config.discord.prefix}help`:
             logToLog('<src/modules/DiscordFunctions.js/Case Help> Passed');
-            fieldEmbed('Commands', fieldArr, '');
+            fieldEmbed('Commands', helpField, 'This link will take you to the commands page');
         break;
         case `${config.discord.prefix}ping`:
             logToLog('<src/modules/DiscordFunctions.js/Case Ping> Passed');

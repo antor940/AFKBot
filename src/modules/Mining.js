@@ -1,7 +1,7 @@
-const config = require('../../config.json');
+const { stopRandomMove, moveRandom } = require('./AntiKick');
+const { errEmbed } = require('./Discord');
 
 const { logToLog } = require('../utils/Logging');
-const { errEmbed } = require('./Discord');
 
 let vec3toClear;
 let stopMining;
@@ -11,6 +11,7 @@ async function mineGenerator(vec3ofBlock)
     logToLog('<src/modules/Mining.js/Function mineGenerator> Passed');
     try
     {
+        stopRandomMove();
         vec3toClear = vec3ofBlock;
         stopMining = false;
         const { bot } = require('./Bot');
@@ -41,6 +42,7 @@ async function mineGenerator(vec3ofBlock)
 function stopGenerator()
 {
     logToLog('<src/modules/Mining.js/Function stopGenerator> Passed');
+    moveRandom();
     stopMining = true;
 };
 

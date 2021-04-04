@@ -1,6 +1,7 @@
 const errors = require('../data/errors.json');
 
 const { errEmbed } = require('./Discord');
+const { moveRandom, stopRandomMove } = require('./AntiKick');
 
 const { logToLog } = require('../utils/Logging');
 
@@ -14,10 +15,12 @@ async function autoFish()
     {
         const { bot } = require('./Bot');
         if (stopFishingNow) return stopFishingNow = false;
+        stopRandomMove();
         if (bot.inventory.emptySlotCount() === 0)
         {
             fishingNow = false;
             errEmbed('Inventory full', 'Interrupting fishing');
+            moveRandom();
             return;
         };
 
@@ -59,6 +62,7 @@ function stopFishing()
     const { bot } = require('./Bot');
     if (!fishingNow) return;
     bot.activateItem();
+    moveRandom();
     stopFishingNow = true;
 };
 
