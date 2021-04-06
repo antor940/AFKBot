@@ -73,6 +73,8 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
   Thank you.
   
   This project may be considered as a continuation of [JPenuchot's AFKBot](https://github.com/JPenuchot/AFKBot), but I didn't know of the existence of that Repo when I named mine.
+  
+  Consider giving a ⭐ in Github if you like this project :) thank you
 
 <a href="https://discord.gg/fFNVp7n8W4"><img alt="Discord Online Users" src="https://img.shields.io/discord/746844033120469062?logo=discord&color=blueviolet&label=Discord" align="left"></a>
 
