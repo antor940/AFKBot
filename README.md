@@ -5,6 +5,8 @@
 <a href="https://github.com/DrMoraschi/AFKBot/releases"><img src="https://img.shields.io/badge/Releases-f4fc03.svg" align="right"></a>
 <h1 align="center">AFKBot</h1>
 
+**This Bot is planned to "retire" sooner than later, don't worry, I'm currently coding a replacement that will include an executable App, so in theory it will be easier to download and use. If you have some doubts, don't hesitate to ask me in Discord :) (this is a temporary decision and it may vary)**
+
 A Bot for Minecraft to stay AFK thanks to [mineflayer](https://github.com/PrismarineJS/mineflayer). Mainly for Windows, but should work on macOS and Linux.
 
 Written in Node.js
