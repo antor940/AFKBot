@@ -7,6 +7,9 @@
 
 **This Bot is planned to "retire" sooner than later, don't worry, I'm currently coding a replacement that will include an executable App, so in theory it will be easier to download and use. If you have some doubts, don't hesitate to ask me in Discord :) (this is a temporary decision and it may vary)**
 
+**As AFKBot may come to an end with the unconfirmed release of the new project, I would like to hear your opinions, thank you :)
+[Google Form](https://forms.gle/sdPnCy43o1q8qi8f7)**
+
 A Bot for Minecraft to stay AFK thanks to [mineflayer](https://github.com/PrismarineJS/mineflayer). Mainly for Windows, but should work on macOS and Linux.
 
 Written in Node.js
