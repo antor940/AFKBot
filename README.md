@@ -56,6 +56,7 @@ But you can always check out the older versions:
 <h2 align="center">Commands</h2>
 
  Commands will be sent to the channel on startup. You can choose.
+ Alternatively, you can look at the list [here](https://drmoraschi.github.io/AFKBot/files/page/)
  
 <h2 align="center">How to Use</h2>
 
