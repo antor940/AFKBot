@@ -3,14 +3,12 @@ const { errEmbed } = require('./Discord')
 
 const { logToLog } = require('../utils/Logging')
 
-let vec3toClear
 let stopMining
 logToLog('<src/modules/Mining.js> Passed')
 async function mineGenerator (vec3ofBlock) {
   logToLog('<src/modules/Mining.js/Function mineGenerator> Passed')
   try {
     stopRandomMove()
-    vec3toClear = vec3ofBlock
     stopMining = false
     const { bot } = require('./Bot')
     if (bot.entity.position.distanceTo(vec3ofBlock) > 10) return errEmbed('Can\'t reach block', '- Block is probably too far to break, check it in the config.json')

@@ -1,11 +1,10 @@
 const config = require('../../config.json')
-const errors = require('../data/errors.json')
 
 const { Vec3 } = require('vec3')
 
 const { startBot, stopBot } = require('./Bot')
 const { followPlayer, gotoCoord, stopPathfind } = require('./Pathfind')
-const { Discord, client, errEmbed, channel, guild } = require('./Discord')
+const { Discord, client, errEmbed, guild } = require('./Discord')
 const { autoFish, stopFishing } = require('./Fishing')
 const { listInventory, rawInventory, emptyInventory } = require('./Inventory')
 const { returnViewer } = require('./Viewer')
