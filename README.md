@@ -2,6 +2,7 @@
 <a href="https://drmoraschi.github.io/AFKBot/"><img src="https://img.shields.io/badge/Page-fc0303.svg" align="right"></a>
 
 [![Release](https://img.shields.io/badge/Download-brightgreen)](https://github.com/DrMoraschi/AFKBot/releases/download/v2.5/AFKBot.v2.zip)
+
 <a href="https://github.com/DrMoraschi/AFKBot/releases"><img src="https://img.shields.io/badge/Releases-f4fc03.svg" align="right"></a>
 <h1 align="center">AFKBot</h1>
 
