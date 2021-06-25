@@ -3,7 +3,7 @@ const config = require('../../config.json')
 const fetch = require('node-fetch')
 
 const { logToLog } = require('./Logging')
-const thisVer = 24
+const thisVer = 25
 
 logToLog('<src/utils/Update.js> Passed')
 function checkUpdate () {
@@ -20,6 +20,7 @@ function checkUpdate () {
     } catch (err) {
       logToLog(`<src/utils/Update.js/ERROR Function checkUpdate> ERROR: ${err}`)
       console.log(`ERROR INITIALIZING: ${err}`)
+      resolve()
     };
   })
 };
