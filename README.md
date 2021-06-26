@@ -75,7 +75,7 @@ This Bot requires a Discord Bot to be set up beforehand, if you don't know how t
 
 <h2 align="center">WARNING</h2>
  
-  I am not responsible of any problems that this Bot may cause, when you are downloading it, it's up to you and to be responsible of your own actions.
+  I am not responsible of any problems that this Bot may cause, when you are downloading it, it's up to you and to be responsible of your own actions. Also, there are some forks of this repository that may not offer the features that they say.
   
   Thank you.
   
