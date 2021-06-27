@@ -9,6 +9,6 @@
 
 If you have previously used AFKBot, please answer this Form to know your experience: **[Google Form](https://forms.gle/sdPnCy43o1q8qi8f7)**
 
-<h3><strong>To go to the new repository: <a href="https://github.com/DrMoraschi/Ranger" target="blank">Ranger</a></strong></h3>
+<h3><strong>To go to the new repository: <a href="https://github.com/DrMoraschi/Ranger">Ranger</a></strong></h3>
 
-<strong>To go to the old README: <a href="https://github.com/DrMoraschi/AFKBot/tree/master/docs/old.md" target="blank">AFKBot</a></strong>
+<strong>To go to the old README: <a href="https://github.com/DrMoraschi/AFKBot/tree/master/docs/old.md">AFKBot</a></strong>
