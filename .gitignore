@@ -1,2 +1,4 @@
-# To prevent some unnecesary actions
-node_modules
+/.vscode
+/node_modules
+
+package-lock.json
