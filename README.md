@@ -11,4 +11,4 @@ If you have previously used AFKBot, please answer this Form to know your experie
 
 <h3><strong>To go to the new repository: <a href="https://github.com/DrMoraschi/Ranger">Ranger</a></strong></h3>
 
-<strong>To go to the old README: <a href="https://github.com/DrMoraschi/AFKBot/blob/v2.5/docs/old.md">AFKBot</a></strong>
+<strong>To go to the old README: <a href="https://github.com/DrMoraschi/AFKBot/blob/master/docs/old.md">AFKBot</a></strong>
