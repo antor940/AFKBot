@@ -18,6 +18,8 @@ async function getStatus () {
       { name: 'Port', value: config.server.port, inline: true },
       { name: 'Version', value: bot.version, inline: true },
       { name: 'Ping', value: bot.player.ping, inline: true },
+      { name: 'Health', value: Math.floor(bot.health), inline: true },
+      { name: 'Food', value: Math.floor(bot.food), inline: true },
       { name: 'Position', value: `x: ${Math.floor(bot.entity.position.x)} y: ${Math.floor(bot.entity.position.y)} z:  ${Math.floor(bot.entity.position.z)}`, inline: true },
       { name: 'Looking', value: `Yaw: ${Math.floor(bot.entity.yaw)} Pitch: ${Math.floor(bot.entity.yaw)}`, inline: true }
     ]

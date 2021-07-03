@@ -20,13 +20,13 @@ function pingServer () {
     port: config.server.port
   }, (err, res) => {
     logToLog('<src/utils/Ping.js/Function pingServer> Passed')
-    if (err) return errorPing()
+    if (err) return errorPing(err)
     return returnPing(res)
   })
 
-  async function errorPing () {
+  async function errorPing (err) {
     try {
-      await errEmbed(`Couldn't ping: ${errors.server['Error: connect ECONNREFUSED']}`, '- Check IP and Port')
+      await errEmbed(`Couldn't ping: ${err.toString()}`, '- Check IP and Port')
       logToLog('<src/utils/Ping.js/Function errorPing> Passed')
     } catch (err) {
       logToLog(`<src/utils/Ping.js/ERROR Function errorPing> ERROR: ${err}`)

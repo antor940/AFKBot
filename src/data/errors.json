@@ -9,9 +9,6 @@
     "fishing": {
         "Error: Invalid item object in equip": "No fishing rod in inventory"
     },
-    "server": {
-        "Error: connect ECONNREFUSED": "Connection rejected by the server, couldn't connect"
-    },
     "status": {
         "TypeError: Cannot read property 'username' of undefined": "This is because the bot hasn't started yet"
     },
