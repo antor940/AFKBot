@@ -5,9 +5,9 @@ const Discord = require('discord.js');
 const { logToLog } = require('../utils/Logging');
 
 logToLog('<src/modules/Discord.js> Passed');
-const notEnoughCreds = `ERROR: Please specify a Discord Bot Token, a Discord Server ID, a Discord Channel ID and an Owner Role ID`;
-const notCorrectIds = `ERROR: server ID, channel ID or Owner Role ID is incorrect, or I cannot access them, please check again\n`;
-const neededCreds = !config.discord.token || !config.discord['server-id'] || !config.discord['channel-id'] || !config.discord['owner-role-id'];
+const notEnoughCreds = `ERROR: Please specify a Discord Bot Token, a Discord Server ID, a Discord Channel ID and an Role To Reply To ID`;
+const notCorrectIds = `ERROR: server ID, channel ID or Role To Reply To ID is incorrect, or I cannot access them, please check again\n`;
+const neededCreds = !config.discord.token || !config.discord['server-id'] || !config.discord['channel-id'] || !config.discord['role-to-reply-to'];
 if (neededCreds) return console.log(notEnoughCreds);
 
 const client = new Discord.Client();
@@ -25,7 +25,7 @@ client.on('ready', () =>
         const channel = client.channels.cache.get(config.discord['channel-id']);
         const guild = client.guilds.cache.get(config.discord['server-id']);
         if (!guild || !channel) return console.log(notCorrectIds);
-        const ownerRole = guild.roles.cache.get(config.discord['owner-role-id']);
+        const ownerRole = guild.roles.cache.get(config.discord['role-to-reply-to']);
         if (!ownerRole) return console.log(notCorrectIds);
         if (!guild.members.cache.get(client.user.id).hasPermission('ADMINISTRATOR')) return errEmbed(`Missing permissions`, `- Make sure I have Administrator permissions`);
     

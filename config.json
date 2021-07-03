@@ -1,136 +1,136 @@
 {
-    "logs": {
-        "log-chat-to-console": true,
-        "log-chat-to-file": true
-    },
-
-    "server": {
-        "host": "localhost",
-        "port": 25565
-    },
-
-    "afkbot": {
-        "username": "AFKBot",
-        "password": "",
-        "auth-method": "mojang"
-    },
-
-    "discord": {
-        "token": "",
-        "server-id": "",
-        "channel-id": "",
-        "embed-hex-color": "#000ff",
-        "prefix": "+",
-
-        "bot-rpc": {
-            "enable": true,
-            "text": "Being AFK is my profession"
-        },
-
-        "owner-role-id": "",
-
-        "send-chat-to-minecraft": false
-    },
-
-    "auto-login": {
-        "enable": false,
-        "password": "",
-        "repeat-password-on-register": true
+  "logs": {
+    "log-chat-to-console": true,
+    "log-chat-to-file": true
+  },
+  
+  "server": {
+    "host": "localhost",
+    "port": 25565,
+    "version": ""
+  },
+  
+  "afkbot": {
+    "username": "AFKBot",
+    "password": "",
+    "auth-method": "mojang"
+  },
+  
+  "discord": {
+    "token": "",
+    "server-id": "",
+    "channel-id": "",
+    "embed-hex-color": "#000ff",
+    "prefix": "+",
+    
+    "bot-rpc": {
+      "enable": true,
+      "text": "Being AFK is my profession"
     },
     
-    "notify-on-user": {
-        "enable": true,
-        "list": [
-            "AFKBotEnemy"
-        ]
-    },
-
-    "whispers": {
-        "enable-answer": true,
-        "timeout-on-whisper": 1000,
-        "message-to-answer": "Sorry, I'm an AFKBot"
-    },
-
-    "pvp": {
-        "enable": true,
-        "attack-players": false,
-        "attack-endermans": false
-    },
-
-    "auto-eat": {
-        "enable": true,
-        "send-status": false,
-        "priority": "foodPoints",
-        "start-at": 19,
-        "banned-foods": [
-            "rotten_flesh",
-            "poisonous_potato",
-            "pufferfish"
-        ]
-    },
-
-    "bloodhound": {
-        "enable": true
-    },
-
-    "message-on-death": {
-        "enable": false, 
-        "delay": 10000,
-        "message": "I died!"
-    },
-
-    "block-generators": {
-        "block-to-break": {
-            "x": 0,
-            "y": 0,
-            "z": 0
-        }
-    },
-
-    "viewer": {
-        "enable": true,
-        "first-person": false,
-        "view-distance": 6
-    },
-
-    "low-health": {
-        "warn-on-low-health": false,
-        "health-points": 5,
-        "disconnect-on-low-health": false
-    },
-
-    "message-on-interval": {
-        "enable": false,
-        "interval": 10000,
-        "message": "I am an AFKBot"
-    },
-
-    "windows-notifications": {
-        "on-banned": true,
-        "on-kicked": true,
-        "on-death": true
-    },
-
-    "pathfind": {
-        "pathfind-range": 1.5,
-        "max-dropdown-blocks": 4,
-        "scaffolding-blocks": [
-            "dirt",
-            "stone"
-        ]
-    },
-
-    "misc-options": {
-        "send-chat-to-ds": false,
-        "antikick": false,
-        "antikick-radius": 3,
-        "look-entities": true
-    },
-
-    "timeouts": {
-        "on-kicked": 5000,
-        "antikick-interval": 600000
-    },
-
-    "check-updates": true
+    "role-to-reply-to": "",
+    
+    "send-chat-to-minecraft": false
+  },
+  
+  "auto-login": {
+    "enable": false,
+    "password": "",
+    "repeat-password-on-register": true
+  },
+  
+  "notify-on-user": {
+    "enable": true,
+    "list": [
+      "AFKBotEnemy"
+    ]
+  },
+  
+  "whispers": {
+    "enable-answer": true,
+    "timeout-on-whisper": 1000,
+    "message-to-answer": "Sorry, I'm an AFKBot"
+  },
+  
+  "pvp": {
+    "enable": true,
+    "attack-players": false,
+    "attack-endermans": false
+  },
+  
+  "auto-eat": {
+    "enable": true,
+    "send-status": false,
+    "priority": "foodPoints",
+    "start-at": 19,
+    "banned-foods": [
+      "rotten_flesh",
+      "poisonous_potato",
+      "pufferfish"
+    ]
+  },
+  
+  "message-on-spawn": {
+    "enable": false,
+    "delay": 10000,
+    "message":"Hello World!"
+  },
+  
+  "message-on-death": {
+    "enable": false, 
+    "delay": 10000,
+    "message": "I died!"
+  },
+  
+  "viewer": {
+    "enable": true,
+    "first-person": false,
+    "view-distance": 6
+  },
+  
+  "low-health": {
+    "warn-on-low-health": false,
+    "health-points": 5,
+    "disconnect-on-low-health": false
+  },
+  
+  "message-on-interval": {
+    "enable": false,
+    "interval": 10000,
+    "message": "I am an AFKBot"
+  },
+  
+  "windows-notifications": {
+    "on-banned": true,
+    "on-kicked": true,
+    "on-death": true
+  },
+  
+  "pathfind": {
+    "pathfind-range": 1.5,
+    "max-dropdown-blocks": 4,
+    "scaffolding-blocks": [
+      "dirt",
+      "stone"
+    ]
+  },
+  
+  "anti-kick": {
+    "enable": false,
+    "radius": 5,
+    "interval": 600000
+  },
+  
+  "misc-options": {
+    "send-chat-to-ds": false,
+    "reconnect-on-kick": true,
+    "look-entities": true
+  },
+  
+  "timeouts": {
+    "on-kicked": 5000
+  },
+  
+  "auto-start": false,
+  "check-updates": true
 }
